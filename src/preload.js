@@ -178,5 +178,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getPlatform: () => ipcRenderer.invoke('get-platform'),
   setNmapPath: (path) => ipcRenderer.invoke('set-nmap-path', path),
   getNmapPath: () => ipcRenderer.invoke('get-nmap-path'),
-  getAppPath: () => ipcRenderer.invoke('get-app-path')
+  getAppPath: () => ipcRenderer.invoke('get-app-path'),
+  
+  // Fonctions de gestion des fichiers
+  showOpenFileDialog: (options) => ipcRenderer.invoke('show-open-file-dialog', options),
+  showSaveFileDialog: (options) => ipcRenderer.invoke('show-save-file-dialog', options),
+  writeFile: (filePath, content) => ipcRenderer.invoke('write-file', filePath, content)
 }); 

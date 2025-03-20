@@ -15,7 +15,8 @@ File Edit0r (Cool As Fuck)
 
 ## Submenu Scanner [ Pending... ]
 Intégration Nessus, OpenVAS
-
+Integration Recon-ng
+Dmitry Integrations
 ## Fuzzing  [ Pending... ]
 Some cool shit
 
@@ -31,5 +32,5 @@ RFID
 
 ## Car Hacking [ Pending... ]
 
-
-
+## Submenu Flooding
+- Phones -> SIP FLooding / RTP Flooding (inviteflood)

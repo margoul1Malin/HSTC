@@ -219,6 +219,12 @@ const electronAPI = {
   // Sélectionner un fichier avec boîte de dialogue native
   showOpenFileDialog: (options) => ipcRenderer.invoke('show-open-file-dialog', options),
   
+  // Sauvegarder un fichier avec boîte de dialogue native
+  showSaveFileDialog: (options) => ipcRenderer.invoke('show-save-file-dialog', options),
+  
+  // Écrire dans un fichier
+  writeFile: (filePath, content) => ipcRenderer.invoke('write-file', filePath, content),
+  
   // Fonctions pour les tâches planifiées
   listScheduledTasks: () => ipcRenderer.invoke('list-scheduled-tasks'),
   addScheduledTask: (taskData) => ipcRenderer.invoke('add-scheduled-task', taskData),

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { FiHome, FiCheckSquare, FiSettings, FiMenu, FiSearch, FiBookmark, FiChevronDown, FiChevronRight, FiDatabase, FiLock, FiTarget, FiServer, FiWifi, FiMail, FiSend, FiPhone, FiEye, FiMessageSquare, FiShield, FiGlobe, FiKey, FiCalendar, FiGithub, FiTool, FiFile, FiImage, FiActivity } from 'react-icons/fi';
-
+import { FiHome, FiCheckSquare, FiSettings, FiMenu, FiSearch, FiBookmark, FiChevronDown, FiChevronRight, FiDatabase, FiLock, FiTarget, FiServer, FiWifi, FiMail, FiSend, FiPhone, FiEye, FiMessageSquare, FiShield, FiGlobe, FiKey, FiCalendar, FiGithub, FiTool, FiFile, FiImage, FiActivity, FiCode, FiCreditCard, FiFolder } from 'react-icons/fi';
+import { FcKey, FcUnlock, FcTabletAndroid, FcSearch, FcViewDetails, FcCalendar, FcBiohazard, FcMoneyTransfer, FcGlobe, FcDebt, FcDataConfiguration, FcAddressBook } from "react-icons/fc";
+import { PiSyringeFill, PiCreditCardFill, PiBinaryFill, PiDoorOpenFill } from "react-icons/pi";
+import { SiNgrok, SiAmazonwebservices } from "react-icons/si";
+import { FaQrcode } from "react-icons/fa";
 const Sidebar = ({ activeView, setActiveView }) => {
   console.log('Sidebar - Rendu, vue active:', activeView);
   
@@ -16,6 +19,9 @@ const Sidebar = ({ activeView, setActiveView }) => {
   const [systemPlanningMenuOpen, setSystemPlanningMenuOpen] = useState(false);
   const [miscellaneousMenuOpen, setMiscellaneousMenuOpen] = useState(false);
   const [sniffingMenuOpen, setSniffingMenuOpen] = useState(false);
+  const [injectorMenuOpen, setInjectorMenuOpen] = useState(false);
+  const [malwareMenuOpen, setMalwareMenuOpen] = useState(false);
+  const [ccMenuOpen, setCcMenuOpen] = useState(false);
 
   // Vérifier si une vue d'exploits est active
   const isExploitViewActive = activeView === 'exploitdb' || activeView === 'savedexploits';
@@ -25,7 +31,6 @@ const Sidebar = ({ activeView, setActiveView }) => {
   
   // Vérifier si une vue de scanner est active
   const isScannerViewActive = activeView === 'networkScanner' || 
-                             activeView === 'sqlyzer' || 
                              activeView === 'webalyzer' ||
                              activeView === 'ssl_tls' ||
                              activeView === 'zapscanner';
@@ -43,7 +48,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
   const isIotSearchViewActive = activeView === 'shodan' || activeView === 'zoomeye';
   
   // Vérifier si une vue de brute force est active
-  const isBruteForceViewActive = activeView === 'hydra';
+  const isBruteForceViewActive = activeView === 'hydra' || activeView === 'john' || activeView === 'gobuster';
 
   // Vérifier si une vue de planification système est active
   const isSystemPlanningViewActive = activeView === 'plannifyer' || activeView === 'scriptgarbage';
@@ -53,6 +58,15 @@ const Sidebar = ({ activeView, setActiveView }) => {
 
   // Vérifier si une vue de sniffing est active
   const isSniffingViewActive = activeView === 'shark';
+  
+  // Vérifier si une vue d'Injector est active
+  const isInjectorViewActive = activeView === 'sqli' || activeView === 'xsser';
+  
+  // Vérifier si une vue de M4lwar3b1tes est active
+  const isMalwareViewActive = activeView === 'ransomware' || activeView === 'backdoor';
+  
+  // Vérifier si une vue de CC est active
+  const isCcViewActive = activeView === 'ccgenerator' || activeView === 'ccchecker';
 
   // Ouvrir automatiquement le menu correspondant à la vue active
   useEffect(() => {
@@ -67,6 +81,9 @@ const Sidebar = ({ activeView, setActiveView }) => {
     if (isSystemPlanningViewActive) setSystemPlanningMenuOpen(true);
     if (isMiscellaneousViewActive) setMiscellaneousMenuOpen(true);
     if (isSniffingViewActive) setSniffingMenuOpen(true);
+    if (isInjectorViewActive) setInjectorMenuOpen(true);
+    if (isMalwareViewActive) setMalwareMenuOpen(true);
+    if (isCcViewActive) setCcMenuOpen(true);
   }, [activeView]);
 
   // Définir les éléments du menu principal
@@ -79,6 +96,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
 
   // Définir les éléments du sous-menu Exploits
   const exploitsSubMenuItems = [
+    { id: 'nvd', label: 'NVD', icon: <FiSearch size={18} />, disabled: true },
     { id: 'exploitdb', label: 'Recherche d\'Exploits', icon: <FiSearch size={18} /> },
     { id: 'savedexploits', label: 'Exploits Sauvegardés', icon: <FiBookmark size={18} /> },
   ];
@@ -91,17 +109,18 @@ const Sidebar = ({ activeView, setActiveView }) => {
   // Définir les éléments du sous-menu Scanner
   const scannerSubMenuItems = [
     { id: 'networkScanner', label: 'Scanner Réseau', icon: <FiWifi size={18} /> },
-    { id: 'sqlyzer', label: 'SQLyzer', icon: <FiDatabase size={18} /> },
-    { id: 'webalyzer', label: 'WebAlyzer', icon: <FiSearch size={18} /> },
+    { id: 'webalyzer', label: 'WebAlyzer', icon: <FcGlobe size={18} /> },
     { id: 'ssl_tls', label: 'SSL/TLS', icon: <FiLock size={18} /> },
     { id: 'zapscanner', label: 'OWASP ZAP', icon: <FiShield size={18} /> },
+    { id: 'simplecrawler', label: 'Simple Crawler', icon: <FiSearch size={18} />, disabled: true },
   ];
   
   // Définir les éléments du sous-menu E-Mails
   const emailsSubMenuItems = [
     { id: 'osintEmail', label: 'OSINT', icon: <FiSearch size={18} /> },
     { id: 'phisher', label: 'Phisher', icon: <FiSend size={18} /> },
-    { id: 'sender', label: 'Sender', icon: <FiMail size={18} /> },
+    { id: 'sender', label: 'SendGrid Sender', icon: <FiMail size={18} /> },
+    { id: 'awssender', label: 'AWS Sender', icon: <SiAmazonwebservices size={18} />, disabled: true },
   ];
   
   // Définir les éléments du sous-menu Téléphones
@@ -124,25 +143,56 @@ const Sidebar = ({ activeView, setActiveView }) => {
 
   // Définir les éléments du sous-menu Brute Force
   const bruteForceSubMenuItems = [
-    { id: 'hydra', label: 'Hydra', icon: <FiKey size={18} /> },
-    { id: 'john', label: 'John The Ripper', icon: <FiKey size={18} /> },
+    { id: 'hydra', label: 'Hydra', icon: <FcKey size={18} /> },
+    { id: 'john', label: 'John The Ripper', icon: <FcUnlock size={18} /> },
+    { id: 'gobuster', label: 'GoBuster', icon: <FcSearch size={18} /> },
+    { id: 'intruder', label: 'Intruder', icon: <FiLock size={18} />, disabled: true },
   ];
 
   // Définir les éléments du sous-menu System Planning
   const systemPlanningSubMenuItems = [
-    { id: 'plannifyer', label: 'Plannifyer', icon: <FiCalendar size={18} /> },
+    { id: 'plannifyer', label: 'Plannifyer', icon: <FcCalendar size={18} /> },
     { id: 'scriptgarbage', label: 'Script Garbage', icon: <FiGithub size={18} /> },
   ];
 
   // Définir les éléments du sous-menu Miscellaneous
   const miscellaneousSubMenuItems = [
-    { id: 'exifyer', label: 'Exifyer', icon: <FiFile size={18} /> },
+    { id: 'exifyer', label: 'Exifyer', icon: <FcViewDetails size={18} /> },
     { id: 'virustotal', label: 'VirusTotal', icon: <FiShield size={18} /> },
+    { id: 'ngrok', label: 'Ngrok', icon: <SiNgrok size={18} />, disabled: true },
+    { id: 'ipgeolocation', label: 'IP Geolocation', icon: <FiGlobe size={18} />, disabled: true },
+    { id: 'qrcodegenerator', label: 'QR Code Generator', icon: <FaQrcode size={18} /> },
   ];
 
   // Définir les éléments du sous-menu Sniffing
   const sniffingSubMenuItems = [
     { id: 'shark', label: 'Shark', icon: <FiActivity size={18} /> },
+  ];
+
+  // Définir les éléments du sous-menu Injector
+  const injectorSubMenuItems = [
+    { id: 'sqli', label: 'SQLi', icon: <FiDatabase size={18} /> },
+    { id: 'xsser', label: 'XSSer', icon: <FiCode size={18} /> },
+    { id: 'xxe', label: 'XXE (Coming Soon...)', icon: <FiFile size={18} />, disabled: true },
+    { id: 'xsrf', label: 'XSRF (Coming Soon...)', icon: <FiGlobe size={18} />, disabled: true },
+    { id: 'lfi', label: 'LFI (Coming Soon...)', icon: <FiFolder size={18} />, disabled: true },
+  ];
+  
+  // Définir les éléments du sous-menu M4lwar3b1tes
+  const malwareSubMenuItems = [
+    { id: 'msfvenom', label: 'Msfvenom', icon: <FcBiohazard size={18} />, disabled: true },
+    { id: 'ransomware', label: 'Ransomware Gen', icon: <FcDebt size={18} />, disabled: true },
+    { id: 'adware', label: 'Adware Gen', icon: <FcAddressBook size={18} />, disabled: true },
+    { id: 'backdoor', label: 'Backdoor Gen', icon: <PiDoorOpenFill size={18} />, disabled: true },
+    { id: 'keylogger', label: 'Keylogger Gen', icon: <FcKey size={18} />, disabled: true },
+    { id: 'botnet', label: 'Botnet Gen', icon: <FcGlobe size={18} />, disabled: true },
+    { id: 'malwaregarbage', label: 'Malware Garbage', icon: <FcDataConfiguration size={18} />, disabled: true },
+  ];
+  
+  // Définir les éléments du sous-menu CC
+  const ccSubMenuItems = [
+    { id: 'ccgenerator', label: 'CC Generator', icon: <PiCreditCardFill size={18} />, disabled: true },
+    { id: 'BIN Provider Check', label: 'BIN Provider Check', icon: <PiBinaryFill size={18} />, disabled: true },
   ];
 
   // Gérer le changement de vue
@@ -261,6 +311,36 @@ const Sidebar = ({ activeView, setActiveView }) => {
     }
   };
 
+  // Basculer l'état du menu Injector
+  const toggleInjectorMenu = () => {
+    if (collapsed) {
+      // Si la sidebar est réduite, ouvrir directement la vue sqlinjector
+      handleViewChange('sqli');
+    } else {
+      setInjectorMenuOpen(!injectorMenuOpen);
+    }
+  };
+  
+  // Basculer l'état du menu M4lwar3b1tes
+  const toggleMalwareMenu = () => {
+    if (collapsed) {
+      // Si la sidebar est réduite, ouvrir directement la vue ransomware
+      handleViewChange('ransomware');
+    } else {
+      setMalwareMenuOpen(!malwareMenuOpen);
+    }
+  };
+  
+  // Basculer l'état du menu CC
+  const toggleCcMenu = () => {
+    if (collapsed) {
+      // Si la sidebar est réduite, ouvrir directement la vue ccgenerator
+      handleViewChange('ccgenerator');
+    } else {
+      setCcMenuOpen(!ccMenuOpen);
+    }
+  };
+
   return (
     <div 
       className={`sidebar bg-white dark:bg-gray-800 shadow-lg h-screen transition-all duration-300 ${
@@ -288,11 +368,14 @@ const Sidebar = ({ activeView, setActiveView }) => {
             <li key={item.id} className="mb-2">
               <button
                 onClick={() => handleViewChange(item.id)}
-                className={`flex items-center w-full p-3 ${
+                className={`flex items-center w-full p-2 rounded-md ${
                   activeView === item.id
                     ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
-                    : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                    : item.disabled 
+                      ? 'text-gray-400 cursor-not-allowed dark:text-gray-500' 
+                      : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                 } transition-colors duration-200`}
+                disabled={item.disabled}
               >
                 <span className="mr-4">{item.icon}</span>
                 {!collapsed && (
@@ -331,8 +414,11 @@ const Sidebar = ({ activeView, setActiveView }) => {
                       className={`flex items-center w-full p-2 rounded-md ${
                         activeView === item.id
                           ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
-                          : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                          : item.disabled 
+                            ? 'text-gray-400 cursor-not-allowed dark:text-gray-500' 
+                            : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                       } transition-colors duration-200`}
+                      disabled={item.disabled}
                     >
                       <span className={`${collapsed ? 'mx-auto' : 'mr-3'}`}>{item.icon}</span>
                       {!collapsed && (
@@ -374,8 +460,11 @@ const Sidebar = ({ activeView, setActiveView }) => {
                       className={`flex items-center w-full p-2 rounded-md ${
                         activeView === item.id
                           ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
-                          : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                          : item.disabled 
+                            ? 'text-gray-400 cursor-not-allowed dark:text-gray-500' 
+                            : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                       } transition-colors duration-200`}
+                      disabled={item.disabled}
                     >
                       <span className={`${collapsed ? 'mx-auto' : 'mr-3'}`}>{item.icon}</span>
                       {!collapsed && (
@@ -417,8 +506,11 @@ const Sidebar = ({ activeView, setActiveView }) => {
                       className={`flex items-center w-full p-2 rounded-md ${
                         activeView === item.id
                           ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
-                          : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                          : item.disabled 
+                            ? 'text-gray-400 cursor-not-allowed dark:text-gray-500' 
+                            : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                       } transition-colors duration-200`}
+                      disabled={item.disabled}
                     >
                       <span className={`${collapsed ? 'mx-auto' : 'mr-3'}`}>{item.icon}</span>
                       {!collapsed && (
@@ -460,8 +552,11 @@ const Sidebar = ({ activeView, setActiveView }) => {
                       className={`flex items-center w-full p-2 rounded-md ${
                         activeView === item.id
                           ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
-                          : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                          : item.disabled 
+                            ? 'text-gray-400 cursor-not-allowed dark:text-gray-500' 
+                            : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                       } transition-colors duration-200`}
+                      disabled={item.disabled}
                     >
                       <span className={`${collapsed ? 'mx-auto' : 'mr-3'}`}>{item.icon}</span>
                       {!collapsed && (
@@ -484,7 +579,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
                   : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
               } transition-colors duration-200`}
             >
-              <span className="mr-4"><FiPhone size={20} /></span>
+              <span className="mr-4"><FcTabletAndroid size={20} /></span>
               {!collapsed && (
                 <>
                   <span className="flex-1">Téléphones</span>
@@ -503,8 +598,11 @@ const Sidebar = ({ activeView, setActiveView }) => {
                       className={`flex items-center w-full p-2 rounded-md ${
                         activeView === item.id
                           ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
-                          : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                          : item.disabled 
+                            ? 'text-gray-400 cursor-not-allowed dark:text-gray-500' 
+                            : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                       } transition-colors duration-200`}
+                      disabled={item.disabled}
                     >
                       <span className={`${collapsed ? 'mx-auto' : 'mr-3'}`}>{item.icon}</span>
                       {!collapsed && (
@@ -546,8 +644,11 @@ const Sidebar = ({ activeView, setActiveView }) => {
                       className={`flex items-center w-full p-2 rounded-md ${
                         activeView === item.id
                           ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
-                          : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                          : item.disabled 
+                            ? 'text-gray-400 cursor-not-allowed dark:text-gray-500' 
+                            : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                       } transition-colors duration-200`}
+                      disabled={item.disabled}
                     >
                       <span className={`${collapsed ? 'mx-auto' : 'mr-3'}`}>{item.icon}</span>
                       {!collapsed && (
@@ -564,7 +665,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
           <li className="mb-2">
             <button
               onClick={toggleIotSearchMenu}
-              className={`flex items-center justify-between w-full p-3 ${
+              className={`flex items-center w-full p-3 ${
                 isIotSearchViewActive
                   ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
                   : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
@@ -590,11 +691,14 @@ const Sidebar = ({ activeView, setActiveView }) => {
                   <li key={item.id}>
                     <button
                       onClick={() => handleViewChange(item.id)}
-                      className={`flex items-center w-full p-2 ${
+                      className={`flex items-center w-full p-2 rounded-md ${
                         activeView === item.id
                           ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
-                          : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
-                      } transition-colors duration-200 rounded-md`}
+                          : item.disabled 
+                            ? 'text-gray-400 cursor-not-allowed dark:text-gray-500' 
+                            : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                      } transition-colors duration-200`}
+                      disabled={item.disabled}
                     >
                       <span className="mr-3">{item.icon}</span>
                       <span>{item.label}</span>
@@ -615,7 +719,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
                   : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
               } transition-colors duration-200`}
             >
-              <span className="mr-4"><FiKey size={20} /></span>
+              <span className="mr-4"><FcKey size={20} /></span>
               {!collapsed && (
                 <>
                   <span className="flex-1">Brute Force</span>
@@ -634,8 +738,11 @@ const Sidebar = ({ activeView, setActiveView }) => {
                       className={`flex items-center w-full p-2 rounded-md ${
                         activeView === item.id
                           ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
-                          : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                          : item.disabled 
+                            ? 'text-gray-400 cursor-not-allowed dark:text-gray-500' 
+                            : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                       } transition-colors duration-200`}
+                      disabled={item.disabled}
                     >
                       <span className={`${collapsed ? 'mx-auto' : 'mr-3'}`}>{item.icon}</span>
                       {!collapsed && (
@@ -658,7 +765,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
                   : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
               } transition-colors duration-200`}
             >
-              <span className="mr-4"><FiCalendar size={20} /></span>
+              <span className="mr-4"><FcCalendar size={20} /></span>
               {!collapsed && (
                 <>
                   <span className="flex-1">System Planning</span>
@@ -677,8 +784,11 @@ const Sidebar = ({ activeView, setActiveView }) => {
                       className={`flex items-center w-full p-2 rounded-md ${
                         activeView === item.id
                           ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
-                          : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                          : item.disabled 
+                            ? 'text-gray-400 cursor-not-allowed dark:text-gray-500' 
+                            : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                       } transition-colors duration-200`}
+                      disabled={item.disabled}
                     >
                       <span className={`${collapsed ? 'mx-auto' : 'mr-3'}`}>{item.icon}</span>
                       {!collapsed && (
@@ -720,8 +830,11 @@ const Sidebar = ({ activeView, setActiveView }) => {
                       className={`flex items-center w-full p-2 rounded-md ${
                         activeView === item.id
                           ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
-                          : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                          : item.disabled 
+                            ? 'text-gray-400 cursor-not-allowed dark:text-gray-500' 
+                            : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                       } transition-colors duration-200`}
+                      disabled={item.disabled}
                     >
                       <span className={`${collapsed ? 'mx-auto' : 'mr-3'}`}>{item.icon}</span>
                       {!collapsed && (
@@ -763,8 +876,149 @@ const Sidebar = ({ activeView, setActiveView }) => {
                       className={`flex items-center w-full p-2 rounded-md ${
                         activeView === item.id
                           ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
-                          : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                          : item.disabled 
+                            ? 'text-gray-400 cursor-not-allowed dark:text-gray-500' 
+                            : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                       } transition-colors duration-200`}
+                      disabled={item.disabled}
+                    >
+                      <span className={`${collapsed ? 'mx-auto' : 'mr-3'}`}>{item.icon}</span>
+                      {!collapsed && (
+                        <span className="text-sm">{item.label}</span>
+                      )}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+          
+          {/* Menu Injector avec sous-menu */}
+          <li className="mb-2">
+            <button
+              onClick={toggleInjectorMenu}
+              className={`flex items-center w-full p-3 ${
+                isInjectorViewActive
+                  ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
+                  : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+              } transition-colors duration-200`}
+            >
+              <span className="mr-4"><PiSyringeFill size={20} /></span>
+              {!collapsed && (
+                <>
+                  <span className="flex-1">Injector</span>
+                  {injectorMenuOpen ? <FiChevronDown size={16} /> : <FiChevronRight size={16} />}
+                </>
+              )}
+            </button>
+
+            {/* Sous-menu Injector */}
+            {(injectorMenuOpen || collapsed) && (
+              <ul className={`${collapsed ? 'pl-0' : 'pl-6'} mt-1`}>
+                {injectorSubMenuItems.map((item) => (
+                  <li key={item.id} className="mb-1">
+                    <button
+                      onClick={() => !item.disabled && handleViewChange(item.id)}
+                      className={`flex items-center w-full p-2 rounded-md ${
+                        activeView === item.id
+                          ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
+                          : item.disabled 
+                            ? 'text-gray-400 cursor-not-allowed dark:text-gray-500' 
+                            : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                      } transition-colors duration-200`}
+                      disabled={item.disabled}
+                    >
+                      <span className={`${collapsed ? 'mx-auto' : 'mr-3'}`}>{item.icon}</span>
+                      {!collapsed && (
+                        <span className="text-sm">{item.label}</span>
+                      )}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+          
+          {/* Menu M4lwar3b1tes avec sous-menu */}
+          <li className="mb-2">
+            <button
+              onClick={toggleMalwareMenu}
+              className={`flex items-center w-full p-3 ${
+                isMalwareViewActive
+                  ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
+                  : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+              } transition-colors duration-200`}
+            >
+              <span className="mr-4"><FcBiohazard size={20} /></span>
+              {!collapsed && (
+                <>
+                  <span className="flex-1">M4lwar3b1tes</span>
+                  {malwareMenuOpen ? <FiChevronDown size={16} /> : <FiChevronRight size={16} />}
+                </>
+              )}
+            </button>
+
+            {/* Sous-menu M4lwar3b1tes */}
+            {(malwareMenuOpen || collapsed) && (
+              <ul className={`${collapsed ? 'pl-0' : 'pl-6'} mt-1`}>
+                {malwareSubMenuItems.map((item) => (
+                  <li key={item.id} className="mb-1">
+                    <button
+                      onClick={() => handleViewChange(item.id)}
+                      className={`flex items-center w-full p-2 rounded-md ${
+                        activeView === item.id
+                          ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
+                          : item.disabled 
+                            ? 'text-gray-400 cursor-not-allowed dark:text-gray-500' 
+                            : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                      } transition-colors duration-200`}
+                      disabled={item.disabled}
+                    >
+                      <span className={`${collapsed ? 'mx-auto' : 'mr-3'}`}>{item.icon}</span>
+                      {!collapsed && (
+                        <span className="text-sm">{item.label}</span>
+                      )}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+          
+          {/* Menu CC avec sous-menu */}
+          <li className="mb-2">
+            <button
+              onClick={toggleCcMenu}
+              className={`flex items-center w-full p-3 ${
+                isCcViewActive
+                  ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
+                  : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+              } transition-colors duration-200`}
+            >
+              <span className="mr-4"><FcMoneyTransfer size={20} /></span>
+              {!collapsed && (
+                <>
+                  <span className="flex-1">Cards</span>
+                  {ccMenuOpen ? <FiChevronDown size={16} /> : <FiChevronRight size={16} />}
+                </>
+              )}
+            </button>
+
+            {/* Sous-menu CC */}
+            {(ccMenuOpen || collapsed) && (
+              <ul className={`${collapsed ? 'pl-0' : 'pl-6'} mt-1`}>
+                {ccSubMenuItems.map((item) => (
+                  <li key={item.id} className="mb-1">
+                    <button
+                      onClick={() => handleViewChange(item.id)}
+                      className={`flex items-center w-full p-2 rounded-md ${
+                        activeView === item.id
+                          ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
+                          : item.disabled 
+                            ? 'text-gray-400 cursor-not-allowed dark:text-gray-500' 
+                            : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                      } transition-colors duration-200`}
+                      disabled={item.disabled}
                     >
                       <span className={`${collapsed ? 'mx-auto' : 'mr-3'}`}>{item.icon}</span>
                       {!collapsed && (

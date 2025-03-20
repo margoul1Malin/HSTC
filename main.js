@@ -165,14 +165,14 @@ ipcMain.handle('execute-command', (event, command) => {
       }
     };
     
-    exec(command, options, (error, stdout, stderr) => {
+    const childProcess = exec(command, options, (error, stdout, stderr) => {
       if (error && error.code !== 0) {
         console.error('Erreur lors de l\'exécution de la commande:', error);
         reject({ error: error.message, code: error.code });
         return;
       }
       
-      resolve({ stdout, stderr });
+      resolve({ stdout, stderr, pid: childProcess.pid });
     });
   });
 });
@@ -617,16 +617,33 @@ ipcMain.handle('export-to-pdf', (event, options) => {
 // Gestionnaire IPC pour ouvrir une boîte de dialogue de sélection de fichier
 ipcMain.handle('show-open-file-dialog', async (event, options) => {
   try {
-    const result = await dialog.showOpenDialog(options);
-    
-    if (!result.canceled && result.filePaths.length > 0) {
-      return { success: true, filePath: result.filePaths[0] };
-    } else {
-      return { success: false, reason: 'canceled' };
-    }
+    const result = await dialog.showOpenDialog(win, options);
+    return result;
   } catch (error) {
-    console.error('Erreur lors de l\'ouverture de la boîte de dialogue :', error);
-    return { success: false, reason: error.message };
+    console.error('Erreur lors de l\'ouverture du dialogue de fichier:', error);
+    return { canceled: true, error: error.message };
+  }
+});
+
+// Gestionnaire IPC pour ouvrir un dialogue de sauvegarde de fichier
+ipcMain.handle('show-save-file-dialog', async (event, options) => {
+  try {
+    const result = await dialog.showSaveDialog(win, options);
+    return result;
+  } catch (error) {
+    console.error('Erreur lors de l\'ouverture du dialogue de sauvegarde:', error);
+    return { canceled: true, error: error.message };
+  }
+});
+
+// Gestionnaire IPC pour écrire dans un fichier
+ipcMain.handle('write-file', async (event, filePath, content) => {
+  try {
+    await fs.promises.writeFile(filePath, content);
+    return { success: true };
+  } catch (error) {
+    console.error('Erreur lors de l\'écriture dans le fichier:', error);
+    return { success: false, error: error.message };
   }
 });
 

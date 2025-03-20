@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import TodoList from './components/TodoList';
@@ -10,7 +9,6 @@ import Vault from './components/vault/Vault';
 import TargetsList from './components/targets/TargetsList';
 import TestComponent from './components/TestComponent';
 import NetworkScanner from './components/scanner/NetworkScanner';
-import SQLyzer from './components/scanner/SQLyzer';
 import WebAlyzer from './components/scanner/WebAlyzer';
 import OsintEmail from './components/emails/osintEmail';
 import Phisher from './components/emails/Phisher';
@@ -25,11 +23,17 @@ import ZoomEye from './components/iot/ZoomEye';
 import ZAPScanner from './components/scanner/ZAPScanner';
 import Hydra from './components/BruteForce/Hydra';
 import JohnTheRipper from './components/BruteForce/JohnTheRipper';
+import GoBuster from './components/BruteForce/GoBuster';
 import Plannifyer from './components/SystemPlanning/Plannifyer';
 import ScriptGarbage from './components/SystemPlanning/ScriptGarbage';
 import Exifyer from './components/Miscellaneous/Exifyer';
 import VirusTotal from './components/Miscellaneous/VirusTotal';
+import QRCodeGenerator from './components/Miscellaneous/QRCodeGenerator';
 import Shark from './components/Sniffing/Shark';
+import SQLi from './components/Injector/SQLi';
+import XSSer from './components/Injector/XSSer';
+import Backdoor from './components/Malware/Backdoor';
+import CcGenerator from './components/CC/CcGenerator';
 import './styles/App.css';
 
 const App = () => {
@@ -140,9 +144,6 @@ const App = () => {
       case 'networkScanner':
         console.log('Rendering NetworkScanner component');
         return <NetworkScanner />;
-      case 'sqlyzer':
-        console.log('Rendering SQLyzer component');
-        return <SQLyzer />;
       case 'webalyzer':
         console.log('Rendering WebAlyzer component');
         return <WebAlyzer />;
@@ -188,6 +189,9 @@ const App = () => {
       case 'john':
         console.log('Rendering John The Ripper component');
         return <JohnTheRipper />;
+      case 'gobuster':
+        console.log('Rendering GoBuster component');
+        return <GoBuster />;
       case 'plannifyer':
         console.log('Rendering Plannifyer component');
         return <Plannifyer />;
@@ -198,12 +202,33 @@ const App = () => {
         return <Exifyer />;
       case 'virustotal':
         return <VirusTotal />;
+      case 'qrcodegenerator':
+        console.log('App - Rendu de QRCodeGenerator');
+        return <QRCodeGenerator />;
       case 'shark':
         console.log('App - Rendu de Shark');
         return <Shark />;
+      case 'sqli':
+        console.log('App - Rendu de SQLi');
+        return <SQLi />;
+      case 'xsser':
+        console.log('App - Rendu de XSSer');
+        return <XSSer />;
+      case 'ransomware':
+        console.log('App - Rendu de Backdoor (laboratoire malware)');
+        return <Backdoor />;
+      case 'backdoor':
+        console.log('App - Rendu de Backdoor');
+        return <Backdoor />;
+      case 'ccgenerator':
+        console.log('App - Rendu de CcGenerator');
+        return <CcGenerator />;
+      case 'ccchecker':
+        console.log('App - Rendu de CcGenerator (temporaire)');
+        return <CcGenerator />;
       default:
-        console.log('App - Vue non reconnue, affichage du Dashboard');
-        return <Dashboard />;
+        console.log('App - Vue non reconnue, affichage du GoBuster');
+        return <GoBuster />;
     }
   };
 
