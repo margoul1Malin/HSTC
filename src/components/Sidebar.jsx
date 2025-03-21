@@ -97,7 +97,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
 
   // Définir les éléments du sous-menu Exploits
   const exploitsSubMenuItems = [
-    { id: 'nvd', label: 'NVD', icon: <FiSearch size={18} />, disabled: true },
+    { id: 'nvd', label: 'NVD (Coming Soon...)', icon: <FiSearch size={18} />, disabled: true },
     { id: 'exploitdb', label: 'Recherche d\'Exploits', icon: <FiSearch size={18} /> },
     { id: 'savedexploits', label: 'Exploits Sauvegardés', icon: <FiBookmark size={18} /> },
   ];
@@ -121,7 +121,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
     { id: 'osintEmail', label: 'OSINT', icon: <FiSearch size={18} /> },
     { id: 'phisher', label: 'Phisher', icon: <FiSend size={18} /> },
     { id: 'sender', label: 'SendGrid Sender', icon: <FiMail size={18} /> },
-    { id: 'awssender', label: 'AWS Sender', icon: <SiAmazonwebservices size={18} />, disabled: true },
+    { id: 'awssender', label: 'AWS Sender (Coming Soon...)', icon: <SiAmazonwebservices size={18} />, disabled: true },
   ];
   
   // Définir les éléments du sous-menu Téléphones
@@ -140,7 +140,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
   const iotSearchSubMenuItems = [
     { id: 'shodan', label: 'Shodan', icon: <FiGlobe size={18} /> },
     { id: 'zoomeye', label: 'ZoomEye', icon: <FiSearch size={18} /> },
-    { id: 'censys', label: 'Censys', icon: <FiSearch size={18} />, disabled: true },
+    { id: 'censys', label: 'Censys (Coming Soon...)', icon: <FiSearch size={18} />, disabled: true },
   ];
 
   // Définir les éléments du sous-menu Brute Force
@@ -148,7 +148,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
     { id: 'hydra', label: 'Hydra', icon: <FcKey size={18} /> },
     { id: 'john', label: 'John The Ripper', icon: <FcUnlock size={18} /> },
     { id: 'gobuster', label: 'GoBuster', icon: <FcSearch size={18} /> },
-    { id: 'intruder', label: 'Intruder', icon: <FiLock size={18} />, disabled: true },
+    { id: 'intruder', label: 'Intruder (Coming Soon...)', icon: <FiLock size={18} />, disabled: true },
   ];
 
   // Définir les éléments du sous-menu System Planning
@@ -183,7 +183,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
   
   // Définir les éléments du sous-menu M4lwar3b1tes
   const malwareSubMenuItems = [
-    { id: 'msfvenom', label: 'Msfvenom', icon: <FcBiohazard size={18} />, disabled: true },
+    { id: 'msfvenom', label: 'Msfvenom', icon: <FcBiohazard size={18} /> },
     { id: 'ransomware', label: 'Ransomware Gen', icon: <FcDebt size={18} />, disabled: true },
     { id: 'adware', label: 'Adware Gen', icon: <FcAddressBook size={18} />, disabled: true },
     { id: 'backdoor', label: 'Backdoor Gen', icon: <PiDoorOpenFill size={18} />, disabled: true },
@@ -205,6 +205,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
     { id: 'subdomainenum', label: 'Subdomain Enum', icon: <FiGlobe size={18} /> },
     { id: 'webtechnologies', label: 'Web Technologies', icon: <FiCode size={18} /> },
     { id: 'proxylist', label: 'Proxy List', icon: <FiServer size={18} /> },
+    { id: 'featuresincoming', label: 'Features Incoming...', icon: <FiCode size={18} />, disabled: true },
   ];
 
   // Gérer le changement de vue

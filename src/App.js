@@ -35,7 +35,6 @@ import MitreAttack from './components/Miscellaneous/MitreAttack';
 import Shark from './components/Sniffing/Shark';
 import SQLi from './components/Injector/SQLi';
 import XSSer from './components/Injector/XSSer';
-import Backdoor from './components/Malware/Backdoor';
 import CcGenerator from './components/CC/CcGenerator';
 import BinChecker from './components/CC/BinChecker';
 import OsintPhonesEmails from './components/OSINT/OsintPhonesEmails';
@@ -43,6 +42,7 @@ import OsintRanking from './components/OSINT/OsintRanking';
 import SubdomainEnum from './components/OSINT/SubdomainEnum';
 import WebTechnologies from './components/OSINT/WebTechnologies';
 import ProxyList from './components/OSINT/ProxyList';
+import Msfvenom from './components/Malware/Msfvenom';
 import './styles/App.css';
 
 const App = () => {
@@ -232,12 +232,6 @@ const App = () => {
       case 'xsser':
         console.log('App - Rendu de XSSer');
         return <XSSer />;
-      case 'ransomware':
-        console.log('App - Rendu de Backdoor (laboratoire malware)');
-        return <Backdoor />;
-      case 'backdoor':
-        console.log('App - Rendu de Backdoor');
-        return <Backdoor />;
       case 'ccgenerator':
         console.log('App - Rendu de CcGenerator');
         return <CcGenerator />;
@@ -262,6 +256,9 @@ const App = () => {
       case 'proxylist':
         console.log('Rendering ProxyList component');
         return <ProxyList />;
+      case 'msfvenom':
+        console.log('Rendering Msfvenom view');
+        return <Msfvenom />;
       default:
         console.log('App - Vue non reconnue, affichage du GoBuster');
         return <GoBuster />;
