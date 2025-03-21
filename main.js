@@ -100,7 +100,10 @@ function createWindow() {
           "https://lookup.binlist.net https://ip-ip-fan-xiang-cha-xun.p.rapidapi.com " +
           "https://www.virustotal.com https://virustotal.com " + 
           "https://osint-phone-email-names-search-everything.p.rapidapi.com " +
-          "https://seo-website-ranking-keywords.p.rapidapi.com https://subdomain-scan1.p.rapidapi.com https://subdomain-finder3.p.rapidapi.com; " +
+          "https://seo-website-ranking-keywords.p.rapidapi.com https://subdomain-scan1.p.rapidapi.com https://subdomain-finder3.p.rapidapi.com " +
+          "https://active-cyber-defence-tools.p.rapidapi.com " + 
+          "https://proxy-list4.p.rapidapi.com " + 
+          "https://mitre-att-ck-framework.p.rapidapi.com; " +
           "img-src 'self' data: blob:; " +
           "frame-src 'self' blob:;"
         ]

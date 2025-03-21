@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FiHome, FiCheckSquare, FiSettings, FiMenu, FiSearch, FiBookmark, FiChevronDown, FiChevronRight, FiDatabase, FiLock, FiTarget, FiServer, FiWifi, FiMail, FiSend, FiPhone, FiEye, FiMessageSquare, FiShield, FiGlobe, FiKey, FiCalendar, FiGithub, FiTool, FiFile, FiImage, FiActivity, FiCode, FiCreditCard, FiFolder, FiUser } from 'react-icons/fi';
+import { FiHome, FiCheckSquare, FiSettings, FiMenu, FiSearch, FiBookmark, FiChevronDown, FiChevronRight, FiDatabase, FiLock, FiTarget, FiServer, FiWifi, FiMail, FiSend, FiPhone, FiEye, FiMessageSquare, FiShield, FiGlobe, FiKey, FiCalendar, FiGithub, FiTool, FiFile, FiImage, FiActivity, FiCode, FiCreditCard, FiFolder, FiUser, FiPhoneCall, FiBarChart2, FiGrid, FiMapPin } from 'react-icons/fi';
 import { FcKey, FcUnlock, FcTabletAndroid, FcSearch, FcViewDetails, FcCalendar, FcBiohazard, FcMoneyTransfer, FcGlobe, FcDebt, FcDataConfiguration, FcAddressBook } from "react-icons/fc";
 import { PiSyringeFill, PiCreditCardFill, PiBinaryFill, PiDoorOpenFill } from "react-icons/pi";
 import { SiNgrok, SiAmazonwebservices } from "react-icons/si";
@@ -159,12 +159,12 @@ const Sidebar = ({ activeView, setActiveView }) => {
 
   // Définir les éléments du sous-menu Miscellaneous
   const miscellaneousSubMenuItems = [
-    { id: 'exifyer', label: 'Exifyer', icon: <FcViewDetails size={18} /> },
+    { id: 'exifyer', label: 'Exifyer', icon: <FiImage size={18} /> },
     { id: 'virustotal', label: 'VirusTotal', icon: <FiShield size={18} /> },
-    { id: 'ngrok', label: 'Ngrok', icon: <SiNgrok size={18} />, disabled: true },
-    { id: 'ipgeolocation', label: 'IP Geolocation', icon: <FiGlobe size={18} /> },
-    { id: 'qrcodegenerator', label: 'QR Code Generator', icon: <FaQrcode size={18} /> },
-    { id: 'base64toimage', label: 'Base64 To Image', icon: <FiImage size={18} /> },
+    { id: 'qrcodegenerator', label: 'QR Code Generator', icon: <FiGrid size={18} /> },
+    { id: 'ipgeolocation', label: 'IP Geolocation', icon: <FiMapPin size={18} /> },
+    { id: 'base64toimage', label: 'Base64 → Image', icon: <FiImage size={18} /> },
+    { id: 'mitreattack', label: 'MITRE ATT&CK', icon: <FiTarget size={18} /> },
   ];
 
   // Définir les éléments du sous-menu Sniffing
@@ -200,9 +200,11 @@ const Sidebar = ({ activeView, setActiveView }) => {
 
   // Définir les éléments du sous-menu OSINT
   const osintSubMenuItems = [
-    { id: 'osintphonesemails', label: 'Téléphones & Emails', icon: <FiUser size={18} /> },
-    { id: 'osintranking', label: 'SEO Ranking', icon: <FiGlobe size={18} /> },
-    { id: 'subdomainenum', label: 'Subdomain Enum', icon: <FiSearch size={18} /> },
+    { id: 'osintphonesemails', label: 'Phones & Emails', icon: <FiPhoneCall size={18} /> },
+    { id: 'osintranking', label: 'Website Ranking', icon: <FiBarChart2 size={18} /> },
+    { id: 'subdomainenum', label: 'Subdomain Enum', icon: <FiGlobe size={18} /> },
+    { id: 'webtechnologies', label: 'Web Technologies', icon: <FiCode size={18} /> },
+    { id: 'proxylist', label: 'Proxy List', icon: <FiServer size={18} /> },
   ];
 
   // Gérer le changement de vue

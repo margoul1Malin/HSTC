@@ -12,7 +12,9 @@ const Smishing = () => {
   const [twilioAccountSid, setTwilioAccountSid] = useState('');
   const [twilioPhoneNumber, setTwilioPhoneNumber] = useState('');
   const [twilioMessagingServiceSid, setTwilioMessagingServiceSid] = useState('');
+  const [twilioSenderId, setTwilioSenderId] = useState('');
   const [useMessagingService, setUseMessagingService] = useState(false);
+  const [useSenderId, setUseSenderId] = useState(false);
   const [templates, setTemplates] = useState([]);
   const [currentTemplate, setCurrentTemplate] = useState({
     id: null,
@@ -40,28 +42,35 @@ const Smishing = () => {
         const twilioSid = await apiKeysService.getKey('twilioSid') || '';
         const twilioPhone = await apiKeysService.getKey('twilioPhone') || '';
         const twilioMsgSid = await apiKeysService.getKey('twilioMessagingServiceSid') || '';
+        const twilioSenderId = await apiKeysService.getKey('twilioSenderId') || '';
         
         console.log('[Smishing] Clés API chargées:', 
           `Token: ${twilioToken ? 'Oui' : 'Non'}, ` +
           `SID: ${twilioSid ? 'Oui' : 'Non'}, ` +
           `Phone: ${twilioPhone ? 'Oui' : 'Non'}, ` +
-          `Messaging SID: ${twilioMsgSid ? 'Oui' : 'Non'}`);
+          `Messaging SID: ${twilioMsgSid ? 'Oui' : 'Non'}, ` +
+          `Sender ID: ${twilioSenderId ? 'Oui' : 'Non'}`);
         
         setTwilioAuthToken(twilioToken);
         setTwilioAccountSid(twilioSid);
         setTwilioPhoneNumber(twilioPhone);
         setTwilioMessagingServiceSid(twilioMsgSid);
+        setTwilioSenderId(twilioSenderId);
         
         // Charger le paramètre useMessagingService depuis electron-store ou localStorage
         let useMsg = false;
+        let useSid = false;
         
         if (window.electronAPI && window.electronAPI.getStoreValue) {
           useMsg = await window.electronAPI.getStoreValue('use_messaging_service') || false;
+          useSid = await window.electronAPI.getStoreValue('use_sender_id') || false;
         } else {
           useMsg = localStorage.getItem('use_messaging_service') === 'true';
+          useSid = localStorage.getItem('use_sender_id') === 'true';
         }
         
         setUseMessagingService(useMsg);
+        setUseSenderId(useSid);
         
         // Charger les templates depuis electron-store ou localStorage
         let savedTemplates = [];
@@ -134,16 +143,19 @@ const Smishing = () => {
       const sidSaved = await apiKeysService.saveKey('twilioSid', twilioAccountSid);
       const phoneSaved = await apiKeysService.saveKey('twilioPhone', twilioPhoneNumber);
       const msgSidSaved = await apiKeysService.saveKey('twilioMessagingServiceSid', twilioMessagingServiceSid);
+      const senderIdSaved = await apiKeysService.saveKey('twilioSenderId', twilioSenderId);
       
       console.log('[Smishing] Clés API sauvegardées:', 
         `Token: ${tokenSaved ? 'OK' : 'Échec'}, ` +
         `SID: ${sidSaved ? 'OK' : 'Échec'}, ` +
         `Phone: ${phoneSaved ? 'OK' : 'Échec'}, ` +
-        `Messaging SID: ${msgSidSaved ? 'OK' : 'Échec'}`);
+        `Messaging SID: ${msgSidSaved ? 'OK' : 'Échec'}, ` +
+        `Sender ID: ${senderIdSaved ? 'OK' : 'Échec'}`);
       
-      // Sauvegarder l'option useMessagingService dans electron-store si disponible
+      // Sauvegarder les options dans electron-store si disponible
       if (window.electronAPI && window.electronAPI.setStoreValue) {
         await window.electronAPI.setStoreValue('use_messaging_service', useMessagingService);
+        await window.electronAPI.setStoreValue('use_sender_id', useSenderId);
       }
       
       // Pour la compatibilité, sauvegarder aussi dans localStorage
@@ -151,9 +163,11 @@ const Smishing = () => {
       localStorage.setItem('twilio_account_sid', twilioAccountSid);
       localStorage.setItem('twilio_phone_number', twilioPhoneNumber);
       localStorage.setItem('twilio_messaging_service_sid', twilioMessagingServiceSid);
+      localStorage.setItem('twilio_sender_id', twilioSenderId);
       localStorage.setItem('use_messaging_service', useMessagingService.toString());
+      localStorage.setItem('use_sender_id', useSenderId.toString());
       
-      if (tokenSaved && sidSaved && phoneSaved && msgSidSaved) {
+      if (tokenSaved && sidSaved && phoneSaved && msgSidSaved && senderIdSaved) {
         showSuccess('Paramètres Twilio sauvegardés avec succès');
       } else {
         showWarning('Certains paramètres Twilio n\'ont pas pu être sauvegardés');
@@ -410,8 +424,13 @@ const Smishing = () => {
       return;
     }
 
-    if (!useMessagingService && !twilioPhoneNumber) {
-      showError('Veuillez configurer votre numéro de téléphone Twilio');
+    if (!useMessagingService && !twilioPhoneNumber && !useSenderId) {
+      showError('Veuillez configurer votre numéro de téléphone Twilio ou utiliser un Sender ID');
+      return;
+    }
+    
+    if (useSenderId && !twilioSenderId) {
+      showError('Veuillez configurer votre Sender ID');
       return;
     }
 
@@ -499,10 +518,13 @@ const Smishing = () => {
             body: currentTemplate.content
           };
           
-          // Ajouter soit le Messaging Service SID, soit le numéro d'expéditeur
+          // Ajouter soit le Messaging Service SID, soit le numéro d'expéditeur ou le Sender ID
           if (useMessagingService) {
             smsParams.messagingServiceSid = twilioMessagingServiceSid;
             console.log(`Utilisation du Messaging Service: ${twilioMessagingServiceSid}`);
+          } else if (useSenderId && twilioSenderId) {
+            smsParams.from = twilioSenderId;
+            console.log(`Utilisation du Sender ID: ${twilioSenderId}`);
           } else {
             smsParams.from = twilioPhoneNumber;
             console.log(`Utilisation du numéro d'expéditeur: ${twilioPhoneNumber}`);
@@ -1075,7 +1097,7 @@ const Smishing = () => {
                     {useMessagingService ? <FiToggleRight size={24} /> : <FiToggleLeft size={24} />}
                   </button>
                   <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {useMessagingService ? "Utiliser un Messaging Service" : "Utiliser un numéro de téléphone"}
+                    {useMessagingService ? "Utiliser un Messaging Service" : "Utiliser un numéro de téléphone/Sender ID"}
                   </span>
                   <button
                     type="button"
@@ -1118,16 +1140,76 @@ const Smishing = () => {
                 </div>
               ) : (
                 <div className="col-span-1 md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Numéro de téléphone Twilio
-                  </label>
-                  <input
-                    type="text"
-                    value={twilioPhoneNumber}
-                    onChange={(e) => setTwilioPhoneNumber(e.target.value)}
-                    placeholder="+1234567890"
-                    className="w-full p-2 border dark:border-gray-600 rounded focus:ring focus:ring-indigo-200 dark:bg-gray-700 dark:text-white"
-                  />
+                  <div className="flex items-center mb-2">
+                    <button
+                      type="button"
+                      onClick={() => setUseSenderId(!useSenderId)}
+                      className="mr-2 text-indigo-600 dark:text-indigo-400 focus:outline-none"
+                    >
+                      {useSenderId ? <FiToggleRight size={24} /> : <FiToggleLeft size={24} />}
+                    </button>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      {useSenderId ? "Utiliser un Sender ID (nom d'expéditeur)" : "Utiliser un numéro de téléphone"}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => showInfo(
+                        <div>
+                          <p className="dark:text-white"><strong>Sender ID vs Numéro de téléphone:</strong></p>
+                          <ul className="list-disc pl-5 mt-1 dark:text-gray-300">
+                            <li><strong>Sender ID:</strong> Affiche un nom au lieu d'un numéro (ex: "VOTRE_NOM"). Limité à 11 caractères alphanumériques.</li>
+                            <li><strong>Numéro de téléphone:</strong> Utilise un numéro standard pour l'envoi.</li>
+                          </ul>
+                          <p className="mt-2 dark:text-gray-300">
+                            <strong>Note:</strong> Le Sender ID n'est pas supporté dans tous les pays (notamment aux États-Unis et au Canada).
+                          </p>
+                          <p className="mt-2 dark:text-gray-300">
+                            <a href="https://www.twilio.com/docs/messaging/sender-id" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               className="text-blue-500 dark:text-blue-400 underline">
+                              En savoir plus sur les Sender ID
+                            </a>
+                          </p>
+                        </div>
+                      )}
+                      className="ml-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none"
+                    >
+                      <FiInfo size={16} />
+                    </button>
+                  </div>
+                  
+                  {useSenderId ? (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Sender ID (nom d'expéditeur)
+                      </label>
+                      <input
+                        type="text"
+                        value={twilioSenderId}
+                        onChange={(e) => setTwilioSenderId(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').substring(0, 11))}
+                        placeholder="VOTRE_NOM (11 caractères max, alphanumériques)"
+                        maxLength={11}
+                        className="w-full p-2 border dark:border-gray-600 rounded focus:ring focus:ring-indigo-200 dark:bg-gray-700 dark:text-white"
+                      />
+                      <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                        {twilioSenderId.length}/11 caractères - Uniquement lettres majuscules et chiffres
+                      </p>
+                    </div>
+                  ) : (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Numéro de téléphone Twilio
+                      </label>
+                      <input
+                        type="text"
+                        value={twilioPhoneNumber}
+                        onChange={(e) => setTwilioPhoneNumber(e.target.value)}
+                        placeholder="+1234567890"
+                        className="w-full p-2 border dark:border-gray-600 rounded focus:ring focus:ring-indigo-200 dark:bg-gray-700 dark:text-white"
+                      />
+                    </div>
+                  )}
                 </div>
               )}
               
@@ -1440,12 +1522,12 @@ const Smishing = () => {
                           <p className="text-sm text-gray-500 dark:text-gray-400">Résultats</p>
                           <div className="flex space-x-4">
                             <div className="flex items-center">
-                              <span className="inline-block w-3 h-3 rounded-full bg-green-500 mr-1"></span>
-                              <span className="dark:text-white">{selectedHistoryEntry.successCount} réussi(s)</span>
+                              <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-1"></span>
+                              <span className="text-xs dark:text-white">{selectedHistoryEntry.successCount} réussi(s)</span>
                             </div>
                             <div className="flex items-center">
-                              <span className="inline-block w-3 h-3 rounded-full bg-red-500 mr-1"></span>
-                              <span className="dark:text-white">{selectedHistoryEntry.errorCount} échoué(s)</span>
+                              <span className="inline-block w-2 h-2 rounded-full bg-red-500 mr-1"></span>
+                              <span className="text-xs dark:text-white">{selectedHistoryEntry.errorCount} échoué(s)</span>
                             </div>
                           </div>
                         </div>

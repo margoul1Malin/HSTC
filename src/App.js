@@ -31,6 +31,7 @@ import VirusTotal from './components/Miscellaneous/VirusTotal';
 import QRCodeGenerator from './components/Miscellaneous/QRCodeGenerator';
 import IPGeolocation from './components/Miscellaneous/IPGeolocation';
 import Base64ToImage from './components/Miscellaneous/Base64ToImage';
+import MitreAttack from './components/Miscellaneous/MitreAttack';
 import Shark from './components/Sniffing/Shark';
 import SQLi from './components/Injector/SQLi';
 import XSSer from './components/Injector/XSSer';
@@ -40,6 +41,8 @@ import BinChecker from './components/CC/BinChecker';
 import OsintPhonesEmails from './components/OSINT/OsintPhonesEmails';
 import OsintRanking from './components/OSINT/OsintRanking';
 import SubdomainEnum from './components/OSINT/SubdomainEnum';
+import WebTechnologies from './components/OSINT/WebTechnologies';
+import ProxyList from './components/OSINT/ProxyList';
 import './styles/App.css';
 
 const App = () => {
@@ -217,6 +220,9 @@ const App = () => {
       case 'base64toimage':
         console.log('App - Rendu de Base64ToImage');
         return <Base64ToImage />;
+      case 'mitreattack':
+        console.log('App - Rendu de MitreAttack');
+        return <MitreAttack />;
       case 'shark':
         console.log('App - Rendu de Shark');
         return <Shark />;
@@ -250,6 +256,12 @@ const App = () => {
       case 'subdomainenum':
         console.log('Rendering SubdomainEnum component');
         return <SubdomainEnum />;
+      case 'webtechnologies':
+        console.log('Rendering WebTechnologies component');
+        return <WebTechnologies />;
+      case 'proxylist':
+        console.log('Rendering ProxyList component');
+        return <ProxyList />;
       default:
         console.log('App - Vue non reconnue, affichage du GoBuster');
         return <GoBuster />;
