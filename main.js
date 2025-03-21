@@ -96,7 +96,11 @@ function createWindow() {
           "https://api.hunter.io https://haveibeenpwned.com https://leakcheck.io " +
           "https://api.twilio.com https://lookups.twilio.com https://apilayer.net " +
           "https://api.sendgrid.com https://api.github.com " +
-          "https://www.virustotal.com https://virustotal.com; " + // Ajout de VirusTotal
+          "https://ipapi.co https://api.criminalip.io https://api.ipregistry.co " +
+          "https://lookup.binlist.net https://ip-ip-fan-xiang-cha-xun.p.rapidapi.com " +
+          "https://www.virustotal.com https://virustotal.com " + 
+          "https://osint-phone-email-names-search-everything.p.rapidapi.com " +
+          "https://seo-website-ranking-keywords.p.rapidapi.com https://subdomain-scan1.p.rapidapi.com https://subdomain-finder3.p.rapidapi.com; " +
           "img-src 'self' data: blob:; " +
           "frame-src 'self' blob:;"
         ]

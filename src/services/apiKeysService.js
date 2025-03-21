@@ -51,6 +51,10 @@ class ApiKeysService {
               this.keys.leakcheck = settings.leakcheckApiKey;
               console.log('[ApiKeysService] Clé LeakCheck chargée depuis settings');
             }
+            if (settings.rapidapiOsintKey) {
+              this.keys.rapidapiOsint = settings.rapidapiOsintKey;
+              console.log('[ApiKeysService] Clé RapidAPI OSINT chargée depuis settings');
+            }
             
             // Sauvegarder ces clés dans electron-store pour l'avenir
             if (Object.keys(this.keys).length > 0) {

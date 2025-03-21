@@ -29,11 +29,17 @@ import ScriptGarbage from './components/SystemPlanning/ScriptGarbage';
 import Exifyer from './components/Miscellaneous/Exifyer';
 import VirusTotal from './components/Miscellaneous/VirusTotal';
 import QRCodeGenerator from './components/Miscellaneous/QRCodeGenerator';
+import IPGeolocation from './components/Miscellaneous/IPGeolocation';
+import Base64ToImage from './components/Miscellaneous/Base64ToImage';
 import Shark from './components/Sniffing/Shark';
 import SQLi from './components/Injector/SQLi';
 import XSSer from './components/Injector/XSSer';
 import Backdoor from './components/Malware/Backdoor';
 import CcGenerator from './components/CC/CcGenerator';
+import BinChecker from './components/CC/BinChecker';
+import OsintPhonesEmails from './components/OSINT/OsintPhonesEmails';
+import OsintRanking from './components/OSINT/OsintRanking';
+import SubdomainEnum from './components/OSINT/SubdomainEnum';
 import './styles/App.css';
 
 const App = () => {
@@ -205,6 +211,12 @@ const App = () => {
       case 'qrcodegenerator':
         console.log('App - Rendu de QRCodeGenerator');
         return <QRCodeGenerator />;
+      case 'ipgeolocation':
+        console.log('App - Rendu de IPGeolocation');
+        return <IPGeolocation />;
+      case 'base64toimage':
+        console.log('App - Rendu de Base64ToImage');
+        return <Base64ToImage />;
       case 'shark':
         console.log('App - Rendu de Shark');
         return <Shark />;
@@ -226,6 +238,18 @@ const App = () => {
       case 'ccchecker':
         console.log('App - Rendu de CcGenerator (temporaire)');
         return <CcGenerator />;
+      case 'binchecker':
+        console.log('Rendering BinChecker component');
+        return <BinChecker />;
+      case 'osintphonesemails':
+        console.log('Rendering OsintPhonesEmails component');
+        return <OsintPhonesEmails />;
+      case 'osintranking':
+        console.log('Rendering OsintRanking component');
+        return <OsintRanking />;
+      case 'subdomainenum':
+        console.log('Rendering SubdomainEnum component');
+        return <SubdomainEnum />;
       default:
         console.log('App - Vue non reconnue, affichage du GoBuster');
         return <GoBuster />;

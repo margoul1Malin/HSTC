@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FiHome, FiCheckSquare, FiSettings, FiMenu, FiSearch, FiBookmark, FiChevronDown, FiChevronRight, FiDatabase, FiLock, FiTarget, FiServer, FiWifi, FiMail, FiSend, FiPhone, FiEye, FiMessageSquare, FiShield, FiGlobe, FiKey, FiCalendar, FiGithub, FiTool, FiFile, FiImage, FiActivity, FiCode, FiCreditCard, FiFolder } from 'react-icons/fi';
+import { FiHome, FiCheckSquare, FiSettings, FiMenu, FiSearch, FiBookmark, FiChevronDown, FiChevronRight, FiDatabase, FiLock, FiTarget, FiServer, FiWifi, FiMail, FiSend, FiPhone, FiEye, FiMessageSquare, FiShield, FiGlobe, FiKey, FiCalendar, FiGithub, FiTool, FiFile, FiImage, FiActivity, FiCode, FiCreditCard, FiFolder, FiUser } from 'react-icons/fi';
 import { FcKey, FcUnlock, FcTabletAndroid, FcSearch, FcViewDetails, FcCalendar, FcBiohazard, FcMoneyTransfer, FcGlobe, FcDebt, FcDataConfiguration, FcAddressBook } from "react-icons/fc";
 import { PiSyringeFill, PiCreditCardFill, PiBinaryFill, PiDoorOpenFill } from "react-icons/pi";
 import { SiNgrok, SiAmazonwebservices } from "react-icons/si";
@@ -22,6 +22,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
   const [injectorMenuOpen, setInjectorMenuOpen] = useState(false);
   const [malwareMenuOpen, setMalwareMenuOpen] = useState(false);
   const [ccMenuOpen, setCcMenuOpen] = useState(false);
+  const [osintMenuOpen, setOsintMenuOpen] = useState(false);
 
   // Vérifier si une vue d'exploits est active
   const isExploitViewActive = activeView === 'exploitdb' || activeView === 'savedexploits';
@@ -45,7 +46,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
   const isSecurityViewActive = activeView === 'privesc';
   
   // Vérifier si une vue de recherche IoT est active
-  const isIotSearchViewActive = activeView === 'shodan' || activeView === 'zoomeye';
+  const isIotSearchViewActive = activeView === 'shodan' || activeView === 'zoomeye' || activeView === 'censys';
   
   // Vérifier si une vue de brute force est active
   const isBruteForceViewActive = activeView === 'hydra' || activeView === 'john' || activeView === 'gobuster';
@@ -54,7 +55,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
   const isSystemPlanningViewActive = activeView === 'plannifyer' || activeView === 'scriptgarbage';
 
   // Vérifier si une vue de misc est active
-  const isMiscellaneousViewActive = activeView === 'exifyer' || activeView === 'virustotal';
+  const isMiscellaneousViewActive = activeView === 'exifyer' || activeView === 'virustotal' || activeView === 'qrcodegenerator' || activeView === 'ipgeolocation';
 
   // Vérifier si une vue de sniffing est active
   const isSniffingViewActive = activeView === 'shark';
@@ -139,6 +140,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
   const iotSearchSubMenuItems = [
     { id: 'shodan', label: 'Shodan', icon: <FiGlobe size={18} /> },
     { id: 'zoomeye', label: 'ZoomEye', icon: <FiSearch size={18} /> },
+    { id: 'censys', label: 'Censys', icon: <FiSearch size={18} />, disabled: true },
   ];
 
   // Définir les éléments du sous-menu Brute Force
@@ -160,8 +162,9 @@ const Sidebar = ({ activeView, setActiveView }) => {
     { id: 'exifyer', label: 'Exifyer', icon: <FcViewDetails size={18} /> },
     { id: 'virustotal', label: 'VirusTotal', icon: <FiShield size={18} /> },
     { id: 'ngrok', label: 'Ngrok', icon: <SiNgrok size={18} />, disabled: true },
-    { id: 'ipgeolocation', label: 'IP Geolocation', icon: <FiGlobe size={18} />, disabled: true },
+    { id: 'ipgeolocation', label: 'IP Geolocation', icon: <FiGlobe size={18} /> },
     { id: 'qrcodegenerator', label: 'QR Code Generator', icon: <FaQrcode size={18} /> },
+    { id: 'base64toimage', label: 'Base64 To Image', icon: <FiImage size={18} /> },
   ];
 
   // Définir les éléments du sous-menu Sniffing
@@ -192,7 +195,14 @@ const Sidebar = ({ activeView, setActiveView }) => {
   // Définir les éléments du sous-menu CC
   const ccSubMenuItems = [
     { id: 'ccgenerator', label: 'CC Generator', icon: <PiCreditCardFill size={18} />, disabled: true },
-    { id: 'BIN Provider Check', label: 'BIN Provider Check', icon: <PiBinaryFill size={18} />, disabled: true },
+    { id: 'binchecker', label: 'BIN Checker', icon: <PiBinaryFill size={18} /> },
+  ];
+
+  // Définir les éléments du sous-menu OSINT
+  const osintSubMenuItems = [
+    { id: 'osintphonesemails', label: 'Téléphones & Emails', icon: <FiUser size={18} /> },
+    { id: 'osintranking', label: 'SEO Ranking', icon: <FiGlobe size={18} /> },
+    { id: 'subdomainenum', label: 'Subdomain Enum', icon: <FiSearch size={18} /> },
   ];
 
   // Gérer le changement de vue
@@ -338,6 +348,16 @@ const Sidebar = ({ activeView, setActiveView }) => {
       handleViewChange('ccgenerator');
     } else {
       setCcMenuOpen(!ccMenuOpen);
+    }
+  };
+
+  // Basculer l'état du menu OSINT
+  const toggleOsintMenu = () => {
+    if (collapsed) {
+      // Si la sidebar est réduite, ouvrir directement la vue osintphonesemails
+      handleViewChange('osintphonesemails');
+    } else {
+      setOsintMenuOpen(!osintMenuOpen);
     }
   };
 
@@ -1011,19 +1031,61 @@ const Sidebar = ({ activeView, setActiveView }) => {
                   <li key={item.id} className="mb-1">
                     <button
                       onClick={() => handleViewChange(item.id)}
-                      className={`flex items-center w-full p-2 rounded-md ${
-                        activeView === item.id
-                          ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
-                          : item.disabled 
-                            ? 'text-gray-400 cursor-not-allowed dark:text-gray-500' 
-                            : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
-                      } transition-colors duration-200`}
                       disabled={item.disabled}
+                      className={`flex items-center w-full p-2 pl-3 ${
+                        activeView === item.id
+                          ? 'bg-indigo-100 text-indigo-700 dark:bg-gray-700 dark:text-indigo-400'
+                          : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                      } ${
+                        item.disabled ? 'opacity-50 cursor-not-allowed' : ''
+                      } text-sm rounded-md transition-colors duration-200`}
                     >
-                      <span className={`${collapsed ? 'mx-auto' : 'mr-3'}`}>{item.icon}</span>
-                      {!collapsed && (
-                        <span className="text-sm">{item.label}</span>
-                      )}
+                      <span className="mr-2">{item.icon}</span>
+                      {!collapsed && <span>{item.label}</span>}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+          
+          {/* Menu OSINT avec sous-menu */}
+          <li className="mb-2">
+            <button
+              onClick={toggleOsintMenu}
+              className={`flex items-center w-full p-3 ${
+                activeView === 'osintphonesemails'
+                  ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
+                  : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+              } transition-colors duration-200`}
+            >
+              <span className="mr-4"><FiGlobe size={20} /></span>
+              {!collapsed && (
+                <>
+                  <span className="flex-1">OSINT</span>
+                  {osintMenuOpen ? <FiChevronDown size={16} /> : <FiChevronRight size={16} />}
+                </>
+              )}
+            </button>
+
+            {/* Sous-menu OSINT */}
+            {(osintMenuOpen || collapsed) && (
+              <ul className={`${collapsed ? 'pl-0' : 'pl-6'} mt-1`}>
+                {osintSubMenuItems.map((item) => (
+                  <li key={item.id} className="mb-1">
+                    <button
+                      onClick={() => handleViewChange(item.id)}
+                      disabled={item.disabled}
+                      className={`flex items-center w-full p-2 pl-3 ${
+                        activeView === item.id
+                          ? 'bg-indigo-100 text-indigo-700 dark:bg-gray-700 dark:text-indigo-400'
+                          : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                      } ${
+                        item.disabled ? 'opacity-50 cursor-not-allowed' : ''
+                      } text-sm rounded-md transition-colors duration-200`}
+                    >
+                      <span className="mr-2">{item.icon}</span>
+                      {!collapsed && <span>{item.label}</span>}
                     </button>
                   </li>
                 ))}
