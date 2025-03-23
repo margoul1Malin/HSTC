@@ -3,10 +3,11 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { FiSave, FiDownload, FiCopy, FiSend, FiEye, FiEyeOff, FiTrash2, FiFileText, FiMail, FiPlus, FiList, FiCode, FiShield, FiUsers, FiUpload, FiHelpCircle, FiSettings, FiCheck, FiAlertCircle } from 'react-icons/fi';
 import { useNotification } from '../../context/NotificationContext';
+import { apiKeysService } from '../../services/apiKeysService';
 
 const Phisher = () => {
   // Contexte de notification
-  const { showSuccess, showError, showInfo, showWarning, showConfirm } = useNotification();
+  const { showSuccess, showError, showInfo, showWarning, showConfirm, showNotification } = useNotification();
   
   // États pour l'éditeur d'e-mail
   const [subject, setSubject] = useState('');
@@ -47,6 +48,9 @@ const Phisher = () => {
   const [csvContent, setCsvContent] = useState('');
   const fileInputRef = useRef(null);
   
+  // États pour les campagnes
+  const [campaigns, setCampaigns] = useState([]);
+  
   // États pour l'envoi d'emails via SendGrid
   const [sendgridApiKey, setSendgridApiKey] = useState('');
   const [senderEmail, setSenderEmail] = useState('');
@@ -54,6 +58,7 @@ const Phisher = () => {
   const [sendLoading, setSendLoading] = useState(false);
   const [sendHistory, setSendHistory] = useState([]);
   const [showSendPanel, setShowSendPanel] = useState(false);
+  const [apiKeyValid, setApiKeyValid] = useState(false);
   
   // Référence pour l'éditeur Quill
   const quillRef = useRef(null);
@@ -157,6 +162,56 @@ const Phisher = () => {
     
     loadSendGridSettings();
   }, []);
+  
+  // Charger les données sauvegardées au démarrage
+  useEffect(() => {
+    // Charger les informations SendGrid sauvegardées
+    const loadSavedData = async () => {
+      try {
+        // Charger les clés API depuis apiKeysService
+        const sgApiKey = await apiKeysService.getKey('sendgridApiKey');
+        if (sgApiKey) {
+          setSendgridApiKey(sgApiKey);
+          
+          // Simple validation basique de la clé API
+          setApiKeyValid(sgApiKey && sgApiKey.trim().length >= 20);
+        }
+        
+        // Charger les modèles de emails depuis localStorage
+        const savedTemplates = JSON.parse(localStorage.getItem('phisher_templates') || '[]');
+        if (savedTemplates.length > 0) {
+          setTemplates(savedTemplates);
+        }
+        
+        // Charger les campagnes sauvegardées
+        const savedCampaigns = JSON.parse(localStorage.getItem('phisher_campaigns') || '[]');
+        if (savedCampaigns.length > 0) {
+          setCampaigns(savedCampaigns);
+        }
+        
+        // Vérifier si un email a été passé depuis la vue Targets
+        const emailData = localStorage.getItem('phisherEmail');
+        if (emailData) {
+          // Ajouter l'email à la liste des destinataires
+          setRecipients(prev => {
+            // Vérifier si l'email existe déjà dans la liste
+            if (!prev.some(r => r.email === emailData)) {
+              return [...prev, { email: emailData, name: '' }];
+            }
+            return prev;
+          });
+          console.log('[Phisher] Email ajouté aux destinataires:', emailData);
+          // Supprimer les données pour éviter de les réutiliser à chaque montage
+          localStorage.removeItem('phisherEmail');
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des données sauvegardées:', error);
+        showNotification('Erreur', 'Impossible de charger les données sauvegardées', 'error');
+      }
+    };
+    
+    loadSavedData();
+  }, [showNotification]);
   
   // Fonction pour sauvegarder un template
   const saveTemplate = () => {

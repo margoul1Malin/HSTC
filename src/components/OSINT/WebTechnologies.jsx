@@ -10,20 +10,34 @@ const WebTechnologies = () => {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [savingKey, setSavingKey] = useState(false);
+  const [searchHistory, setSearchHistory] = useState([]);
 
-  // Charger la clé API au démarrage
+  // Charger les clés API
   useEffect(() => {
     const loadApiKey = async () => {
       try {
-        const key = await apiKeysService.getKey('rapidapiOsint');
-        setRapidApiKey(key || '');
+        const savedKey = await apiKeysService.getKey('wappalyzerApiKey');
+        if (savedKey) setRapidApiKey(savedKey);
       } catch (error) {
         console.error('Erreur lors du chargement de la clé API:', error);
-        setError('Impossible de charger la clé API. Veuillez la configurer manuellement.');
+        setError('Impossible de charger la clé API');
       }
     };
     
     loadApiKey();
+    
+    // Charger l'historique des recherches
+    const savedHistory = JSON.parse(localStorage.getItem('webtechnologies_history') || '[]');
+    setSearchHistory(savedHistory);
+    
+    // Vérifier si une URL a été passée depuis la vue Targets
+    const urlData = localStorage.getItem('webTechUrl');
+    if (urlData) {
+      setUrl(urlData);
+      console.log('[WebTechnologies] URL chargée depuis Targets:', urlData);
+      // Supprimer les données pour éviter de les réutiliser à chaque montage
+      localStorage.removeItem('webTechUrl');
+    }
   }, []);
 
   // Fonction pour sauvegarder la clé API

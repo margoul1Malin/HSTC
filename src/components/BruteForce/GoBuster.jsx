@@ -28,6 +28,11 @@ const GoBuster = () => {
   // Référence pour suivre les changements du wordlist
   const selectedFileRef = useRef(null);
   
+  // États pour la vérification de l'installation de GoBuster
+  const [checkingInstallation, setCheckingInstallation] = useState(false);
+  const [goBusterInstalled, setGoBusterInstalled] = useState(false);
+  const [goBusterVersion, setGoBusterVersion] = useState('');
+  
   // Effect pour s'assurer que wordlist et wordlistFile sont synchronisés
   useEffect(() => {
     // Créer une fonction qui synchronise les états
@@ -47,6 +52,88 @@ const GoBuster = () => {
     
     // Pas besoin de retourner une fonction de nettoyage
   }, []); // Dépendance vide car nous utilisons la référence directement
+
+  // Vérifier si GoBuster est installé au chargement de la page
+  useEffect(() => {
+    const checkGoBusterInstallation = async () => {
+      if (window.electronAPI) {
+        try {
+          setCheckingInstallation(true);
+          const response = await window.electronAPI.execCommand('which gobuster');
+          setGoBusterInstalled(response.trim() !== '');
+          if (response.trim() === '') {
+            addLog('GoBuster n\'est pas installé.', 'error');
+          } else {
+            addLog(`GoBuster détecté à: ${response.trim()}`, 'success');
+            
+            // Récupérer la version de GoBuster
+            try {
+              const versionResponse = await window.electronAPI.execCommand('gobuster version');
+              const versionMatch = versionResponse.match(/Version:\s*([\d.]+)/);
+              if (versionMatch && versionMatch[1]) {
+                setGoBusterVersion(versionMatch[1]);
+                addLog(`Version de GoBuster: ${versionMatch[1]}`, 'info');
+              }
+            } catch (error) {
+              console.error('Erreur lors de la vérification de la version:', error);
+            }
+          }
+        } catch (error) {
+          setGoBusterInstalled(false);
+          addLog('Erreur lors de la vérification de GoBuster.', 'error');
+          console.error('Erreur lors de la vérification de GoBuster:', error);
+        } finally {
+          setCheckingInstallation(false);
+        }
+      } else {
+        addLog('L\'API Electron n\'est pas disponible. Impossible de vérifier GoBuster.', 'warning');
+        setCheckingInstallation(false);
+      }
+    };
+    
+    // Charger les paramètres sauvegardés
+    const loadSavedSettings = () => {
+      try {
+        // Charger les paramètres de GoBuster
+        const savedSettings = JSON.parse(localStorage.getItem('gobuster_settings') || '{}');
+        if (Object.keys(savedSettings).length > 0) {
+          if (savedSettings.wordlist) setWordlist(savedSettings.wordlist);
+          if (savedSettings.threads) setThreads(savedSettings.threads);
+          if (savedSettings.extensions) setExtensions(savedSettings.extensions);
+          if (savedSettings.statusCodes) setStatusCodes(savedSettings.statusCodes);
+          if (savedSettings.timeout) setTimeout(savedSettings.timeout);
+          if (savedSettings.userAgent) setUserAgent(savedSettings.userAgent);
+          if (savedSettings.proxy) setProxy(savedSettings.proxy);
+          if (savedSettings.cookies) setCookies(savedSettings.cookies);
+          if (savedSettings.followRedirect !== undefined) setFollowRedirect(savedSettings.followRedirect);
+          if (savedSettings.basicAuth) setBasicAuth(savedSettings.basicAuth);
+          addLog('Paramètres de GoBuster chargés.', 'info');
+        }
+        
+        // Charger l'historique des scans
+        const savedHistory = JSON.parse(localStorage.getItem('gobuster_scan_history') || '[]');
+        if (savedHistory.length > 0) {
+          setScanHistory(savedHistory);
+          addLog(`${savedHistory.length} scan(s) trouvé(s) dans l'historique.`, 'info');
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des paramètres:', error);
+        addLog('Erreur lors du chargement des paramètres.', 'error');
+      }
+    };
+    
+    // Vérifier si une URL a été passée depuis la vue Targets
+    const urlData = localStorage.getItem('goBusterUrl');
+    if (urlData) {
+      setTarget(urlData);
+      addLog(`URL cible définie depuis Targets: ${urlData}`, 'info');
+      // Supprimer les données pour éviter de les réutiliser à chaque montage
+      localStorage.removeItem('goBusterUrl');
+    }
+    
+    checkGoBusterInstallation();
+    loadSavedSettings();
+  }, []);
 
   // Fonction pour valider les entrées
   const validateInputs = () => {

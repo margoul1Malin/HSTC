@@ -5,7 +5,7 @@ import * as twilioSmoodingService from '../../services/twilioSmoodingService';
 import { apiKeysService } from '../../services/apiKeysService';
 
 const Smooding = () => {
-  const { showSuccess, showError, showInfo, showWarning } = useNotification();
+  const { showSuccess, showError, showInfo, showWarning, showNotification } = useNotification();
   const [loading, setLoading] = useState(false);
   const [testingConnection, setTestingConnection] = useState(false);
   const [twilioAuthToken, setTwilioAuthToken] = useState('');
@@ -62,6 +62,16 @@ const Smooding = () => {
         // Vérifier le statut du compte si les identifiants sont disponibles
         if (twilioSid && twilioToken) {
           checkAccountStatus(twilioSid, twilioToken);
+        }
+        
+        // Vérifier si un numéro de téléphone a été passé depuis la vue Targets
+        const phoneData = localStorage.getItem('smoodingPhone');
+        if (phoneData) {
+          setTargetPhone(phoneData);
+          console.log('[Smooding] Numéro de téléphone chargé depuis Targets:', phoneData);
+          addLog(`Numéro de téléphone chargé depuis Targets: ${phoneData}`, 'info');
+          // Supprimer les données pour éviter de les réutiliser à chaque montage
+          localStorage.removeItem('smoodingPhone');
         }
       } catch (error) {
         console.error('[Smooding] Erreur lors du chargement des données:', error);

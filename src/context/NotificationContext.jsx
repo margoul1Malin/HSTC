@@ -35,6 +35,12 @@ export const NotificationProvider = ({ children }) => {
   const showWarning = (message, duration) => addNotification(message, 'warning', duration);
   const showInfo = (message, duration) => addNotification(message, 'info', duration);
   
+  // Fonction pour afficher une notification avec titre
+  const showNotification = (title, message, type = 'info', duration) => {
+    const formattedMessage = title ? `<strong>${title}</strong><br/>${message}` : message;
+    return addNotification(formattedMessage, type, duration);
+  };
+  
   // Fonction pour afficher une boîte de dialogue de confirmation
   const showConfirm = (message, onConfirm, onCancel) => {
     const id = generateUniqueId();
@@ -56,45 +62,51 @@ export const NotificationProvider = ({ children }) => {
   };
 
   return (
-    <NotificationContext.Provider 
-      value={{ 
-        addNotification, 
+    <NotificationContext.Provider
+      value={{
+        notifications,
+        addNotification,
         removeNotification,
         showSuccess,
         showError,
         showWarning,
         showInfo,
-        showConfirm
+        showConfirm,
+        showNotification
       }}
     >
       {children}
-      <div className="notification-container">
+      
+      {/* Afficher les notifications */}
+      <div className="fixed top-0 right-0 p-4 z-50">
         {notifications.map(notification => (
           <Notification
             key={notification.id}
-            type={notification.type}
+            id={notification.id}
             message={notification.message}
+            type={notification.type}
             duration={notification.duration}
-            onClose={() => removeNotification(notification.id)}
+            onClose={removeNotification}
           />
         ))}
       </div>
       
-      {/* Boîtes de dialogue de confirmation */}
+      {/* Afficher les boîtes de dialogue de confirmation */}
       {confirmDialogs.map(dialog => (
-        <div key={dialog.id} className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-md mx-auto">
-            <p className="text-gray-800 dark:text-gray-200 mb-6">{dialog.message}</p>
+        <div key={dialog.id} className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-black opacity-50" onClick={() => closeConfirmDialog(dialog.id, false)}></div>
+          <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg z-10 max-w-md w-full">
+            <div className="mb-4 text-gray-800 dark:text-gray-200">{dialog.message}</div>
             <div className="flex justify-end space-x-2">
               <button
-                onClick={() => closeConfirmDialog(dialog.id, false)}
                 className="px-4 py-2 bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-400 dark:hover:bg-gray-600"
+                onClick={() => closeConfirmDialog(dialog.id, false)}
               >
                 Annuler
               </button>
               <button
+                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                 onClick={() => closeConfirmDialog(dialog.id, true)}
-                className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
               >
                 Confirmer
               </button>

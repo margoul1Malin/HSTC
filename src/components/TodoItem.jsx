@@ -1,17 +1,20 @@
 import React from 'react';
-import { FiTrash2, FiEdit2, FiCheck, FiX } from 'react-icons/fi';
+import { FiTrash2, FiEdit2, FiCheck, FiX, FiMessageCircle } from 'react-icons/fi';
 
 const TodoItem = ({
   todo,
   editingId,
   editText,
+  editDescription,
   setEditText,
+  setEditDescription,
   onToggle,
   onDelete,
   onStartEdit,
   onSaveEdit,
   onCancelEdit,
-  onChangePriority
+  onChangePriority,
+  onChangeStatus
 }) => {
   // Définir les couleurs de priorité
   const priorityColors = {
@@ -27,99 +30,144 @@ const TodoItem = ({
     high: 'Élevée'
   };
 
+  // Définir les statuts
+  const statusOptions = [
+    { value: 'todo', label: 'À faire', color: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' },
+    { value: 'in-progress', label: 'En cours', color: 'bg-blue-100 text-blue-800 dark:bg-blue-700 dark:text-blue-300' },
+    { value: 'done', label: 'Terminée', color: 'bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-300' }
+  ];
+
+  // Trouver le statut actuel
+  const currentStatus = statusOptions.find(status => status.value === todo.status) || statusOptions[0];
+
   return (
-    <li className={`border-b border-gray-200 dark:border-gray-700 p-4 flex items-center ${
-      todo.completed ? 'bg-gray-50 dark:bg-gray-900' : ''
+    <li className={`border-b border-gray-200 dark:border-gray-700 p-6 ${
+      todo.status === 'done' ? 'bg-gray-50 dark:bg-gray-900/50' : ''
     }`}>
-      {/* Checkbox */}
-      <div className="mr-3">
-        <button
-          onClick={() => onToggle(todo.id)}
-          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-            todo.completed
-              ? 'border-green-500 bg-green-500 text-white'
-              : 'border-gray-300 dark:border-gray-600'
-          }`}
-        >
-          {todo.completed && <FiCheck size={14} />}
-        </button>
-      </div>
-
-      {/* Contenu du todo */}
-      <div className="flex-1">
-        {editingId === todo.id ? (
-          <input
-            type="text"
-            value={editText}
-            onChange={(e) => setEditText(e.target.value)}
-            className="w-full p-1 border-b-2 border-indigo-500 dark:border-indigo-400 bg-transparent outline-none"
-            autoFocus
-          />
-        ) : (
-          <div className="flex items-center">
-            <span
-              className={`${
-                todo.completed
-                  ? 'line-through text-gray-500 dark:text-gray-400'
-                  : 'text-gray-800 dark:text-gray-200'
-              }`}
-            >
-              {todo.text}
-            </span>
-            <span
-              className={`ml-3 text-xs px-2 py-1 rounded-full ${priorityColors[todo.priority]}`}
-            >
-              {priorityLabels[todo.priority]}
-            </span>
+      {editingId === todo.id ? (
+        <div className="space-y-4">
+          {/* Mode édition */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Titre
+            </label>
+            <input
+              type="text"
+              value={editText}
+              onChange={(e) => setEditText(e.target.value)}
+              className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent dark:bg-gray-800 focus:border-indigo-500 dark:focus:border-indigo-400 outline-none"
+              autoFocus
+            />
           </div>
-        )}
-      </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Description
+            </label>
+            <textarea
+              value={editDescription}
+              onChange={(e) => setEditDescription(e.target.value)}
+              className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent dark:bg-gray-800 min-h-[100px] focus:border-indigo-500 dark:focus:border-indigo-400 outline-none"
+            />
+          </div>
 
-      {/* Actions */}
-      <div className="flex items-center">
-        {editingId === todo.id ? (
-          <>
+          <div className="flex justify-end space-x-2 mt-2">
             <button
               onClick={onSaveEdit}
-              className="p-2 text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
+              className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md flex items-center"
             >
-              <FiCheck size={18} />
+              <FiCheck className="mr-1" />
+              Enregistrer
             </button>
             <button
               onClick={onCancelEdit}
-              className="p-2 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+              className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md flex items-center"
             >
-              <FiX size={18} />
+              <FiX className="mr-1" />
+              Annuler
             </button>
-          </>
-        ) : (
-          <>
-            {/* Menu déroulant de priorité */}
+          </div>
+        </div>
+      ) : (
+        <div>
+          {/* Mode affichage */}
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-3">
+            <div className="flex-1">
+              <h3 className={`text-lg font-semibold ${
+                todo.status === 'done' ? 'line-through text-gray-500 dark:text-gray-400' : 'text-gray-800 dark:text-gray-200'
+              }`}>
+                {todo.text}
+              </h3>
+              
+              <div className="mt-2">
+                <p className={`text-sm ${
+                  todo.status === 'done' ? 'line-through text-gray-500 dark:text-gray-400' : 'text-gray-600 dark:text-gray-400'
+                }`}>
+                  {todo.description || <span className="italic text-gray-400 dark:text-gray-500">Aucune description</span>}
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex flex-wrap items-center gap-2 md:justify-end">
+              <span
+                className={`text-xs px-2 py-1 rounded-full ${priorityColors[todo.priority]}`}
+              >
+                {priorityLabels[todo.priority]}
+              </span>
+              
+              <span
+                className={`text-xs px-2 py-1 rounded-full ${currentStatus.color}`}
+              >
+                {currentStatus.label}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-end space-x-2 pt-2 border-t border-gray-100 dark:border-gray-700">
+            {/* Statut */}
+            <div className="flex-1 md:flex-none">
+              <select
+                value={todo.status}
+                onChange={(e) => onChangeStatus(todo.id, e.target.value)}
+                className="p-2 text-sm rounded border border-gray-300 dark:border-gray-700 bg-transparent dark:bg-gray-800"
+              >
+                {statusOptions.map(option => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            {/* Priorité */}
             <select
               value={todo.priority}
               onChange={(e) => onChangePriority(todo.id, e.target.value)}
-              className="mr-2 p-1 text-sm rounded border border-gray-300 dark:border-gray-700 bg-transparent"
+              className="p-2 text-sm rounded border border-gray-300 dark:border-gray-700 bg-transparent dark:bg-gray-800"
             >
-              <option value="low">Faible</option>
-              <option value="medium">Moyenne</option>
-              <option value="high">Élevée</option>
+              <option value="low">Priorité: Faible</option>
+              <option value="medium">Priorité: Moyenne</option>
+              <option value="high">Priorité: Élevée</option>
             </select>
             
             <button
               onClick={() => onStartEdit(todo)}
-              className="p-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+              className="p-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 bg-blue-100 dark:bg-blue-900/30 rounded-md"
+              title="Modifier"
             >
               <FiEdit2 size={18} />
             </button>
+            
             <button
               onClick={() => onDelete(todo.id)}
-              className="p-2 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+              className="p-2 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 bg-red-100 dark:bg-red-900/30 rounded-md"
+              title="Supprimer"
             >
               <FiTrash2 size={18} />
             </button>
-          </>
-        )}
-      </div>
+          </div>
+        </div>
+      )}
     </li>
   );
 };

@@ -47,6 +47,18 @@ const Scan_SSL_TLS = () => {
   // Référence pour le conteneur de sortie
   const outputRef = useRef(null);
   
+  // Charger l'URL depuis le localStorage au montage du composant
+  useEffect(() => {
+    // Vérifier si une URL a été passée depuis la vue Targets
+    const urlData = localStorage.getItem('sslTlsUrl');
+    if (urlData) {
+      console.log('URL reçue dans Scan_SSL_TLS:', urlData);
+      setUrl(urlData);
+      // Supprimer les données pour éviter de les réutiliser à chaque montage
+      localStorage.removeItem('sslTlsUrl');
+    }
+  }, []);
+  
   // Fonction pour préparer le contenu pour l'exportation
   const prepareExportContent = () => {
     console.log('Préparation du contenu pour l\'exportation...');

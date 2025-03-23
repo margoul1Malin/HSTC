@@ -4,7 +4,7 @@ import { useNotification } from '../../context/NotificationContext';
 import { apiKeysService } from '../../services/apiKeysService';
 
 const Sender = () => {
-  const { showSuccess, showError, showInfo, showWarning, showConfirm } = useNotification();
+  const { showSuccess, showError, showInfo, showWarning, showConfirm, showNotification } = useNotification();
   
   // États pour les paramètres SendGrid
   const [sendgridApiKey, setSendgridApiKey] = useState('');
@@ -28,12 +28,46 @@ const Sender = () => {
   // Références
   const fileInputRef = useRef(null);
   
-  // Charger les données sauvegardées au démarrage
+  // Charger les clés API et les configurations sauvegardées
   useEffect(() => {
+    const loadSavedData = async () => {
+      try {
+        // Charger l'API key SendGrid
+        const sgKey = await apiKeysService.getKey('sendgridSenderApiKey');
+        if (sgKey) {
+          setSendgridApiKey(sgKey);
+          const isValid = await validateSendgridApiKey(sgKey);
+          setApiKeyValid(isValid);
+        }
+
+        // Charger les modèles d'email
+        const savedTemplates = JSON.parse(localStorage.getItem('email_templates') || '[]');
+        if (savedTemplates.length > 0) {
+          setTemplates(savedTemplates);
+        }
+
+        // Charger l'historique des emails
+        const savedHistory = JSON.parse(localStorage.getItem('email_history') || '[]');
+        if (savedHistory.length > 0) {
+          setEmailHistory(savedHistory);
+        }
+        
+        // Vérifier si un email a été passé depuis la vue Targets
+        const emailData = localStorage.getItem('senderEmail');
+        if (emailData) {
+          setToEmail(emailData);
+          console.log(`[Sender] Email destinataire défini: ${emailData}`);
+          // Supprimer les données pour éviter de les réutiliser à chaque montage
+          localStorage.removeItem('senderEmail');
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des données:', error);
+        showNotification('Erreur', 'Impossible de charger les données sauvegardées', 'error');
+      }
+    };
+
     loadSavedData();
-    loadTemplatesFromPhisher();
-    checkSelectedTemplate();
-  }, []);
+  }, [showNotification]);
   
   // Charger les données sauvegardées
   const loadSavedData = async () => {

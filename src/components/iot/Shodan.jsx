@@ -48,6 +48,15 @@ const Shodan = () => {
     };
     
     loadSavedApiKey();
+    
+    // Vérifier si une URL a été passée depuis la vue Targets
+    const urlData = localStorage.getItem('shodanUrl');
+    if (urlData) {
+      console.log('[Shodan] URL reçue:', urlData);
+      setQuery(urlData);
+      // Supprimer les données pour éviter de les réutiliser à chaque montage
+      localStorage.removeItem('shodanUrl');
+    }
   }, []);
   
   // Sauvegarder la clé API

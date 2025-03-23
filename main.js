@@ -168,14 +168,32 @@ ipcMain.handle('execute-command', (event, command) => {
       // Ajouter les variables d'environnement pour Python
       env: {
         ...process.env,
-        PYTHONIOENCODING: 'utf-8'  // Assurer l'encodage correct pour Python
-      }
+        PYTHONIOENCODING: 'utf-8',  // Assurer l'encodage correct pour Python
+        PYTHONPATH: path.join(__dirname, 'env', 'lib', 'python3.13', 'site-packages') // Ajouter le chemin des modules Python
+      },
+      encoding: 'utf8',
+      shell: true
     };
     
+    console.log('Exécution avec options:', JSON.stringify(options, null, 2));
+    
     const childProcess = exec(command, options, (error, stdout, stderr) => {
-      if (error && error.code !== 0) {
+      console.log('Sortie stdout brute:', stdout);
+      console.log('Sortie stderr brute:', stderr);
+      
+      if (error) {
         console.error('Erreur lors de l\'exécution de la commande:', error);
-        reject({ error: error.message, code: error.code });
+        console.error('Code de sortie:', error.code);
+        console.error('Signal tué:', error.signal);
+        console.error('Commande complète:', error.cmd);
+        
+        // Rejeter avec plus d'informations en cas d'erreur
+        reject({ 
+          error: error.message, 
+          code: error.code,
+          stderr: stderr,
+          stdout: stdout
+        });
         return;
       }
       

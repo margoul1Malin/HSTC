@@ -64,7 +64,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
   const isInjectorViewActive = activeView === 'sqli' || activeView === 'xsser';
   
   // Vérifier si une vue de M4lwar3b1tes est active
-  const isMalwareViewActive = activeView === 'ransomware' || activeView === 'backdoor';
+  const isMalwareViewActive = activeView === 'msfvenom';
   
   // Vérifier si une vue de CC est active
   const isCcViewActive = activeView === 'ccgenerator' || activeView === 'ccchecker';
@@ -97,9 +97,10 @@ const Sidebar = ({ activeView, setActiveView }) => {
 
   // Définir les éléments du sous-menu Exploits
   const exploitsSubMenuItems = [
-    { id: 'nvd', label: 'NVD (Coming Soon...)', icon: <FiSearch size={18} />, disabled: true },
     { id: 'exploitdb', label: 'Recherche d\'Exploits', icon: <FiSearch size={18} /> },
     { id: 'savedexploits', label: 'Exploits Sauvegardés', icon: <FiBookmark size={18} /> },
+    { id: 'nvd', label: 'NVD (Coming Soon...)', icon: <FiSearch size={18} />, disabled: true },
+    { id: 'vuldb', label: 'VulDB (Coming Soon...)', icon: <FiSearch size={18} />, disabled: true },
   ];
   
   // Définir les éléments du sous-menu Cibles
@@ -184,12 +185,6 @@ const Sidebar = ({ activeView, setActiveView }) => {
   // Définir les éléments du sous-menu M4lwar3b1tes
   const malwareSubMenuItems = [
     { id: 'msfvenom', label: 'Msfvenom', icon: <FcBiohazard size={18} /> },
-    { id: 'ransomware', label: 'Ransomware Gen', icon: <FcDebt size={18} />, disabled: true },
-    { id: 'adware', label: 'Adware Gen', icon: <FcAddressBook size={18} />, disabled: true },
-    { id: 'backdoor', label: 'Backdoor Gen', icon: <PiDoorOpenFill size={18} />, disabled: true },
-    { id: 'keylogger', label: 'Keylogger Gen', icon: <FcKey size={18} />, disabled: true },
-    { id: 'botnet', label: 'Botnet Gen', icon: <FcGlobe size={18} />, disabled: true },
-    { id: 'malwaregarbage', label: 'Malware Garbage', icon: <FcDataConfiguration size={18} />, disabled: true },
   ];
   
   // Définir les éléments du sous-menu CC
@@ -688,18 +683,16 @@ const Sidebar = ({ activeView, setActiveView }) => {
           <li className="mb-2">
             <button
               onClick={toggleIotSearchMenu}
-              className={`flex items-center w-full p-3 ${
+              className={`flex items-center w-full p-3 justify-between ${
                 isIotSearchViewActive
                   ? 'bg-indigo-50 text-indigo-600 dark:bg-gray-700 dark:text-indigo-400'
                   : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
               } transition-colors duration-200`}
             >
-              <div className="flex items-center">
-                <span className="mr-4"><FiGlobe size={20} /></span>
-                {!collapsed && (
-                  <span>IoT Search</span>
-                )}
-              </div>
+              <span className="mr-4"><FiGlobe size={20} /></span>
+              {!collapsed && (
+                <span>IoT Search</span>
+              )}
               {!collapsed && (
                 <span>
                   {iotSearchMenuOpen ? <FiChevronDown size={16} /> : <FiChevronRight size={16} />}

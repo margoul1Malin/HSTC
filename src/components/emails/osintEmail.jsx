@@ -6,7 +6,7 @@ import { apiKeysService } from '../../services/apiKeysService';
 
 const OsintEmail = () => {
   // Contexte de notification
-  const { showSuccess, showError, showInfo, showWarning } = useNotification();
+  const { showSuccess, showError, showInfo, showWarning, showNotification } = useNotification();
   
   // États pour les paramètres de recherche
   const [domain, setDomain] = useState('');
@@ -63,6 +63,71 @@ const OsintEmail = () => {
     
     loadSavedData();
   }, []);
+  
+  // Charger les données sauvegardées au démarrage
+  useEffect(() => {
+    const loadApiKeys = async () => {
+      try {
+        const hunterKey = await apiKeysService.getKey('hunterApiKey');
+        if (hunterKey) setHunterApiKey(hunterKey);
+        
+        const leakCheckKey = await apiKeysService.getKey('leakCheckApiKey');
+        if (leakCheckKey) setLeakCheckApiKey(leakCheckKey);
+      } catch (error) {
+        showError("Erreur lors du chargement des clés API");
+        console.error("Erreur de chargement des clés API:", error);
+      }
+    };
+    
+    loadApiKeys();
+    
+    // Récupérer l'adresse email depuis le localStorage si disponible
+    const savedEmail = localStorage.getItem('osintEmailAddress');
+    if (savedEmail) {
+      setEmail(savedEmail);
+      // Définir le type de recherche sur 'email'
+      setSearchType('email');
+      // Supprimer l'adresse email du localStorage pour éviter de la réutiliser lors des prochains chargements
+      localStorage.removeItem('osintEmailAddress');
+    }
+  }, []);
+  
+  // Charger les clés API et l'historique depuis le localStorage au chargement
+  useEffect(() => {
+    const savedHunterKey = localStorage.getItem('hunter_api_key');
+    const savedLeakCheckKey = localStorage.getItem('leakcheck_api_key');
+    const savedHistory = JSON.parse(localStorage.getItem('osint_email_history')) || [];
+    
+    if (savedHunterKey) setHunterApiKey(savedHunterKey);
+    if (savedLeakCheckKey) setLeakCheckApiKey(savedLeakCheckKey);
+    setSearchHistory(savedHistory);
+    
+    // Tester l'API Electron
+    testElectronAPI();
+  }, []);
+  
+  // Charger les clés API et les données d'email
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const key = await apiKeysService.getKey('emailOsint');
+        if (key) setApiKey(key);
+      } catch (error) {
+        console.error("Erreur lors du chargement de la clé API:", error);
+        showNotification("Erreur", "Impossible de charger la clé API", "error");
+      }
+      
+      // Vérifier si un email a été passé depuis la vue Targets
+      const emailData = localStorage.getItem('phisherEmail');
+      if (emailData) {
+        setEmail(emailData);
+        // Supprimer les données pour éviter de les réutiliser à chaque montage
+        localStorage.removeItem('phisherEmail');
+      }
+    };
+    
+    loadData();
+  }, [showNotification]);
   
   // Fonction pour effectuer des requêtes HTTP via l'API Electron
   const proxyRequest = async (url, headers = {}, method = 'GET', data = null) => {

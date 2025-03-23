@@ -44,6 +44,7 @@ import WebTechnologies from './components/OSINT/WebTechnologies';
 import ProxyList from './components/OSINT/ProxyList';
 import Msfvenom from './components/Malware/Msfvenom';
 import './styles/App.css';
+import { NotificationProvider } from './context/NotificationContext';
 
 const App = () => {
   console.log('App - Rendu');
@@ -266,12 +267,14 @@ const App = () => {
   };
 
   return (
-    <div className={`app ${darkMode ? 'dark' : 'light'}`}>
-      <Sidebar activeView={activeView} setActiveView={setActiveView} />
-      <main className="flex-1 p-6 overflow-auto">
-        {renderActiveView()}
-      </main>
-    </div>
+    <NotificationProvider>
+      <div className={`app ${darkMode ? 'dark' : 'light'}`}>
+        <Sidebar activeView={activeView} setActiveView={setActiveView} />
+        <main className="flex-1 p-6 overflow-auto">
+          {renderActiveView()}
+        </main>
+      </div>
+    </NotificationProvider>
   );
 };
 

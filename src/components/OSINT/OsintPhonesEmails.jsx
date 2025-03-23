@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { FiSearch, FiInfo, FiCheckCircle, FiXCircle, FiSettings, FiUser, FiPhone, FiMail, FiGlobe, FiList } from 'react-icons/fi';
 import { apiKeysService } from '../../services/apiKeysService';
+import { useNotification } from '../../context/NotificationContext';
 
 const OsintPhonesEmails = () => {
+  const { showSuccess, showError, showInfo, showWarning, showNotification } = useNotification();
   const [searchTerm, setSearchTerm] = useState('');
   const [searchType, setSearchType] = useState('all'); // 'phone', 'email', 'username', 'all'
   const [apiKey, setApiKey] = useState('');
@@ -13,20 +15,30 @@ const OsintPhonesEmails = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [savingKey, setSavingKey] = useState(false);
 
-  // Charger la clé API au démarrage
+  // Charger les données sauvegardées au démarrage
   useEffect(() => {
-    const loadApiKey = async () => {
+    const loadApiKeys = async () => {
       try {
-        const key = await apiKeysService.getKey('rapidapiOsint');
-        setApiKey(key || '');
+        const rapidapiKey = await apiKeysService.getKey('rapidapiOsint');
+        if (rapidapiKey) setApiKey(rapidapiKey);
       } catch (error) {
-        console.error('Erreur lors du chargement de la clé API:', error);
-        setError('Impossible de charger la clé API. Veuillez la configurer manuellement.');
+        console.error("Erreur lors du chargement des clés API:", error);
+        showError("Impossible de charger la clé API. Veuillez la configurer manuellement.");
       }
     };
     
-    loadApiKey();
-  }, []);
+    loadApiKeys();
+    
+    // Vérifier si des données ont été passées depuis la vue Targets
+    const osintData = localStorage.getItem('osintPhonesEmailsData');
+    if (osintData) {
+      setSearchTerm(osintData);
+      // Déterminer automatiquement le type de recherche
+      setSearchType(detectSearchType(osintData));
+      // Supprimer les données pour éviter de les réutiliser à chaque montage
+      localStorage.removeItem('osintPhonesEmailsData');
+    }
+  }, [showError]);
 
   // Fonction pour sauvegarder la clé API
   const saveApiKey = async () => {
@@ -40,11 +52,11 @@ const OsintPhonesEmails = () => {
         setSuccessMessage('Clé API sauvegardée avec succès !');
         setTimeout(() => setSuccessMessage(''), 3000);
       } else {
-        setError('Veuillez entrer une clé API valide');
+        showError('Veuillez entrer une clé API valide');
       }
     } catch (error) {
       console.error('Erreur lors de la sauvegarde de la clé API:', error);
-      setError('Erreur lors de la sauvegarde de la clé API. Veuillez réessayer.');
+      showError('Erreur lors de la sauvegarde de la clé API. Veuillez réessayer.');
     } finally {
       setSavingKey(false);
     }
@@ -53,12 +65,12 @@ const OsintPhonesEmails = () => {
   // Fonction pour effectuer la recherche OSINT
   const performSearch = async () => {
     if (!searchTerm) {
-      setError('Veuillez saisir un terme de recherche');
+      showError('Veuillez saisir un terme de recherche');
       return;
     }
 
     if (!apiKey) {
-      setError('Veuillez configurer votre clé API RapidAPI');
+      showError('Veuillez configurer votre clé API RapidAPI');
       return;
     }
 
@@ -90,7 +102,7 @@ const OsintPhonesEmails = () => {
       setResults(data);
     } catch (error) {
       console.error('Erreur lors de la recherche OSINT:', error);
-      setError(error.message || 'Une erreur est survenue lors de la recherche');
+      showError(error.message || 'Une erreur est survenue lors de la recherche');
     } finally {
       setLoading(false);
     }

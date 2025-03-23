@@ -1,81 +1,80 @@
-import React, { useState, useEffect } from 'react';
-import { FiCheckCircle, FiAlertCircle, FiX } from 'react-icons/fi';
+import React, { useEffect, useState } from 'react';
+import { FiAlertCircle, FiCheckCircle, FiInfo, FiAlertTriangle, FiX } from 'react-icons/fi';
 
-const Notification = ({ type = 'success', message, onClose, duration = 3000 }) => {
+const Notification = ({ id, message, type = 'info', duration = 3000, onClose }) => {
   const [isVisible, setIsVisible] = useState(true);
 
+  // Configurer un timer pour fermer la notification après la durée spécifiée
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-      setTimeout(() => {
-        onClose();
-      }, 300); // Délai pour l'animation de sortie
-    }, duration);
+    if (duration > 0) {
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+        setTimeout(() => onClose(id), 300); // Donner du temps pour l'animation de sortie
+      }, duration);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [id, duration, onClose]);
 
-    return () => clearTimeout(timer);
-  }, [duration, onClose]);
+  // Gérer la fermeture manuelle
+  const handleClose = () => {
+    setIsVisible(false);
+    setTimeout(() => onClose(id), 300); // Donner du temps pour l'animation de sortie
+  };
 
-  const getBackgroundColor = () => {
+  // Définir l'icône et les couleurs en fonction du type
+  const getNotificationStyles = () => {
     switch (type) {
       case 'success':
-        return 'bg-green-100 dark:bg-green-900 border-green-500';
+        return {
+          icon: <FiCheckCircle className="w-5 h-5" />,
+          bgColor: 'bg-green-100 dark:bg-green-900/30',
+          textColor: 'text-green-800 dark:text-green-200',
+          borderColor: 'border-green-500 dark:border-green-700'
+        };
       case 'error':
-        return 'bg-red-100 dark:bg-red-900 border-red-500';
+        return {
+          icon: <FiAlertCircle className="w-5 h-5" />,
+          bgColor: 'bg-red-100 dark:bg-red-900/30',
+          textColor: 'text-red-800 dark:text-red-200',
+          borderColor: 'border-red-500 dark:border-red-700'
+        };
       case 'warning':
-        return 'bg-yellow-100 dark:bg-yellow-900 border-yellow-500';
+        return {
+          icon: <FiAlertTriangle className="w-5 h-5" />,
+          bgColor: 'bg-yellow-100 dark:bg-yellow-900/30',
+          textColor: 'text-yellow-800 dark:text-yellow-200',
+          borderColor: 'border-yellow-500 dark:border-yellow-700'
+        };
       case 'info':
-        return 'bg-blue-100 dark:bg-blue-900 border-blue-500';
       default:
-        return 'bg-gray-100 dark:bg-gray-900 border-gray-500';
+        return {
+          icon: <FiInfo className="w-5 h-5" />,
+          bgColor: 'bg-blue-100 dark:bg-blue-900/30',
+          textColor: 'text-blue-800 dark:text-blue-200',
+          borderColor: 'border-blue-500 dark:border-blue-700'
+        };
     }
   };
 
-  const getTextColor = () => {
-    switch (type) {
-      case 'success':
-        return 'text-green-700 dark:text-green-300';
-      case 'error':
-        return 'text-red-700 dark:text-red-300';
-      case 'warning':
-        return 'text-yellow-700 dark:text-yellow-300';
-      case 'info':
-        return 'text-blue-700 dark:text-blue-300';
-      default:
-        return 'text-gray-700 dark:text-gray-300';
-    }
-  };
-
-  const getIcon = () => {
-    switch (type) {
-      case 'success':
-        return <FiCheckCircle className={`${getTextColor()} mr-3`} size={20} />;
-      case 'error':
-      case 'warning':
-        return <FiAlertCircle className={`${getTextColor()} mr-3`} size={20} />;
-      default:
-        return <FiCheckCircle className={`${getTextColor()} mr-3`} size={20} />;
-    }
-  };
+  const { icon, bgColor, textColor, borderColor } = getNotificationStyles();
 
   return (
-    <div 
-      className={`fixed top-4 right-4 z-50 flex items-center p-4 rounded-lg shadow-lg border-l-4 ${getBackgroundColor()} transition-all duration-300 ${
-        isVisible ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform -translate-y-2'
+    <div
+      className={`flex items-start p-3 mb-3 rounded-md shadow-md border-l-4 transition-opacity duration-300 ${bgColor} ${textColor} ${borderColor} ${
+        isVisible ? 'opacity-100' : 'opacity-0'
       }`}
-      style={{ maxWidth: '400px' }}
+      role="alert"
     >
-      {getIcon()}
-      <div className={`flex-1 ${getTextColor()}`}>
-        {message}
-      </div>
-      <button 
-        onClick={() => {
-          setIsVisible(false);
-          setTimeout(() => onClose(), 300);
-        }}
-        className={`ml-3 p-1 rounded-full hover:bg-white hover:bg-opacity-20 ${getTextColor()}`}
+      <div className="flex-shrink-0 mr-3">{icon}</div>
+      
+      <div className="flex-1 mr-2" dangerouslySetInnerHTML={{ __html: message }} />
+      
+      <button
+        className="flex-shrink-0 opacity-70 hover:opacity-100 focus:outline-none"
+        onClick={handleClose}
       >
-        <FiX size={16} />
+        <FiX className="w-4 h-4" />
       </button>
     </div>
   );

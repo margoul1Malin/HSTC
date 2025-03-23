@@ -35,6 +35,29 @@ const ZAPScanner = () => {
   // Référence pour le conteneur de résultats
   const resultsRef = useRef(null);
   
+  // Vérifier si ZAP est installé
+  const checkZapInstallation = async () => {
+    try {
+      if (window.electronAPI && window.electronAPI.executeCommand) {
+        const command = 'test -d src/programs/ZAP_2.16.0 && echo "installed" || echo "not-installed"';
+        const result = await window.electronAPI.executeCommand(command);
+        
+        if (result.stdout && result.stdout.trim() === "installed") {
+          console.log('ZAP est installé');
+          return true;
+        } else {
+          console.log('ZAP n\'est pas installé');
+          showWarning('OWASP ZAP n\'est pas installé. Certaines fonctionnalités peuvent ne pas fonctionner correctement.');
+          return false;
+        }
+      }
+      return false;
+    } catch (error) {
+      console.error('Erreur lors de la vérification de l\'installation de ZAP:', error);
+      return false;
+    }
+  };
+  
   // Vérifier si ZAP est en cours d'exécution
   const checkZapStatus = async () => {
     try {
@@ -81,13 +104,26 @@ const ZAPScanner = () => {
   // Vérifier le statut de ZAP au chargement du composant
   useEffect(() => {
     checkZapStatus();
+    checkZapInstallation();
+    loadSavedConfiguration();
     
-    // Récupérer la clé API depuis le localStorage
-    const savedApiKey = localStorage.getItem('zapApiKey');
-    if (savedApiKey) {
-      setApiKey(savedApiKey);
-      console.log('Clé API ZAP chargée depuis le localStorage');
+    // Vérifier si une URL a été passée depuis la vue Targets
+    const urlData = localStorage.getItem('zapScannerUrl');
+    if (urlData) {
+      setTarget(urlData);
+      addLog(`Cible définie depuis Targets: ${urlData}`, 'info');
+      // Supprimer les données pour éviter de les réutiliser à chaque montage
+      localStorage.removeItem('zapScannerUrl');
     }
+    
+    // Nettoyer le processus ZAP au démontage du composant
+    return () => {
+      if (isZapRunning && window.electronAPI) {
+        window.electronAPI.killProcess('zap')
+          .then(() => console.log('ZAP arrêté avec succès'))
+          .catch(error => console.error('Erreur lors de l\'arrêt de ZAP:', error));
+      }
+    };
   }, []);
   
   // Démarrer ZAP

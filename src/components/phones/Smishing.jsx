@@ -5,7 +5,7 @@ import { sendSms as twilioSendSms, checkMessageStatus, testTwilioConnection } fr
 import { apiKeysService } from '../../services/apiKeysService';
 
 const Smishing = () => {
-  const { showSuccess, showError, showInfo, showWarning, showConfirm } = useNotification();
+  const { showSuccess, showError, showInfo, showWarning, showConfirm, showNotification } = useNotification();
   const [loading, setLoading] = useState(false);
   const [testingConnection, setTestingConnection] = useState(false);
   const [twilioAuthToken, setTwilioAuthToken] = useState('');
@@ -100,13 +100,35 @@ const Smishing = () => {
         if (twilioSid && twilioToken) {
           checkAccountStatus(twilioSid, twilioToken);
         }
+
+        // Charger les numéros Twilio
+        const phoneNumbers = JSON.parse(localStorage.getItem('twilio_smishing_numbers') || '[]');
+        if (phoneNumbers && phoneNumbers.length > 0) {
+          setRecipients(phoneNumbers);
+        }
+        
+        // Charger les modèles SMS
+        const templates = JSON.parse(localStorage.getItem('smishing_templates') || '[]');
+        if (templates && templates.length > 0) {
+          setTemplates(templates);
+        }
+        
+        // Vérifier si un numéro de téléphone a été passé depuis la vue Targets
+        const phoneData = localStorage.getItem('smishingPhone');
+        if (phoneData) {
+          setRecipient(phoneData);
+          console.log('[Smishing] Numéro cible chargé depuis Targets:', phoneData);
+          // Supprimer les données pour éviter de les réutiliser à chaque montage
+          localStorage.removeItem('smishingPhone');
+        }
       } catch (error) {
         console.error('[Smishing] Erreur lors du chargement des données:', error);
+        showError('Erreur lors du chargement des données sauvegardées');
       }
     };
     
     loadSavedData();
-  }, []);
+  }, [showError]);
   
   // Vérifier le statut du compte Twilio
   const checkAccountStatus = async (accountSid, authToken) => {

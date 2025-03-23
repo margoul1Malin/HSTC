@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { FiSearch, FiAlertCircle, FiInfo, FiDownload, FiFileText, FiFile } from 'react-icons/fi';
 import { useNotification } from '../../context/NotificationContext';
 import { apiKeysService } from '../../services/apiKeysService';
+import { toast } from 'react-toastify';
 
 const PhoneOsint = () => {
-  const { showSuccess, showError, showInfo, showWarning } = useNotification();
+  const { showSuccess, showError, showInfo, showWarning, showNotification } = useNotification();
   const [loading, setLoading] = useState(false);
   const [phone, setPhone] = useState('');
   const [apiKey, setApiKey] = useState('');
@@ -54,6 +55,41 @@ const PhoneOsint = () => {
     };
     
     loadSavedData();
+  }, []);
+
+  // Récupérer le numéro de téléphone depuis le localStorage au chargement
+  useEffect(() => {
+    const savedPhoneNumber = localStorage.getItem('osintPhoneNumber');
+    if (savedPhoneNumber) {
+      setPhone(savedPhoneNumber);
+      // Supprimer le numéro de téléphone du localStorage pour éviter de le réutiliser lors des prochains chargements
+      localStorage.removeItem('osintPhoneNumber');
+    }
+  }, []);
+
+  // Chargement de la clé API et des informations du téléphone depuis localStorage au montage du composant
+  useEffect(() => {
+    const loadApiKey = async () => {
+      try {
+        const key = await apiKeysService.getKey('phoneOsint');
+        setApiKey(key || '');
+      } catch (error) {
+        console.error("Erreur lors du chargement de la clé API:", error);
+        toast.error("Impossible de charger la clé API", {
+          position: toast.POSITION.TOP_RIGHT
+        });
+      }
+    };
+    
+    loadApiKey();
+    
+    // Vérifier si un numéro de téléphone a été passé depuis la vue Targets
+    const phoneData = localStorage.getItem('smishingPhone');
+    if (phoneData) {
+      setPhoneNumber(phoneData);
+      // Supprimer les données pour éviter de les réutiliser à chaque montage
+      localStorage.removeItem('smishingPhone');
+    }
   }, []);
 
   // Sauvegarder les clés API
@@ -162,13 +198,13 @@ const PhoneOsint = () => {
       let cmd;
       if (platform === 'win32') {
         // Utiliser PowerShell pour Windows
-        cmd = `powershell -Command "& {python .\\src\\scripts\\phones\\win_phone_leakcheck.py '${phone}' '${apiKey}'}"`;
+        cmd = `powershell -Command "& {.\\env\\Scripts\\python .\\src\\scripts\\phones\\win_phone_leakcheck.py '${phone}' '${apiKey}'}"`;
       } else if (platform === 'darwin') {
         // macOS
-        cmd = `python ./src/scripts/phones/mac_phone_leakcheck.py '${phone}' '${apiKey}'`;
+        cmd = `./env/bin/python ./src/scripts/phones/mac_phone_leakcheck.py '${phone}' '${apiKey}'`;
       } else {
         // Linux et autres
-        cmd = `python ./src/scripts/phones/linux_phone_leakcheck.py '${phone}' '${apiKey}'`;
+        cmd = `./env/bin/python ./src/scripts/phones/linux_phone_leakcheck.py '${phone}' '${apiKey}'`;
       }
       
       // Masquer la clé API dans les logs
