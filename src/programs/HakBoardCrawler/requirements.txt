@@ -1,0 +1,29 @@
+# HakBoardCrawler - Scanner de vulnérabilités web
+# Fichier des dépendances
+
+# Dépendances principales
+requests>=2.28.0
+beautifulsoup4>=4.11.0
+fake_useragent>=1.1.0
+pymupdf>=1.21.0         # Pour les PDF
+python-docx>=0.8.11     # Pour les documents Word
+Pillow>=9.2.0           # Pour les images
+exifread>=3.0.0         # Pour les métadonnées d'images
+tldextract>=3.4.0       # Pour l'analyse des domaines
+lxml>=4.9.0             # Pour l'analyse XML
+jinja2>=3.1.0           # Pour les templates HTML
+markupsafe>=2.1.0       # Dépendance de Jinja2
+markdown>=3.4.0         # Pour les conversions Markdown
+pyyaml>=6.0.0           # Pour le parsing de YAML
+python-magic>=0.4.27    # Pour la détection de type MIME
+urllib3>=1.26.12
+certifi>=2022.9.24
+chardet>=5.1.0
+idna>=3.4
+cryptography>=39.0.0    # Pour l'analyse des certificats SSL
+
+# Dépendances pour l'export
+pdfkit>=1.0.0           # Pour l'export en PDF
+
+# Autres dépendances
+argparse>=1.4.0 

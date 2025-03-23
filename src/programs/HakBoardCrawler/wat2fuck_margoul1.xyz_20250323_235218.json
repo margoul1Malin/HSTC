@@ -1,0 +1,3738 @@
+{
+  "target": "http://margoul1.xyz",
+  "timestamp": "2025-03-23T23:52:05.339434",
+  "mode": "aggressive",
+  "vulnerabilities": {
+    "target": "http://margoul1.xyz",
+    "cors_issues": [],
+    "csp_issues": [],
+    "header_issues": [
+      {
+        "severity": "high",
+        "header": "X-Content-Type-Options",
+        "description": "En-tête X-Content-Type-Options manquant. Empêche le navigateur d'interpréter les fichiers comme un type MIME différent."
+      },
+      {
+        "severity": "high",
+        "header": "X-Frame-Options",
+        "description": "En-tête X-Frame-Options manquant. Protège contre les attaques de clickjacking."
+      },
+      {
+        "severity": "high",
+        "header": "X-XSS-Protection",
+        "description": "En-tête X-XSS-Protection manquant. Filtre de base pour les attaques XSS dans les navigateurs plus anciens."
+      },
+      {
+        "severity": "high",
+        "header": "Strict-Transport-Security",
+        "description": "En-tête Strict-Transport-Security manquant. Force les connexions via HTTPS plutôt que HTTP."
+      },
+      {
+        "severity": "low",
+        "header": "server",
+        "description": "L'en-tête server révèle des informations sur la technologie utilisée: Vercel"
+      }
+    ],
+    "exposed_files": [],
+    "potential_vulnerabilities": []
+  },
+  "header_issues": [
+    {
+      "severity": "high",
+      "header": "X-Content-Type-Options",
+      "description": "En-tête X-Content-Type-Options manquant. Empêche le navigateur d'interpréter les fichiers comme un type MIME différent."
+    },
+    {
+      "severity": "high",
+      "header": "X-Frame-Options",
+      "description": "En-tête X-Frame-Options manquant. Protège contre les attaques de clickjacking."
+    },
+    {
+      "severity": "high",
+      "header": "X-XSS-Protection",
+      "description": "En-tête X-XSS-Protection manquant. Filtre de base pour les attaques XSS dans les navigateurs plus anciens."
+    },
+    {
+      "severity": "high",
+      "header": "Strict-Transport-Security",
+      "description": "En-tête Strict-Transport-Security manquant. Force les connexions via HTTPS plutôt que HTTP."
+    },
+    {
+      "severity": "low",
+      "header": "server",
+      "description": "L'en-tête server révèle des informations sur la technologie utilisée: Vercel"
+    }
+  ],
+  "exposed_files": [],
+  "potential_vulnerabilities": [],
+  "site_map": {
+    "url": "http://margoul1.xyz",
+    "nodes": [
+      {
+        "url": "http://margoul1.xyz",
+        "title": "Margoul1 Store",
+        "depth": 0,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "links": [
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Margoul1",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/login",
+            "text": "Connexion",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Explorer",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/categories/gadgets",
+            "text": "GadgetsInnovations technologiques",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/categories/softwares",
+            "text": "SoftwaresSolutions digitales",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/categories/services",
+            "text": "ServicesSupport professionnel",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67ab71204290856a7232e926",
+            "text": "NouveauWickenD (Coming Soon)Interface Graphique pour RobberChicken Wifi.0.00 €",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67ab704683dda53875789587",
+            "text": "NouveauProgrammationPossibilité de travailler ensemble ou seul sur un projet devloppé en Python - Micropython0.00 €",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925",
+            "text": "NouveauGUIckenInterface Graphique pour RobberChicken0.00 €",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924",
+            "text": "NouveauServices - PentestingEnvoyez-moi un message pour voir les détails de votre demande.0.00 €",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67ab6e1383dda53875789586",
+            "text": "NouveauSite WebEnvoyez-moi un message sans payer les 1€, nous verrons les détails du site que vous souhaitez créer et feront un devis en conséquence.0.00 €",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          }
+        ]
+      },
+      {
+        "url": "http://margoul1.xyz/",
+        "title": "Margoul1 Store",
+        "depth": 1,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "links": [
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Margoul1",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/login",
+            "text": "Connexion",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Explorer",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/categories/gadgets",
+            "text": "GadgetsInnovations technologiques",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/categories/softwares",
+            "text": "SoftwaresSolutions digitales",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/categories/services",
+            "text": "ServicesSupport professionnel",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67ab71204290856a7232e926",
+            "text": "NouveauWickenD (Coming Soon)Interface Graphique pour RobberChicken Wifi.0.00 €",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67ab704683dda53875789587",
+            "text": "NouveauProgrammationPossibilité de travailler ensemble ou seul sur un projet devloppé en Python - Micropython0.00 €",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925",
+            "text": "NouveauGUIckenInterface Graphique pour RobberChicken0.00 €",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924",
+            "text": "NouveauServices - PentestingEnvoyez-moi un message pour voir les détails de votre demande.0.00 €",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67ab6e1383dda53875789586",
+            "text": "NouveauSite WebEnvoyez-moi un message sans payer les 1€, nous verrons les détails du site que vous souhaitez créer et feront un devis en conséquence.0.00 €",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          }
+        ]
+      },
+      {
+        "url": "http://margoul1.xyz/produits",
+        "title": "Margoul1 Store",
+        "depth": 1,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "links": [
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Margoul1",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/login",
+            "text": "Connexion",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          }
+        ]
+      },
+      {
+        "url": "http://margoul1.xyz/contact",
+        "title": "Margoul1 Store",
+        "depth": 1,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "links": [
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Margoul1",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/login",
+            "text": "Connexion",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          }
+        ]
+      },
+      {
+        "url": "http://margoul1.xyz/login",
+        "title": "Margoul1 Store",
+        "depth": 1,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "links": [
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Margoul1",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/login",
+            "text": "Connexion",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          }
+        ]
+      },
+      {
+        "url": "http://margoul1.xyz/categories/gadgets",
+        "title": "Margoul1 Store",
+        "depth": 1,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "links": [
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Margoul1",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/login",
+            "text": "Connexion",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67adea2c5ba2965134191177",
+            "text": "RobberChicken Wifi (Coming Soon)Version Wifi de RobberChicken avec Server C2 Command & Control, BruteForce Attacks & plus encore..39.99 €Nouveau",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2",
+            "text": "RobberChickenClé USB RubberDucky avec interface graphique et complètement reprogrammable.29.99 €Nouveau",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          }
+        ]
+      },
+      {
+        "url": "http://margoul1.xyz/categories/softwares",
+        "title": "Margoul1 Store",
+        "depth": 1,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "links": [
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Margoul1",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/login",
+            "text": "Connexion",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67ab71204290856a7232e926",
+            "text": "WickenD (Coming Soon)Interface Graphique pour RobberChicken Wifi.0.00 €Nouveau",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925",
+            "text": "GUIckenInterface Graphique pour RobberChicken0.00 €Nouveau",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          }
+        ]
+      },
+      {
+        "url": "http://margoul1.xyz/categories/services",
+        "title": "Margoul1 Store",
+        "depth": 1,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "links": [
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Margoul1",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/login",
+            "text": "Connexion",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9",
+            "text": "Services - Landing Page~500€ Selon vos objectifs. Tarif négociable. Veuillez me contacter directement sur le site pour obtenir plus d'informations. 0.00 €Nouveau",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5",
+            "text": "Veille Tech ScraperWeb Scraper pour de la veille technologique ça évite de s'emmerder à aller partout. Le Lien : https://github.com/margoul1Malin/InfoScraper0.00 €Nouveau",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67ab704683dda53875789587",
+            "text": "Services - ProgrammationPossibilité de travailler ensemble ou seul sur un projet devloppé en Python - Micropython0.00 €Nouveau",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924",
+            "text": "Services - PentestingEnvoyez-moi un message pour voir les détails de votre demande.0.00 €Nouveau",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits/67ab6e1383dda53875789586",
+            "text": "Services - Site WebEnvoyez-moi un message, nous verrons les détails du site que vous souhaitez créer et feront un devis en conséquence.0.00 €Nouveau",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          }
+        ]
+      },
+      {
+        "url": "http://margoul1.xyz/produits/67ab71204290856a7232e926",
+        "title": "Margoul1 Store",
+        "depth": 1,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "links": [
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Margoul1",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/login",
+            "text": "Connexion",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          }
+        ]
+      },
+      {
+        "url": "http://margoul1.xyz/produits/67ab704683dda53875789587",
+        "title": "Margoul1 Store",
+        "depth": 1,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "links": [
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Margoul1",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/login",
+            "text": "Connexion",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          }
+        ]
+      },
+      {
+        "url": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925",
+        "title": "Margoul1 Store",
+        "depth": 1,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "links": [
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Margoul1",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/login",
+            "text": "Connexion",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          }
+        ]
+      },
+      {
+        "url": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924",
+        "title": "Margoul1 Store",
+        "depth": 1,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "links": [
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Margoul1",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/login",
+            "text": "Connexion",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          }
+        ]
+      },
+      {
+        "url": "http://margoul1.xyz/produits/67ab6e1383dda53875789586",
+        "title": "Margoul1 Store",
+        "depth": 1,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "links": [
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Margoul1",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/login",
+            "text": "Connexion",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          }
+        ]
+      },
+      {
+        "url": "http://margoul1.xyz/produits/67adea2c5ba2965134191177",
+        "title": "Margoul1 Store",
+        "depth": 2,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "links": [
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Margoul1",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/login",
+            "text": "Connexion",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          }
+        ]
+      },
+      {
+        "url": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2",
+        "title": "Margoul1 Store",
+        "depth": 2,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "links": [
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Margoul1",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/login",
+            "text": "Connexion",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          }
+        ]
+      },
+      {
+        "url": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9",
+        "title": "Margoul1 Store",
+        "depth": 2,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "links": [
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Margoul1",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/login",
+            "text": "Connexion",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          }
+        ]
+      },
+      {
+        "url": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5",
+        "title": "Margoul1 Store",
+        "depth": 2,
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "links": [
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Margoul1",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/login",
+            "text": "Connexion",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/",
+            "text": "Accueil",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/produits",
+            "text": "Produits",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          },
+          {
+            "url": "http://margoul1.xyz/contact",
+            "text": "Contact",
+            "is_external": false
+          }
+        ]
+      }
+    ],
+    "resources": {
+      "images": [
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1518770660439-4636190af475%3Fauto%3Dformat%26fit%3Dcrop%26q%3D80&w=3840&q=75",
+          "alt": "Tech background",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288863%2Fproducts%2Fp44s3pzjkgxakhysraiv.jpg&w=3840&q=75",
+          "alt": "WickenD (Coming Soon)",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288630%2Fproducts%2Fv72bh743zm6vunxyyv2n.webp&w=3840&q=75",
+          "alt": "Programmation",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288479%2Fproducts%2Fdntkzmepmvpxngr36ivt.webp&w=3840&q=75",
+          "alt": "GUIcken",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288395%2Fproducts%2Fhxzszr3gpoasehgtrjup.jpg&w=3840&q=75",
+          "alt": "Services - Pentesting",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288082%2Fproducts%2Fmy8lkkzst37p6aaxeysg.jpg&w=3840&q=75",
+          "alt": "Site Web",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1518770660439-4636190af475%3Fauto%3Dformat%26fit%3Dcrop%26q%3D80&w=3840&q=75",
+          "alt": "Tech background",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288863%2Fproducts%2Fp44s3pzjkgxakhysraiv.jpg&w=3840&q=75",
+          "alt": "WickenD (Coming Soon)",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288630%2Fproducts%2Fv72bh743zm6vunxyyv2n.webp&w=3840&q=75",
+          "alt": "Programmation",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288479%2Fproducts%2Fdntkzmepmvpxngr36ivt.webp&w=3840&q=75",
+          "alt": "GUIcken",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288395%2Fproducts%2Fhxzszr3gpoasehgtrjup.jpg&w=3840&q=75",
+          "alt": "Services - Pentesting",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288082%2Fproducts%2Fmy8lkkzst37p6aaxeysg.jpg&w=3840&q=75",
+          "alt": "Site Web",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739450922%2Fproducts%2Fuglxihlurjyaxd6qbfkx.webp&w=3840&q=75",
+          "alt": "RobberChicken Wifi (Coming Soon)",
+          "page": "http://margoul1.xyz/categories/gadgets"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=%2Fuploads%2F1738932989377-RobberChicken.webp&w=3840&q=75",
+          "alt": "RobberChicken",
+          "page": "http://margoul1.xyz/categories/gadgets"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288863%2Fproducts%2Fp44s3pzjkgxakhysraiv.jpg&w=3840&q=75",
+          "alt": "WickenD (Coming Soon)",
+          "page": "http://margoul1.xyz/categories/softwares"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288479%2Fproducts%2Fdntkzmepmvpxngr36ivt.webp&w=3840&q=75",
+          "alt": "GUIcken",
+          "page": "http://margoul1.xyz/categories/softwares"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1741707426%2Fproducts%2Fzjthjdyuctfsssg2iids.jpg&w=3840&q=75",
+          "alt": "Services - Landing Page",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739450561%2Fproducts%2Fs5bnyew2ls6gdlapqjji.png&w=3840&q=75",
+          "alt": "Veille Tech Scraper",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288630%2Fproducts%2Fv72bh743zm6vunxyyv2n.webp&w=3840&q=75",
+          "alt": "Services - Programmation",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288395%2Fproducts%2Fhxzszr3gpoasehgtrjup.jpg&w=3840&q=75",
+          "alt": "Services - Pentesting",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739352108%2Fproducts%2Fkt5oztisahhvog5h4okx.jpg&w=3840&q=75",
+          "alt": "Services - Site Web",
+          "page": "http://margoul1.xyz/categories/services"
+        }
+      ],
+      "scripts": [
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/page-ac0b06712ae6134d.js",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/page-ac0b06712ae6134d.js",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js",
+          "page": "http://margoul1.xyz/produits"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js",
+          "page": "http://margoul1.xyz/produits"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js",
+          "page": "http://margoul1.xyz/produits"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js",
+          "page": "http://margoul1.xyz/produits"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js",
+          "page": "http://margoul1.xyz/produits"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js",
+          "page": "http://margoul1.xyz/produits"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js",
+          "page": "http://margoul1.xyz/produits"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/(shop)/produits/page-f6b436c426e4fee6.js",
+          "page": "http://margoul1.xyz/produits"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js",
+          "page": "http://margoul1.xyz/produits"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js",
+          "page": "http://margoul1.xyz/produits"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js",
+          "page": "http://margoul1.xyz/produits"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js",
+          "page": "http://margoul1.xyz/produits"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "page": "http://margoul1.xyz/produits"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js",
+          "page": "http://margoul1.xyz/produits"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js",
+          "page": "http://margoul1.xyz/contact"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js",
+          "page": "http://margoul1.xyz/contact"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js",
+          "page": "http://margoul1.xyz/contact"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js",
+          "page": "http://margoul1.xyz/contact"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js",
+          "page": "http://margoul1.xyz/contact"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js",
+          "page": "http://margoul1.xyz/contact"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/(shop)/contact/page-a32f5679792fe288.js",
+          "page": "http://margoul1.xyz/contact"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js",
+          "page": "http://margoul1.xyz/contact"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js",
+          "page": "http://margoul1.xyz/contact"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js",
+          "page": "http://margoul1.xyz/contact"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js",
+          "page": "http://margoul1.xyz/contact"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js",
+          "page": "http://margoul1.xyz/contact"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "page": "http://margoul1.xyz/contact"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js",
+          "page": "http://margoul1.xyz/contact"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js",
+          "page": "http://margoul1.xyz/login"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js",
+          "page": "http://margoul1.xyz/login"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js",
+          "page": "http://margoul1.xyz/login"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js",
+          "page": "http://margoul1.xyz/login"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js",
+          "page": "http://margoul1.xyz/login"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js",
+          "page": "http://margoul1.xyz/login"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js",
+          "page": "http://margoul1.xyz/login"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/(auth)/login/page-78f7e08f70d3271e.js",
+          "page": "http://margoul1.xyz/login"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js",
+          "page": "http://margoul1.xyz/login"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js",
+          "page": "http://margoul1.xyz/login"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js",
+          "page": "http://margoul1.xyz/login"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js",
+          "page": "http://margoul1.xyz/login"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "page": "http://margoul1.xyz/login"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js",
+          "page": "http://margoul1.xyz/login"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js",
+          "page": "http://margoul1.xyz/categories/gadgets"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js",
+          "page": "http://margoul1.xyz/categories/gadgets"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js",
+          "page": "http://margoul1.xyz/categories/gadgets"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js",
+          "page": "http://margoul1.xyz/categories/gadgets"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js",
+          "page": "http://margoul1.xyz/categories/gadgets"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js",
+          "page": "http://margoul1.xyz/categories/gadgets"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js",
+          "page": "http://margoul1.xyz/categories/gadgets"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js",
+          "page": "http://margoul1.xyz/categories/gadgets"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js",
+          "page": "http://margoul1.xyz/categories/gadgets"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js",
+          "page": "http://margoul1.xyz/categories/gadgets"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js",
+          "page": "http://margoul1.xyz/categories/gadgets"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/categories/%5Bcategory%5D/page-067f13d4434a75e5.js",
+          "page": "http://margoul1.xyz/categories/gadgets"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "page": "http://margoul1.xyz/categories/gadgets"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js",
+          "page": "http://margoul1.xyz/categories/gadgets"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js",
+          "page": "http://margoul1.xyz/categories/softwares"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js",
+          "page": "http://margoul1.xyz/categories/softwares"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js",
+          "page": "http://margoul1.xyz/categories/softwares"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js",
+          "page": "http://margoul1.xyz/categories/softwares"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js",
+          "page": "http://margoul1.xyz/categories/softwares"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js",
+          "page": "http://margoul1.xyz/categories/softwares"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js",
+          "page": "http://margoul1.xyz/categories/softwares"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js",
+          "page": "http://margoul1.xyz/categories/softwares"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js",
+          "page": "http://margoul1.xyz/categories/softwares"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js",
+          "page": "http://margoul1.xyz/categories/softwares"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js",
+          "page": "http://margoul1.xyz/categories/softwares"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/categories/%5Bcategory%5D/page-067f13d4434a75e5.js",
+          "page": "http://margoul1.xyz/categories/softwares"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "page": "http://margoul1.xyz/categories/softwares"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js",
+          "page": "http://margoul1.xyz/categories/softwares"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/categories/%5Bcategory%5D/page-067f13d4434a75e5.js",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js",
+          "page": "http://margoul1.xyz/produits/67ab71204290856a7232e926"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js",
+          "page": "http://margoul1.xyz/produits/67ab71204290856a7232e926"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js",
+          "page": "http://margoul1.xyz/produits/67ab71204290856a7232e926"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js",
+          "page": "http://margoul1.xyz/produits/67ab71204290856a7232e926"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js",
+          "page": "http://margoul1.xyz/produits/67ab71204290856a7232e926"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js",
+          "page": "http://margoul1.xyz/produits/67ab71204290856a7232e926"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js",
+          "page": "http://margoul1.xyz/produits/67ab71204290856a7232e926"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/produits/%5Bid%5D/page-dcb803a6f3267961.js",
+          "page": "http://margoul1.xyz/produits/67ab71204290856a7232e926"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js",
+          "page": "http://margoul1.xyz/produits/67ab71204290856a7232e926"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js",
+          "page": "http://margoul1.xyz/produits/67ab71204290856a7232e926"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js",
+          "page": "http://margoul1.xyz/produits/67ab71204290856a7232e926"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js",
+          "page": "http://margoul1.xyz/produits/67ab71204290856a7232e926"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "page": "http://margoul1.xyz/produits/67ab71204290856a7232e926"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js",
+          "page": "http://margoul1.xyz/produits/67ab71204290856a7232e926"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js",
+          "page": "http://margoul1.xyz/produits/67ab704683dda53875789587"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js",
+          "page": "http://margoul1.xyz/produits/67ab704683dda53875789587"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js",
+          "page": "http://margoul1.xyz/produits/67ab704683dda53875789587"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js",
+          "page": "http://margoul1.xyz/produits/67ab704683dda53875789587"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js",
+          "page": "http://margoul1.xyz/produits/67ab704683dda53875789587"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js",
+          "page": "http://margoul1.xyz/produits/67ab704683dda53875789587"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js",
+          "page": "http://margoul1.xyz/produits/67ab704683dda53875789587"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/produits/%5Bid%5D/page-dcb803a6f3267961.js",
+          "page": "http://margoul1.xyz/produits/67ab704683dda53875789587"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js",
+          "page": "http://margoul1.xyz/produits/67ab704683dda53875789587"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js",
+          "page": "http://margoul1.xyz/produits/67ab704683dda53875789587"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js",
+          "page": "http://margoul1.xyz/produits/67ab704683dda53875789587"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js",
+          "page": "http://margoul1.xyz/produits/67ab704683dda53875789587"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "page": "http://margoul1.xyz/produits/67ab704683dda53875789587"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js",
+          "page": "http://margoul1.xyz/produits/67ab704683dda53875789587"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js",
+          "page": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js",
+          "page": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js",
+          "page": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js",
+          "page": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js",
+          "page": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js",
+          "page": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js",
+          "page": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/produits/%5Bid%5D/page-dcb803a6f3267961.js",
+          "page": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js",
+          "page": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js",
+          "page": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js",
+          "page": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js",
+          "page": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "page": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js",
+          "page": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js",
+          "page": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js",
+          "page": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js",
+          "page": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js",
+          "page": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js",
+          "page": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js",
+          "page": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js",
+          "page": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/produits/%5Bid%5D/page-dcb803a6f3267961.js",
+          "page": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js",
+          "page": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js",
+          "page": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js",
+          "page": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js",
+          "page": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "page": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js",
+          "page": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js",
+          "page": "http://margoul1.xyz/produits/67ab6e1383dda53875789586"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js",
+          "page": "http://margoul1.xyz/produits/67ab6e1383dda53875789586"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js",
+          "page": "http://margoul1.xyz/produits/67ab6e1383dda53875789586"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js",
+          "page": "http://margoul1.xyz/produits/67ab6e1383dda53875789586"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js",
+          "page": "http://margoul1.xyz/produits/67ab6e1383dda53875789586"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js",
+          "page": "http://margoul1.xyz/produits/67ab6e1383dda53875789586"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js",
+          "page": "http://margoul1.xyz/produits/67ab6e1383dda53875789586"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/produits/%5Bid%5D/page-dcb803a6f3267961.js",
+          "page": "http://margoul1.xyz/produits/67ab6e1383dda53875789586"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js",
+          "page": "http://margoul1.xyz/produits/67ab6e1383dda53875789586"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js",
+          "page": "http://margoul1.xyz/produits/67ab6e1383dda53875789586"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js",
+          "page": "http://margoul1.xyz/produits/67ab6e1383dda53875789586"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js",
+          "page": "http://margoul1.xyz/produits/67ab6e1383dda53875789586"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "page": "http://margoul1.xyz/produits/67ab6e1383dda53875789586"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js",
+          "page": "http://margoul1.xyz/produits/67ab6e1383dda53875789586"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js",
+          "page": "http://margoul1.xyz/produits/67adea2c5ba2965134191177"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js",
+          "page": "http://margoul1.xyz/produits/67adea2c5ba2965134191177"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js",
+          "page": "http://margoul1.xyz/produits/67adea2c5ba2965134191177"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js",
+          "page": "http://margoul1.xyz/produits/67adea2c5ba2965134191177"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js",
+          "page": "http://margoul1.xyz/produits/67adea2c5ba2965134191177"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js",
+          "page": "http://margoul1.xyz/produits/67adea2c5ba2965134191177"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js",
+          "page": "http://margoul1.xyz/produits/67adea2c5ba2965134191177"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/produits/%5Bid%5D/page-dcb803a6f3267961.js",
+          "page": "http://margoul1.xyz/produits/67adea2c5ba2965134191177"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js",
+          "page": "http://margoul1.xyz/produits/67adea2c5ba2965134191177"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js",
+          "page": "http://margoul1.xyz/produits/67adea2c5ba2965134191177"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js",
+          "page": "http://margoul1.xyz/produits/67adea2c5ba2965134191177"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js",
+          "page": "http://margoul1.xyz/produits/67adea2c5ba2965134191177"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "page": "http://margoul1.xyz/produits/67adea2c5ba2965134191177"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js",
+          "page": "http://margoul1.xyz/produits/67adea2c5ba2965134191177"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js",
+          "page": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js",
+          "page": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js",
+          "page": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js",
+          "page": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js",
+          "page": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js",
+          "page": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js",
+          "page": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/produits/%5Bid%5D/page-dcb803a6f3267961.js",
+          "page": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js",
+          "page": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js",
+          "page": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js",
+          "page": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js",
+          "page": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "page": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js",
+          "page": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js",
+          "page": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js",
+          "page": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js",
+          "page": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js",
+          "page": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js",
+          "page": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js",
+          "page": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js",
+          "page": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/produits/%5Bid%5D/page-dcb803a6f3267961.js",
+          "page": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js",
+          "page": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js",
+          "page": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js",
+          "page": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js",
+          "page": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "page": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js",
+          "page": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js",
+          "page": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js",
+          "page": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js",
+          "page": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js",
+          "page": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js",
+          "page": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js",
+          "page": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js",
+          "page": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/produits/%5Bid%5D/page-dcb803a6f3267961.js",
+          "page": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js",
+          "page": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js",
+          "page": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js",
+          "page": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js",
+          "page": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "page": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js",
+          "page": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5"
+        }
+      ],
+      "stylesheets": [
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css",
+          "page": "http://margoul1.xyz"
+        },
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css",
+          "page": "http://margoul1.xyz/"
+        },
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css",
+          "page": "http://margoul1.xyz/produits"
+        },
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css",
+          "page": "http://margoul1.xyz/contact"
+        },
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css",
+          "page": "http://margoul1.xyz/login"
+        },
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css",
+          "page": "http://margoul1.xyz/categories/gadgets"
+        },
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css",
+          "page": "http://margoul1.xyz/categories/softwares"
+        },
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css",
+          "page": "http://margoul1.xyz/categories/services"
+        },
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css",
+          "page": "http://margoul1.xyz/produits/67ab71204290856a7232e926"
+        },
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css",
+          "page": "http://margoul1.xyz/produits/67ab704683dda53875789587"
+        },
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css",
+          "page": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925"
+        },
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css",
+          "page": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924"
+        },
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css",
+          "page": "http://margoul1.xyz/produits/67ab6e1383dda53875789586"
+        },
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css",
+          "page": "http://margoul1.xyz/produits/67adea2c5ba2965134191177"
+        },
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css",
+          "page": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2"
+        },
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css",
+          "page": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9"
+        },
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css",
+          "page": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5"
+        }
+      ],
+      "links": [
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Margoul1",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/login",
+          "text": "Connexion",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Explorer",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/categories/gadgets",
+          "text": "GadgetsInnovations technologiques",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/categories/softwares",
+          "text": "SoftwaresSolutions digitales",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/categories/services",
+          "text": "ServicesSupport professionnel",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67ab71204290856a7232e926",
+          "text": "NouveauWickenD (Coming Soon)Interface Graphique pour RobberChicken Wifi.0.00 €",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67ab704683dda53875789587",
+          "text": "NouveauProgrammationPossibilité de travailler ensemble ou seul sur un projet devloppé en Python - Micropython0.00 €",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925",
+          "text": "NouveauGUIckenInterface Graphique pour RobberChicken0.00 €",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924",
+          "text": "NouveauServices - PentestingEnvoyez-moi un message pour voir les détails de votre demande.0.00 €",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67ab6e1383dda53875789586",
+          "text": "NouveauSite WebEnvoyez-moi un message sans payer les 1€, nous verrons les détails du site que vous souhaitez créer et feront un devis en conséquence.0.00 €",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Margoul1",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/login",
+          "text": "Connexion",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Explorer",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/categories/gadgets",
+          "text": "GadgetsInnovations technologiques",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/categories/softwares",
+          "text": "SoftwaresSolutions digitales",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/categories/services",
+          "text": "ServicesSupport professionnel",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67ab71204290856a7232e926",
+          "text": "NouveauWickenD (Coming Soon)Interface Graphique pour RobberChicken Wifi.0.00 €",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67ab704683dda53875789587",
+          "text": "NouveauProgrammationPossibilité de travailler ensemble ou seul sur un projet devloppé en Python - Micropython0.00 €",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925",
+          "text": "NouveauGUIckenInterface Graphique pour RobberChicken0.00 €",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924",
+          "text": "NouveauServices - PentestingEnvoyez-moi un message pour voir les détails de votre demande.0.00 €",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67ab6e1383dda53875789586",
+          "text": "NouveauSite WebEnvoyez-moi un message sans payer les 1€, nous verrons les détails du site que vous souhaitez créer et feront un devis en conséquence.0.00 €",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Margoul1",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/login",
+          "text": "Connexion",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Margoul1",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/login",
+          "text": "Connexion",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Margoul1",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/login",
+          "text": "Connexion",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Margoul1",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/login",
+          "text": "Connexion",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67adea2c5ba2965134191177",
+          "text": "RobberChicken Wifi (Coming Soon)Version Wifi de RobberChicken avec Server C2 Command & Control, BruteForce Attacks & plus encore..39.99 €Nouveau",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2",
+          "text": "RobberChickenClé USB RubberDucky avec interface graphique et complètement reprogrammable.29.99 €Nouveau",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Margoul1",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/login",
+          "text": "Connexion",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67ab71204290856a7232e926",
+          "text": "WickenD (Coming Soon)Interface Graphique pour RobberChicken Wifi.0.00 €Nouveau",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925",
+          "text": "GUIckenInterface Graphique pour RobberChicken0.00 €Nouveau",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Margoul1",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/login",
+          "text": "Connexion",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9",
+          "text": "Services - Landing Page~500€ Selon vos objectifs. Tarif négociable. Veuillez me contacter directement sur le site pour obtenir plus d'informations. 0.00 €Nouveau",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5",
+          "text": "Veille Tech ScraperWeb Scraper pour de la veille technologique ça évite de s'emmerder à aller partout. Le Lien : https://github.com/margoul1Malin/InfoScraper0.00 €Nouveau",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67ab704683dda53875789587",
+          "text": "Services - ProgrammationPossibilité de travailler ensemble ou seul sur un projet devloppé en Python - Micropython0.00 €Nouveau",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924",
+          "text": "Services - PentestingEnvoyez-moi un message pour voir les détails de votre demande.0.00 €Nouveau",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits/67ab6e1383dda53875789586",
+          "text": "Services - Site WebEnvoyez-moi un message, nous verrons les détails du site que vous souhaitez créer et feront un devis en conséquence.0.00 €Nouveau",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Margoul1",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/login",
+          "text": "Connexion",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Margoul1",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/login",
+          "text": "Connexion",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Margoul1",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/login",
+          "text": "Connexion",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Margoul1",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/login",
+          "text": "Connexion",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Margoul1",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/login",
+          "text": "Connexion",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Margoul1",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/login",
+          "text": "Connexion",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Margoul1",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/login",
+          "text": "Connexion",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Margoul1",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/login",
+          "text": "Connexion",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Margoul1",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/login",
+          "text": "Connexion",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "text": "Accueil",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/produits",
+          "text": "Produits",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        },
+        {
+          "url": "http://margoul1.xyz/contact",
+          "text": "Contact",
+          "is_external": false
+        }
+      ],
+      "forms": [
+        {
+          "action": "",
+          "method": "get",
+          "page": "http://margoul1.xyz/contact",
+          "fields": 2
+        }
+      ],
+      "frames": [],
+      "fonts": [],
+      "media": []
+    },
+    "total_pages": 17,
+    "structure": {
+      "name": "Root",
+      "children": {
+        "produits": {
+          "name": "produits",
+          "children": {
+            "67ab71204290856a7232e926": {
+              "name": "67ab71204290856a7232e926",
+              "children": {},
+              "urls": [
+                {
+                  "url": "http://margoul1.xyz/produits/67ab71204290856a7232e926",
+                  "title": "Margoul1 Store"
+                }
+              ]
+            },
+            "67ab704683dda53875789587": {
+              "name": "67ab704683dda53875789587",
+              "children": {},
+              "urls": [
+                {
+                  "url": "http://margoul1.xyz/produits/67ab704683dda53875789587",
+                  "title": "Margoul1 Store"
+                }
+              ]
+            },
+            "67ab6fa14290856a7232e925": {
+              "name": "67ab6fa14290856a7232e925",
+              "children": {},
+              "urls": [
+                {
+                  "url": "http://margoul1.xyz/produits/67ab6fa14290856a7232e925",
+                  "title": "Margoul1 Store"
+                }
+              ]
+            },
+            "67ab6f4d4290856a7232e924": {
+              "name": "67ab6f4d4290856a7232e924",
+              "children": {},
+              "urls": [
+                {
+                  "url": "http://margoul1.xyz/produits/67ab6f4d4290856a7232e924",
+                  "title": "Margoul1 Store"
+                }
+              ]
+            },
+            "67ab6e1383dda53875789586": {
+              "name": "67ab6e1383dda53875789586",
+              "children": {},
+              "urls": [
+                {
+                  "url": "http://margoul1.xyz/produits/67ab6e1383dda53875789586",
+                  "title": "Margoul1 Store"
+                }
+              ]
+            },
+            "67adea2c5ba2965134191177": {
+              "name": "67adea2c5ba2965134191177",
+              "children": {},
+              "urls": [
+                {
+                  "url": "http://margoul1.xyz/produits/67adea2c5ba2965134191177",
+                  "title": "Margoul1 Store"
+                }
+              ]
+            },
+            "67a602ff0985220c02dec5b2": {
+              "name": "67a602ff0985220c02dec5b2",
+              "children": {},
+              "urls": [
+                {
+                  "url": "http://margoul1.xyz/produits/67a602ff0985220c02dec5b2",
+                  "title": "Margoul1 Store"
+                }
+              ]
+            },
+            "67d058a8746fd55cfa88ffc9": {
+              "name": "67d058a8746fd55cfa88ffc9",
+              "children": {},
+              "urls": [
+                {
+                  "url": "http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9",
+                  "title": "Margoul1 Store"
+                }
+              ]
+            },
+            "67ade8ce75f7af9fa71ab6a5": {
+              "name": "67ade8ce75f7af9fa71ab6a5",
+              "children": {},
+              "urls": [
+                {
+                  "url": "http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5",
+                  "title": "Margoul1 Store"
+                }
+              ]
+            }
+          },
+          "urls": [
+            {
+              "url": "http://margoul1.xyz/produits",
+              "title": "Margoul1 Store"
+            }
+          ]
+        },
+        "contact": {
+          "name": "contact",
+          "children": {},
+          "urls": [
+            {
+              "url": "http://margoul1.xyz/contact",
+              "title": "Margoul1 Store"
+            }
+          ]
+        },
+        "login": {
+          "name": "login",
+          "children": {},
+          "urls": [
+            {
+              "url": "http://margoul1.xyz/login",
+              "title": "Margoul1 Store"
+            }
+          ]
+        },
+        "categories": {
+          "name": "categories",
+          "children": {
+            "gadgets": {
+              "name": "gadgets",
+              "children": {},
+              "urls": [
+                {
+                  "url": "http://margoul1.xyz/categories/gadgets",
+                  "title": "Margoul1 Store"
+                }
+              ]
+            },
+            "softwares": {
+              "name": "softwares",
+              "children": {},
+              "urls": [
+                {
+                  "url": "http://margoul1.xyz/categories/softwares",
+                  "title": "Margoul1 Store"
+                }
+              ]
+            },
+            "services": {
+              "name": "services",
+              "children": {},
+              "urls": [
+                {
+                  "url": "http://margoul1.xyz/categories/services",
+                  "title": "Margoul1 Store"
+                }
+              ]
+            }
+          },
+          "urls": []
+        }
+      },
+      "urls": [
+        {
+          "url": "http://margoul1.xyz",
+          "title": "Margoul1 Store"
+        },
+        {
+          "url": "http://margoul1.xyz/",
+          "title": "Margoul1 Store"
+        }
+      ]
+    },
+    "stats": {
+      "total_pages": 17,
+      "total_links": 180,
+      "total_images": 21,
+      "total_scripts": 238,
+      "total_styles": 17,
+      "total_forms": 1,
+      "total_frames": 0,
+      "max_depth": 2
+    }
+  },
+  "metadata": {
+    "url": "http://margoul1.xyz",
+    "files": [
+      {
+        "url": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1518770660439-4636190af475%3Fauto%3Dformat%26fit%3Dcrop%26q%3D80&w=3840&q=75",
+        "filename": "image",
+        "filetype": "image",
+        "content_type": "image/jpeg",
+        "metadata": {
+          "ImageWidth": 3840,
+          "ImageHeight": 2560,
+          "ImageFormat": "JPEG",
+          "ImageMode": "RGB",
+          "HasGeoData": false
+        }
+      },
+      {
+        "url": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288863%2Fproducts%2Fp44s3pzjkgxakhysraiv.jpg&w=3840&q=75",
+        "filename": "image",
+        "filetype": "image",
+        "content_type": "image/jpeg",
+        "metadata": {
+          "ImageWidth": 225,
+          "ImageHeight": 225,
+          "ImageFormat": "JPEG",
+          "ImageMode": "RGB",
+          "HasGeoData": false
+        }
+      },
+      {
+        "url": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288630%2Fproducts%2Fv72bh743zm6vunxyyv2n.webp&w=3840&q=75",
+        "filename": "image",
+        "filetype": "image",
+        "content_type": "image/jpeg",
+        "metadata": {
+          "ImageWidth": 800,
+          "ImageHeight": 800,
+          "ImageFormat": "JPEG",
+          "ImageMode": "RGB",
+          "HasGeoData": false
+        }
+      },
+      {
+        "url": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288479%2Fproducts%2Fdntkzmepmvpxngr36ivt.webp&w=3840&q=75",
+        "filename": "image",
+        "filetype": "image",
+        "content_type": "image/jpeg",
+        "metadata": {
+          "ImageWidth": 600,
+          "ImageHeight": 600,
+          "ImageFormat": "JPEG",
+          "ImageMode": "RGB",
+          "HasGeoData": false
+        }
+      },
+      {
+        "url": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288395%2Fproducts%2Fhxzszr3gpoasehgtrjup.jpg&w=3840&q=75",
+        "filename": "image",
+        "filetype": "image",
+        "content_type": "image/jpeg",
+        "metadata": {
+          "ImageWidth": 1024,
+          "ImageHeight": 683,
+          "ImageFormat": "JPEG",
+          "ImageMode": "RGB",
+          "HasGeoData": false
+        }
+      },
+      {
+        "url": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288082%2Fproducts%2Fmy8lkkzst37p6aaxeysg.jpg&w=3840&q=75",
+        "filename": "image",
+        "filetype": "image",
+        "content_type": "image/jpeg",
+        "metadata": {
+          "ImageWidth": 300,
+          "ImageHeight": 168,
+          "ImageFormat": "JPEG",
+          "ImageMode": "RGB",
+          "HasGeoData": false
+        }
+      }
+    ],
+    "interesting_metadata": [],
+    "social_metadata": {},
+    "html_metadata": {
+      "title": "Margoul1 Store",
+      "description": "Hardware, Software, Services",
+      "keywords": [],
+      "author": "",
+      "generator": "",
+      "og": {},
+      "twitter": {},
+      "meta_tags": [
+        {
+          "name": "",
+          "content": ""
+        },
+        {
+          "name": "viewport",
+          "content": "width=device-width, initial-scale=1"
+        },
+        {
+          "name": "description",
+          "content": "Hardware, Software, Services"
+        },
+        {
+          "name": "next-size-adjust",
+          "content": ""
+        }
+      ]
+    },
+    "framework_info": {
+      "name": "next.js",
+      "version": "",
+      "indicators": [
+        "<script async=\"\" src=\"/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js\"></script>",
+        "<link as=\"font\" crossorigin=\"\" href=\"/_next/static/media/a34f9d1faa5f3315-s.p.woff2\" rel=\"preload\" type=\"font/woff2\"/>"
+      ]
+    },
+    "static_resources": {
+      "images": [
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1518770660439-4636190af475%3Fauto%3Dformat%26fit%3Dcrop%26q%3D80&w=3840&q=75",
+          "alt": "Tech background",
+          "width": "",
+          "height": ""
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288863%2Fproducts%2Fp44s3pzjkgxakhysraiv.jpg&w=3840&q=75",
+          "alt": "WickenD (Coming Soon)",
+          "width": "",
+          "height": ""
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288630%2Fproducts%2Fv72bh743zm6vunxyyv2n.webp&w=3840&q=75",
+          "alt": "Programmation",
+          "width": "",
+          "height": ""
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288479%2Fproducts%2Fdntkzmepmvpxngr36ivt.webp&w=3840&q=75",
+          "alt": "GUIcken",
+          "width": "",
+          "height": ""
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288395%2Fproducts%2Fhxzszr3gpoasehgtrjup.jpg&w=3840&q=75",
+          "alt": "Services - Pentesting",
+          "width": "",
+          "height": ""
+        },
+        {
+          "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288082%2Fproducts%2Fmy8lkkzst37p6aaxeysg.jpg&w=3840&q=75",
+          "alt": "Site Web",
+          "width": "",
+          "height": ""
+        }
+      ],
+      "scripts": [
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/app/page-ac0b06712ae6134d.js"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js"
+        },
+        {
+          "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js"
+        }
+      ],
+      "stylesheets": [
+        {
+          "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css"
+        }
+      ],
+      "fonts": [],
+      "media": []
+    }
+  },
+  "endpoints": {
+    "url": "http://margoul1.xyz",
+    "endpoints": [
+      {
+        "url": "http://margoul1.xyz/api/",
+        "method": "GET",
+        "parameters": []
+      },
+      {
+        "url": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css\\",
+        "method": "GET",
+        "parameters": []
+      },
+      {
+        "url": "http://margoul1.xyz/_next/data/",
+        "method": "GET",
+        "parameters": []
+      },
+      {
+        "url": "http://margoul1.xyz/_next/static/media/a34f9d1faa5f3315-s.p.woff2\\",
+        "method": "GET",
+        "parameters": []
+      },
+      {
+        "url": "http://margoul1.xyz/_next/static/",
+        "method": "GET",
+        "parameters": []
+      }
+    ],
+    "total_found": 5
+  },
+  "framework_info": {
+    "name": "next.js",
+    "version": "",
+    "indicators": [
+      "<script async=\"\" src=\"/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js\"></script>",
+      "<link as=\"font\" crossorigin=\"\" href=\"/_next/static/media/a34f9d1faa5f3315-s.p.woff2\" rel=\"preload\" type=\"font/woff2\"/>"
+    ]
+  },
+  "static_resources": {
+    "images": [
+      {
+        "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1518770660439-4636190af475%3Fauto%3Dformat%26fit%3Dcrop%26q%3D80&w=3840&q=75",
+        "alt": "Tech background",
+        "width": "",
+        "height": ""
+      },
+      {
+        "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288863%2Fproducts%2Fp44s3pzjkgxakhysraiv.jpg&w=3840&q=75",
+        "alt": "WickenD (Coming Soon)",
+        "width": "",
+        "height": ""
+      },
+      {
+        "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288630%2Fproducts%2Fv72bh743zm6vunxyyv2n.webp&w=3840&q=75",
+        "alt": "Programmation",
+        "width": "",
+        "height": ""
+      },
+      {
+        "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288479%2Fproducts%2Fdntkzmepmvpxngr36ivt.webp&w=3840&q=75",
+        "alt": "GUIcken",
+        "width": "",
+        "height": ""
+      },
+      {
+        "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288395%2Fproducts%2Fhxzszr3gpoasehgtrjup.jpg&w=3840&q=75",
+        "alt": "Services - Pentesting",
+        "width": "",
+        "height": ""
+      },
+      {
+        "src": "http://margoul1.xyz/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdo4fi6vpx%2Fimage%2Fupload%2Fv1739288082%2Fproducts%2Fmy8lkkzst37p6aaxeysg.jpg&w=3840&q=75",
+        "alt": "Site Web",
+        "width": "",
+        "height": ""
+      }
+    ],
+    "scripts": [
+      {
+        "src": "http://margoul1.xyz/_next/static/chunks/fd9d1056-a8c33b581c3fa0f6.js"
+      },
+      {
+        "src": "http://margoul1.xyz/_next/static/chunks/117-1c36abccea475d13.js"
+      },
+      {
+        "src": "http://margoul1.xyz/_next/static/chunks/main-app-2dcde4753ea0d175.js"
+      },
+      {
+        "src": "http://margoul1.xyz/_next/static/chunks/166-90f185d61fdb3fdc.js"
+      },
+      {
+        "src": "http://margoul1.xyz/_next/static/chunks/705-86aef59ad7c6dfef.js"
+      },
+      {
+        "src": "http://margoul1.xyz/_next/static/chunks/648-016fa3d062778f4e.js"
+      },
+      {
+        "src": "http://margoul1.xyz/_next/static/chunks/605-89a37dbdd8d6ebfe.js"
+      },
+      {
+        "src": "http://margoul1.xyz/_next/static/chunks/145-8d40d74a5890c495.js"
+      },
+      {
+        "src": "http://margoul1.xyz/_next/static/chunks/953-a67353833b8736ab.js"
+      },
+      {
+        "src": "http://margoul1.xyz/_next/static/chunks/app/layout-28f78c93e9b9d607.js"
+      },
+      {
+        "src": "http://margoul1.xyz/_next/static/chunks/app/error-b747984a3c994da4.js"
+      },
+      {
+        "src": "http://margoul1.xyz/_next/static/chunks/app/page-ac0b06712ae6134d.js"
+      },
+      {
+        "src": "http://margoul1.xyz/_next/static/chunks/polyfills-42372ed130431b0a.js"
+      },
+      {
+        "src": "http://margoul1.xyz/_next/static/chunks/webpack-238b9604b4293a0d.js"
+      }
+    ],
+    "stylesheets": [
+      {
+        "href": "http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css"
+      }
+    ],
+    "fonts": [],
+    "media": []
+  },
+  "summary": {
+    "total_urls": 17,
+    "total_vulnerabilities": 5,
+    "severity_counts": {
+      "high": 4,
+      "medium": 0,
+      "low": 1,
+      "info": 0
+    },
+    "interesting_findings": [
+      {
+        "type": "header_issue",
+        "severity": "high",
+        "description": "En-tête X-Content-Type-Options manquant. Empêche le navigateur d'interpréter les fichiers comme un type MIME différent."
+      },
+      {
+        "type": "header_issue",
+        "severity": "high",
+        "description": "En-tête X-Frame-Options manquant. Protège contre les attaques de clickjacking."
+      },
+      {
+        "type": "header_issue",
+        "severity": "high",
+        "description": "En-tête X-XSS-Protection manquant. Filtre de base pour les attaques XSS dans les navigateurs plus anciens."
+      },
+      {
+        "type": "header_issue",
+        "severity": "high",
+        "description": "En-tête Strict-Transport-Security manquant. Force les connexions via HTTPS plutôt que HTTP."
+      }
+    ],
+    "total_api_endpoints": 5,
+    "resources": {
+      "images": 6,
+      "scripts": 14,
+      "stylesheets": 1,
+      "fonts": 0,
+      "media": 0
+    },
+    "scan_duration": 13.559441804885864,
+    "framework": "next.js"
+  }
+}

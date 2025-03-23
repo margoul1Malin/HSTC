@@ -1,0 +1,2 @@
+[console_scripts]
+hakboardcrawler = hakboardcrawler.main:main
