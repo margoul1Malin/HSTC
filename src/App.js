@@ -42,8 +42,10 @@ import OsintRanking from './components/OSINT/OsintRanking';
 import SubdomainEnum from './components/OSINT/SubdomainEnum';
 import WebTechnologies from './components/OSINT/WebTechnologies';
 import ProxyList from './components/OSINT/ProxyList';
+import TwitterScraper from './components/OSINT/TwitterScraper';
 import Msfvenom from './components/Malware/Msfvenom';
 import Converter from './components/Miscellaneous/Converter';
+import Donut from './components/Malware/Donut';
 import './styles/App.css';
 import { NotificationProvider } from './context/NotificationContext';
 
@@ -258,9 +260,15 @@ const App = () => {
       case 'proxylist':
         console.log('Rendering ProxyList component');
         return <ProxyList />;
+      case 'twitterscraper':
+        console.log('Rendering TwitterScraper component');
+        return <TwitterScraper />;
       case 'msfvenom':
         console.log('Rendering Msfvenom view');
         return <Msfvenom />;
+      case 'donut':
+        console.log('Rendering Donut component');
+        return <Donut />;
       case 'converter':
         console.log('Rendering Converter component');
         return <Converter />;

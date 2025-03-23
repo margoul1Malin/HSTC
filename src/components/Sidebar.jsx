@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FiHome, FiCheckSquare, FiSettings, FiMenu, FiSearch, FiBookmark, FiChevronDown, FiChevronRight, FiDatabase, FiLock, FiTarget, FiServer, FiWifi, FiMail, FiSend, FiPhone, FiEye, FiMessageSquare, FiShield, FiGlobe, FiKey, FiCalendar, FiGithub, FiTool, FiFile, FiImage, FiActivity, FiCode, FiCreditCard, FiFolder, FiUser, FiPhoneCall, FiBarChart2, FiGrid, FiMapPin, FiRepeat } from 'react-icons/fi';
+import { FiHome, FiCheckSquare, FiSettings, FiMenu, FiSearch, FiBookmark, FiChevronDown, FiChevronRight, FiDatabase, FiLock, FiTarget, FiServer, FiWifi, FiMail, FiSend, FiPhone, FiEye, FiMessageSquare, FiShield, FiGlobe, FiKey, FiCalendar, FiGithub, FiTool, FiFile, FiImage, FiActivity, FiCode, FiCreditCard, FiFolder, FiUser, FiPhoneCall, FiBarChart2, FiMapPin, FiRepeat, FiTwitter } from 'react-icons/fi';
 import { FcKey, FcUnlock, FcTabletAndroid, FcSearch, FcViewDetails, FcCalendar, FcBiohazard, FcMoneyTransfer, FcGlobe, FcDebt, FcDataConfiguration, FcAddressBook } from "react-icons/fc";
 import { PiSyringeFill, PiCreditCardFill, PiBinaryFill, PiDoorOpenFill } from "react-icons/pi";
 import { SiNgrok, SiAmazonwebservices } from "react-icons/si";
@@ -70,7 +70,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
   const isInjectorViewActive = activeView === 'sqli' || activeView === 'xsser';
   
   // Vérifier si une vue de M4lwar3b1tes est active
-  const isMalwareViewActive = activeView === 'msfvenom';
+  const isMalwareViewActive = activeView === 'msfvenom' || activeView === 'donut';
   
   // Vérifier si une vue de CC est active
   const isCcViewActive = activeView === 'ccgenerator' || activeView === 'ccchecker';
@@ -168,7 +168,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
   const miscellaneousSubMenuItems = [
     { id: 'exifyer', label: 'Exifyer', icon: <FiImage size={18} /> },
     { id: 'virustotal', label: 'VirusTotal', icon: <FiShield size={18} /> },
-    { id: 'qrcodegenerator', label: 'QR Code Generator', icon: <FiGrid size={18} /> },
+    { id: 'qrcodegenerator', label: 'QR Code Generator', icon: <FaQrcode size={18} /> },
     { id: 'ipgeolocation', label: 'IP Geolocation', icon: <FiMapPin size={18} /> },
     { id: 'base64toimage', label: 'Base64 → Image', icon: <FiImage size={18} /> },
     { id: 'mitreattack', label: 'MITRE ATT&CK', icon: <FiTarget size={18} /> },
@@ -192,6 +192,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
   // Définir les éléments du sous-menu M4lwar3b1tes
   const malwareSubMenuItems = [
     { id: 'msfvenom', label: 'Msfvenom', icon: <FcBiohazard size={18} /> },
+    { id: 'donut', label: 'Donut', icon: <FcBiohazard size={18} /> },
   ];
   
   // Définir les éléments du sous-menu CC
@@ -207,6 +208,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
     { id: 'subdomainenum', label: 'Subdomain Enum', icon: <FiGlobe size={18} /> },
     { id: 'webtechnologies', label: 'Web Technologies', icon: <FiCode size={18} /> },
     { id: 'proxylist', label: 'Proxy List', icon: <FiServer size={18} /> },
+    { id: 'twitterscraper', label: 'Twitter Scraper', icon: <FiTwitter size={18} /> },
     { id: 'featuresincoming', label: 'Features Incoming...', icon: <FiCode size={18} />, disabled: true },
   ];
 

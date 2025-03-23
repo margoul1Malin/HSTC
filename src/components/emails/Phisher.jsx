@@ -72,8 +72,10 @@ const Phisher = () => {
       [{ 'list': 'ordered' }, { 'list': 'bullet' }],
       [{ 'align': [] }],
       ['link', 'image'],
+      [{ 'indent': '-1' }, { 'indent': '+1' }],
+      [{ 'size': ['small', false, 'large', 'huge'] }],
       ['clean']
-    ],
+    ]
   };
   
   const formats = [
@@ -367,6 +369,20 @@ const Phisher = () => {
     return result;
   };
   
+  // Fonction pour remplacer les variables dans le contenu pour un destinataire spécifique
+  const replaceVariablesForRecipient = (text, recipient) => {
+    let result = text;
+    
+    // Remplacer les variables par les valeurs du destinataire
+    variables.forEach(variable => {
+      const regex = new RegExp(`{{${variable.id}}}`, 'g');
+      const value = recipient[variable.id] || variable.value || '';
+      result = result.replace(regex, value);
+    });
+    
+    return result;
+  };
+  
   // Fonction pour obfusquer les liens
   const obfuscateLinks = (html) => {
     if (!obfuscationSettings.obfuscateLinks) return html;
@@ -600,10 +616,11 @@ const Phisher = () => {
   // Fonction pour exporter l'e-mail au format EML (compatible avec la plupart des clients de messagerie)
   const exportEml = () => {
     const processedContent = processContent(content);
+    const processedSubject = replaceVariables(subject);
     
     const emlContent = `From: ${from}
 To: ${to}
-${cc ? `Cc: ${cc}\n` : ''}${bcc ? `Bcc: ${bcc}\n` : ''}Subject: ${subject}
+${cc ? `Cc: ${cc}\n` : ''}${bcc ? `Bcc: ${bcc}\n` : ''}Subject: ${processedSubject}
 MIME-Version: 1.0
 Content-Type: text/html; charset=UTF-8
 
@@ -614,7 +631,7 @@ ${processedContent}
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${subject.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.eml`;
+    a.download = `${processedSubject.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.eml`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -764,20 +781,6 @@ ${processedContent}
     URL.revokeObjectURL(url);
   };
   
-  // Fonction pour remplacer les variables dans le contenu pour un destinataire spécifique
-  const replaceVariablesForRecipient = (text, recipient) => {
-    let result = text;
-    
-    // Remplacer les variables par les valeurs du destinataire
-    variables.forEach(variable => {
-      const regex = new RegExp(`{{${variable.id}}}`, 'g');
-      const value = recipient[variable.id] || variable.value || '';
-      result = result.replace(regex, value);
-    });
-    
-    return result;
-  };
-  
   // Fonction pour exporter des emails personnalisés pour tous les destinataires
   const exportPersonalizedEmails = async () => {
     if (recipients.length === 0) {
@@ -807,8 +810,9 @@ ${processedContent}
         }
         
         try {
-          // Remplacer les variables dans le contenu
+          // Remplacer les variables dans le contenu et le sujet
           const personalizedContent = replaceVariablesForRecipient(content, recipient);
+          const personalizedSubject = replaceVariablesForRecipient(subject, recipient);
           
           // Appliquer les obfuscations
           const processedContent = processContent(personalizedContent);
@@ -819,7 +823,7 @@ ${processedContent}
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>${subject}</title>
+  <title>${personalizedSubject}</title>
 </head>
 <body>
   ${processedContent}
@@ -830,7 +834,7 @@ ${processedContent}
           // Créer le contenu EML
           const emlContent = `From: ${from}
 To: ${recipient.email}
-${cc ? `Cc: ${cc}\n` : ''}${bcc ? `Bcc: ${bcc}\n` : ''}Subject: ${subject}
+${cc ? `Cc: ${cc}\n` : ''}${bcc ? `Bcc: ${bcc}\n` : ''}Subject: ${personalizedSubject}
 MIME-Version: 1.0
 Content-Type: text/html; charset=UTF-8
 
@@ -1023,8 +1027,9 @@ Pour plus d'informations, contactez votre équipe de sécurité.
       // Envoyer à chaque destinataire
       for (const recipient of recipients) {
         try {
-          // Remplacer les variables pour ce destinataire
+          // Remplacer les variables pour ce destinataire dans le contenu et le sujet
           const personalizedContent = replaceVariablesForRecipient(content, recipient);
+          const personalizedSubject = replaceVariablesForRecipient(subject, recipient);
           
           // Appliquer les obfuscations
           const processedContent = processContent(personalizedContent);
@@ -1036,7 +1041,7 @@ Pour plus d'informations, contactez votre équipe de sécurité.
               email: senderEmail,
               name: senderName
             },
-            subject: subject,
+            subject: personalizedSubject,
             html: processedContent
           };
           
@@ -1175,8 +1180,9 @@ Pour plus d'informations, contactez votre équipe de sécurité.
     setSendLoading(true);
     
     try {
-      // Traiter le contenu avec les variables et obfuscations
+      // Traiter le contenu et le sujet avec les variables et obfuscations
       const processedContent = processContent(content);
+      const processedSubject = replaceVariables(subject);
       
       // Préparer les données pour l'envoi
       const emailData = {
@@ -1185,7 +1191,7 @@ Pour plus d'informations, contactez votre équipe de sécurité.
           email: senderEmail,
           name: senderName
         },
-        subject: subject,
+        subject: processedSubject,
         html: processedContent
       };
       
@@ -1242,6 +1248,148 @@ Pour plus d'informations, contactez votre équipe de sécurité.
     return date.toLocaleString();
   };
   
+  // Initialiser le module de redimensionnement d'image pour Quill
+  useEffect(() => {
+    if (window.Quill) {
+      // Enregistrer le module de redimensionnement d'image
+      try {
+        const ImageResize = window.ImageResize || {};
+        Quill.register('modules/imageResize', ImageResize);
+        console.log('Module de redimensionnement d\'image enregistré avec succès');
+      } catch (error) {
+        console.error('Erreur lors de l\'enregistrement du module de redimensionnement d\'image:', error);
+      }
+    }
+  }, []);
+  
+  // Remplaçons par une meilleure approche
+  useEffect(() => {
+    const loadImageResizeModule = async () => {
+      try {
+        if (typeof window.Quill === 'undefined') {
+          console.log('Quill n\'est pas encore chargé, attente...');
+          return;
+        }
+
+        // Vérifier si le module est déjà chargé
+        if (!Quill.imports['modules/imageResize']) {
+          console.log('Chargement du module de redimensionnement d\'image...');
+          
+          // Importation dynamique du module
+          const ImageResize = await import('quill-image-resize-module');
+          Quill.register('modules/imageResize', ImageResize.default);
+          
+          console.log('Module de redimensionnement d\'image enregistré avec succès');
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement du module de redimensionnement d\'image:', error);
+        showWarning('Le module de redimensionnement d\'image n\'a pas pu être chargé. Certaines fonctionnalités d\'édition d\'image pourraient ne pas fonctionner.');
+      }
+    };
+    
+    loadImageResizeModule();
+  }, [showWarning]);
+  
+  // Cette fonction permet de gérer le redimensionnement des images via le clic droit
+  useEffect(() => {
+    if (quillRef.current) {
+      const editor = quillRef.current.getEditor();
+      
+      // Ajouter un gestionnaire pour les images insérées
+      editor.root.addEventListener('click', (event) => {
+        const target = event.target;
+        
+        // Vérifier si l'élément cliqué est une image
+        if (target.tagName === 'IMG') {
+          // Ajouter un gestionnaire pour le clic droit sur l'image
+          target.oncontextmenu = (e) => {
+            e.preventDefault();
+            
+            // Créer un menu contextuel
+            const menu = document.createElement('div');
+            menu.className = 'quill-image-menu';
+            menu.style.position = 'absolute';
+            menu.style.left = `${e.pageX}px`;
+            menu.style.top = `${e.pageY}px`;
+            menu.style.backgroundColor = 'white';
+            menu.style.border = '1px solid #ccc';
+            menu.style.borderRadius = '4px';
+            menu.style.padding = '8px';
+            menu.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+            menu.style.zIndex = '1000';
+            
+            // Options du menu
+            const options = [
+              { label: 'Petite image (25%)', value: '25%' },
+              { label: 'Image moyenne (50%)', value: '50%' },
+              { label: 'Grande image (75%)', value: '75%' },
+              { label: 'Taille originale (100%)', value: '100%' },
+              { label: 'Aligner à gauche', value: 'left' },
+              { label: 'Centrer', value: 'center' },
+              { label: 'Aligner à droite', value: 'right' }
+            ];
+            
+            // Ajouter les options au menu
+            options.forEach(option => {
+              const item = document.createElement('div');
+              item.className = 'quill-image-menu-item';
+              item.textContent = option.label;
+              item.style.padding = '4px 8px';
+              item.style.cursor = 'pointer';
+              item.style.hover = 'backgroundColor: #f0f0f0';
+              
+              // Ajouter un gestionnaire pour le clic sur l'option
+              item.onclick = () => {
+                // Appliquer l'option sélectionnée
+                if (option.value.includes('%')) {
+                  // Changer la taille de l'image
+                  target.style.width = option.value;
+                  target.style.height = 'auto';
+                } else {
+                  // Changer l'alignement de l'image
+                  target.style.display = 'block';
+                  
+                  if (option.value === 'center') {
+                    target.style.marginLeft = 'auto';
+                    target.style.marginRight = 'auto';
+                  } else if (option.value === 'left') {
+                    target.style.marginLeft = '0';
+                    target.style.marginRight = 'auto';
+                  } else if (option.value === 'right') {
+                    target.style.marginLeft = 'auto';
+                    target.style.marginRight = '0';
+                  }
+                }
+                
+                // Fermer le menu
+                document.body.removeChild(menu);
+              };
+              
+              menu.appendChild(item);
+            });
+            
+            // Ajouter le menu au document
+            document.body.appendChild(menu);
+            
+            // Fermer le menu lorsqu'on clique ailleurs
+            document.addEventListener('click', function closeMenu(e) {
+              if (!menu.contains(e.target)) {
+                if (document.body.contains(menu)) {
+                  document.body.removeChild(menu);
+                }
+                document.removeEventListener('click', closeMenu);
+              }
+            });
+            
+            return false;
+          };
+        }
+      });
+      
+      console.log('Gestionnaire d\'images personnalisé initialisé');
+    }
+  }, [quillRef]);
+  
   return (
     <div className="phisher bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 p-4 rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">Phisher - Créateur d'E-mails</h1>
@@ -1261,6 +1409,9 @@ Pour plus d'informations, contactez votre équipe de sécurité.
                 placeholder="Sujet de l'e-mail"
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
               />
+              <div className="mt-1 text-xs text-blue-600 dark:text-blue-400">
+                Vous pouvez utiliser des variables dynamiques dans le sujet : exemple {"{{"}"firstname{"}}"} 
+              </div>
             </div>
             
             <div className="mb-4">
