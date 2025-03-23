@@ -1,9 +1,382 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import Quill from 'quill';
 import { FiSave, FiDownload, FiCopy, FiSend, FiEye, FiEyeOff, FiTrash2, FiFileText, FiMail, FiPlus, FiList, FiCode, FiShield, FiUsers, FiUpload, FiHelpCircle, FiSettings, FiCheck, FiAlertCircle } from 'react-icons/fi';
 import { useNotification } from '../../context/NotificationContext';
 import { apiKeysService } from '../../services/apiKeysService';
+
+// Implémentation personnalisée du module de redimensionnement d'image
+// Définir la classe en dehors de register pour qu'elle soit considérée comme un constructeur valide
+class SimpleImageResize {
+  constructor(quill, options) {
+    this.quill = quill;
+    this.options = options || {};
+    this.quill.root.addEventListener('click', this.handleClick.bind(this), false);
+    this.currentImage = null;
+    this.overlay = null;
+    this.handles = [];
+    this.toolbar = null;
+  }
+
+  handleClick(evt) {
+    if (evt.target && evt.target.tagName === 'IMG') {
+      if (this.currentImage === evt.target) return;
+      
+      // Cacher l'overlay précédent s'il existe
+      if (this.currentImage) this.hide();
+      
+      // Montrer l'overlay pour la nouvelle image
+      this.show(evt.target);
+    } else if (this.currentImage) {
+      // Vérifier si le clic est sur la barre d'outils
+      if (this.toolbar && this.toolbar.contains(evt.target)) {
+        return; // Ne pas cacher si on clique sur la barre d'outils
+      }
+      
+      // Cliquer en dehors masque l'overlay
+      this.hide();
+    }
+  }
+
+  show(img) {
+    this.currentImage = img;
+    this.showOverlay();
+    this.createHandles();
+    this.createToolbar();
+    this.setUserSelect('none'); // Désactiver la sélection de texte
+  }
+
+  setUserSelect(value) {
+    ['userSelect', 'mozUserSelect', 'webkitUserSelect', 'msUserSelect'].forEach(prop => {
+      // Appliquer au conteneur de l'éditeur
+      this.quill.root.style[prop] = value;
+      // Appliquer globalement
+      document.documentElement.style[prop] = value;
+    });
+  }
+
+  showOverlay() {
+    // Créer l'overlay
+    this.overlay = document.createElement('div');
+    Object.assign(this.overlay.style, {
+      position: 'absolute',
+      boxSizing: 'border-box',
+      border: '1px dashed #3182ce',
+      zIndex: 1
+    });
+    
+    // Positionner l'overlay
+    this.repositionElements();
+    
+    // Ajouter l'overlay au DOM
+    this.quill.root.parentNode.appendChild(this.overlay);
+  }
+
+  createHandles() {
+    // Créer les poignées de redimensionnement (coins et côtés)
+    const positions = [
+      { right: '-6px', bottom: '-6px', cursor: 'nwse-resize' }, // bas-droite
+      { left: '-6px', bottom: '-6px', cursor: 'nesw-resize' },  // bas-gauche
+      { right: '-6px', top: '-6px', cursor: 'nesw-resize' },    // haut-droite
+      { left: '-6px', top: '-6px', cursor: 'nwse-resize' }      // haut-gauche
+    ];
+    
+    positions.forEach(pos => {
+      const handle = document.createElement('div');
+      Object.assign(handle.style, {
+        position: 'absolute',
+        height: '12px',
+        width: '12px',
+        backgroundColor: '#3182ce',
+        border: '1px solid white',
+        boxSizing: 'border-box',
+        opacity: '0.80',
+        zIndex: 2,
+        ...pos
+      });
+      
+      // Ajouter les données de position pour savoir quel coin est manipulé
+      handle.dataset.position = JSON.stringify(pos);
+      
+      // Ajouter les événements de redimensionnement
+      handle.addEventListener('mousedown', this.handleMousedown.bind(this), false);
+      this.quill.root.parentNode.appendChild(handle);
+      this.handles.push(handle);
+    });
+    
+    // Afficher la taille de l'image
+    this.displaySize = document.createElement('div');
+    Object.assign(this.displaySize.style, {
+      position: 'absolute',
+      font: '12px/1.0 Arial, Helvetica, sans-serif',
+      padding: '4px 8px',
+      textAlign: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      color: 'white',
+      borderRadius: '3px',
+      zIndex: 2,
+      top: '-30px',
+      left: '0'
+    });
+    
+    this.displaySize.innerHTML = `${this.currentImage.width} × ${Math.round(this.currentImage.width / this.currentImage.naturalWidth * this.currentImage.naturalHeight)}`;
+    this.quill.root.parentNode.appendChild(this.displaySize);
+    this.handles.push(this.displaySize);
+  }
+
+  createToolbar() {
+    // Créer la barre d'outils
+    this.toolbar = document.createElement('div');
+    Object.assign(this.toolbar.style, {
+      position: 'absolute',
+      top: '-40px',
+      right: '0',
+      left: '0',
+      height: '34px',
+      minWidth: '100px',
+      backgroundColor: '#2d3748',
+      borderRadius: '3px',
+      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 3
+    });
+    
+    // Créer les boutons d'alignement
+    const alignments = [
+      { name: 'left', icon: '◀', style: { float: 'left', marginRight: '10px' } },
+      { name: 'center', icon: '◆', style: { display: 'block', margin: '0 auto' } },
+      { name: 'right', icon: '▶', style: { float: 'right', marginLeft: '10px' } }
+    ];
+    
+    alignments.forEach(alignment => {
+      const button = document.createElement('button');
+      button.innerHTML = alignment.icon;
+      button.title = `Aligner ${alignment.name}`;
+      button.dataset.alignment = alignment.name;
+      
+      Object.assign(button.style, {
+        backgroundColor: 'transparent',
+        border: 'none',
+        color: 'white',
+        fontSize: '18px',
+        cursor: 'pointer',
+        padding: '4px 8px',
+        margin: '0 4px',
+        outline: 'none',
+        borderRadius: '3px'
+      });
+      
+      if (this.getCurrentAlignment() === alignment.name) {
+        button.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+      }
+      
+      button.addEventListener('click', this.handleAlignmentClick.bind(this), false);
+      this.toolbar.appendChild(button);
+    });
+    
+    this.quill.root.parentNode.appendChild(this.toolbar);
+    this.handles.push(this.toolbar);
+  }
+
+  getCurrentAlignment() {
+    if (!this.currentImage) return 'left'; // Par défaut
+    
+    const style = this.currentImage.getAttribute('style') || '';
+    if (style.includes('margin: 0 auto') || style.includes('margin:0 auto') || 
+        style.includes('display: block') || style.includes('display:block')) {
+      return 'center';
+    } else if (style.includes('float: right') || style.includes('float:right')) {
+      return 'right';
+    }
+    
+    return 'left';
+  }
+
+  handleAlignmentClick(evt) {
+    if (!this.currentImage) return;
+    
+    const alignment = evt.target.dataset.alignment;
+    
+    // Supprimer les styles précédents
+    this.currentImage.removeAttribute('style');
+    
+    // Appliquer le nouvel alignement
+    switch (alignment) {
+      case 'left':
+        this.currentImage.setAttribute('style', 'float: left; margin-right: 10px;');
+        break;
+      case 'center':
+        this.currentImage.setAttribute('style', 'display: block; margin: 0 auto;');
+        break;
+      case 'right':
+        this.currentImage.setAttribute('style', 'float: right; margin-left: 10px;');
+        break;
+    }
+    
+    // Mettre à jour l'état des boutons
+    Array.from(this.toolbar.children).forEach(button => {
+      button.style.backgroundColor = button.dataset.alignment === alignment 
+        ? 'rgba(255, 255, 255, 0.2)' 
+        : 'transparent';
+    });
+    
+    // Mettre à jour la position
+    this.repositionElements();
+  }
+
+  handleMousedown(evt) {
+    this.dragHandle = evt.target;
+    const posData = JSON.parse(this.dragHandle.dataset.position);
+    
+    this.dragStartX = evt.clientX;
+    this.dragStartY = evt.clientY;
+    this.preDragWidth = this.currentImage.width;
+    this.preDragHeight = this.currentImage.height;
+    
+    document.addEventListener('mousemove', this.handleDrag.bind(this), false);
+    document.addEventListener('mouseup', this.handleMouseup.bind(this), false);
+    
+    // Changer le curseur
+    document.body.style.cursor = posData.cursor;
+    this.currentImage.style.cursor = posData.cursor;
+  }
+
+  handleDrag(evt) {
+    if (!this.currentImage || !this.dragHandle) return;
+    
+    // Déterminer la direction du redimensionnement en fonction de la poignée
+    const posData = JSON.parse(this.dragHandle.dataset.position);
+    const deltaX = evt.clientX - this.dragStartX;
+    
+    // Calculer la nouvelle largeur en fonction de la poignée utilisée
+    let newWidth;
+    if (posData.right) {
+      // Si on tire depuis la droite, ajouter la différence
+      newWidth = Math.max(50, this.preDragWidth + deltaX);
+    } else if (posData.left) {
+      // Si on tire depuis la gauche, soustraire la différence
+      newWidth = Math.max(50, this.preDragWidth - deltaX);
+    }
+    
+    if (newWidth) {
+      // S'assurer que l'image reste dans les limites de l'éditeur
+      const editorWidth = this.quill.root.offsetWidth;
+      if (newWidth > editorWidth * 0.95) {
+        newWidth = editorWidth * 0.95;
+      }
+      
+      this.currentImage.width = newWidth;
+      this.repositionElements();
+      
+      // Mettre à jour l'affichage de la taille
+      this.updateDisplaySize();
+    }
+  }
+
+  updateDisplaySize() {
+    if (this.displaySize && this.currentImage) {
+      const width = this.currentImage.width;
+      const naturalWidth = this.currentImage.naturalWidth;
+      const naturalHeight = this.currentImage.naturalHeight;
+      const height = Math.round(width / naturalWidth * naturalHeight);
+      
+      this.displaySize.innerHTML = `${width} × ${height}`;
+    }
+  }
+
+  handleMouseup() {
+    document.removeEventListener('mousemove', this.handleDrag.bind(this));
+    document.removeEventListener('mouseup', this.handleMouseup.bind(this));
+    
+    // Restaurer le curseur
+    document.body.style.cursor = '';
+    if (this.currentImage) this.currentImage.style.cursor = '';
+    
+    this.dragHandle = null;
+  }
+
+  repositionElements() {
+    if (!this.overlay || !this.currentImage) return;
+    
+    const parent = this.quill.root.parentNode;
+    const imgRect = this.currentImage.getBoundingClientRect();
+    const containerRect = parent.getBoundingClientRect();
+    
+    // Positionner l'overlay
+    Object.assign(this.overlay.style, {
+      left: (imgRect.left - containerRect.left) + 'px',
+      top: (imgRect.top - containerRect.top) + 'px',
+      width: imgRect.width + 'px',
+      height: imgRect.height + 'px'
+    });
+    
+    // Positionner les poignées et autres éléments
+    if (this.handles.length > 0) {
+      // Les 4 poignées de coin
+      for (let i = 0; i < 4; i++) {
+        const handle = this.handles[i];
+        if (handle && handle.dataset.position) {
+          const pos = JSON.parse(handle.dataset.position);
+          
+          if (pos.right) {
+            handle.style.left = (imgRect.width - 6 + imgRect.left - containerRect.left) + 'px';
+          } else if (pos.left) {
+            handle.style.left = (imgRect.left - containerRect.left - 6) + 'px';
+          }
+          
+          if (pos.bottom) {
+            handle.style.top = (imgRect.height - 6 + imgRect.top - containerRect.top) + 'px';
+          } else if (pos.top) {
+            handle.style.top = (imgRect.top - containerRect.top - 6) + 'px';
+          }
+        }
+      }
+      
+      // Affichage de la taille (index 4)
+      const displaySize = this.handles[4];
+      if (displaySize) {
+        displaySize.style.left = (imgRect.left - containerRect.left) + 'px';
+        displaySize.style.top = (imgRect.top - containerRect.top - 30) + 'px';
+      }
+      
+      // Barre d'outils (index 5)
+      const toolbar = this.handles[5];
+      if (toolbar) {
+        toolbar.style.left = (imgRect.left - containerRect.left) + 'px';
+        toolbar.style.width = imgRect.width + 'px';
+        toolbar.style.top = (imgRect.top - containerRect.top - 40) + 'px';
+      }
+    }
+  }
+
+  hide() {
+    // Supprimer l'overlay
+    if (this.overlay) {
+      this.quill.root.parentNode.removeChild(this.overlay);
+      this.overlay = null;
+    }
+    
+    // Supprimer les poignées
+    this.handles.forEach(handle => {
+      if (handle && handle.parentNode) {
+        handle.parentNode.removeChild(handle);
+      }
+    });
+    this.handles = [];
+    
+    this.toolbar = null;
+    this.currentImage = null;
+    this.setUserSelect(''); // Restaurer la sélection de texte
+  }
+}
+
+// Enregistrer le module
+if (Quill) {
+  Quill.register('modules/imageResize', SimpleImageResize);
+}
 
 const Phisher = () => {
   // Contexte de notification
@@ -24,10 +397,10 @@ const Phisher = () => {
   // États pour les variables dynamiques
   const [showVariablesPanel, setShowVariablesPanel] = useState(false);
   const [variables, setVariables] = useState([
-    { id: 'firstname', name: 'Prénom', value: 'Jean' },
-    { id: 'lastname', name: 'Nom', value: 'Dupont' },
-    { id: 'company', name: 'Entreprise', value: 'Acme Inc.' },
-    { id: 'position', name: 'Poste', value: 'Directeur' }
+    { id: 'firstname', label: 'Prénom', value: '[Prénom]' },
+    { id: 'lastname', label: 'Nom', value: '[Nom]' },
+    { id: 'company', label: 'Entreprise', value: '[Entreprise]' },
+    { id: 'position', label: 'Poste', value: '[Poste]' }
   ]);
   const [newVariable, setNewVariable] = useState({ id: '', name: '', value: '' });
   
@@ -60,9 +433,9 @@ const Phisher = () => {
   const [showSendPanel, setShowSendPanel] = useState(false);
   const [apiKeyValid, setApiKeyValid] = useState(false);
   
-  // Référence pour l'éditeur Quill
+  // Référence à l'éditeur ReactQuill
   const quillRef = useRef(null);
-  
+
   // Modules et formats pour l'éditeur Quill
   const modules = {
     toolbar: [
@@ -75,17 +448,29 @@ const Phisher = () => {
       [{ 'indent': '-1' }, { 'indent': '+1' }],
       [{ 'size': ['small', false, 'large', 'huge'] }],
       ['clean']
-    ]
+    ],
+    imageResize: {
+      displaySize: true
+    }
   };
-  
+
   const formats = [
     'header',
     'bold', 'italic', 'underline', 'strike',
     'color', 'background',
     'list', 'bullet',
     'align',
-    'link', 'image'
+    'link', 'image',
+    'indent',
+    'size',
+    'clean'
   ];
+  
+  // Formater la date
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleString();
+  };
   
   // Charger les templates sauvegardés au démarrage
   useEffect(() => {
@@ -256,22 +641,39 @@ const Phisher = () => {
   
   // Fonction pour supprimer un template
   const deleteTemplate = (id, e) => {
-    e.stopPropagation();
-    
-    const updatedTemplates = templates.filter(template => template.id !== id);
-    setTemplates(updatedTemplates);
+    // Vérifier si e existe avant d'appeler stopPropagation
+    if (e && typeof e.stopPropagation === 'function') {
+      e.stopPropagation();
+    }
     
     try {
-      localStorage.setItem('phishing_templates', JSON.stringify(updatedTemplates));
-      showSuccess('Template supprimé avec succès');
+      // Récupérer les templates existants
+      const existingTemplates = JSON.parse(localStorage.getItem('phishing_templates') || '[]');
       
-      if (selectedTemplate === id) {
+      // Filtrer pour enlever le template avec l'ID spécifié
+      const updatedTemplates = existingTemplates.filter(template => template.id !== id);
+      
+      // Sauvegarder les templates mis à jour
+      localStorage.setItem('phishing_templates', JSON.stringify(updatedTemplates));
+      
+      // Mettre à jour également email_templates pour le composant Sender
+      localStorage.setItem('email_templates', JSON.stringify(updatedTemplates));
+      
+      // Mettre à jour l'état local
+      setTemplates(updatedTemplates);
+      
+      // Si le template supprimé était sélectionné, le désélectionner
+      if (selectedTemplate && selectedTemplate.id === id) {
         setSelectedTemplate(null);
       }
       
+      // Si le template supprimé était en prévisualisation, fermer la prévisualisation
       if (previewTemplate && previewTemplate.id === id) {
         setPreviewTemplate(null);
       }
+      
+      // Notification de succès
+      showSuccess('Template supprimé avec succès');
     } catch (error) {
       console.error('Erreur lors de la suppression du template:', error);
       showError('Erreur lors de la suppression du template');
@@ -1242,154 +1644,6 @@ Pour plus d'informations, contactez votre équipe de sécurité.
     return re.test(String(email).toLowerCase());
   };
   
-  // Formater la date
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleString();
-  };
-  
-  // Initialiser le module de redimensionnement d'image pour Quill
-  useEffect(() => {
-    if (window.Quill) {
-      // Enregistrer le module de redimensionnement d'image
-      try {
-        const ImageResize = window.ImageResize || {};
-        Quill.register('modules/imageResize', ImageResize);
-        console.log('Module de redimensionnement d\'image enregistré avec succès');
-      } catch (error) {
-        console.error('Erreur lors de l\'enregistrement du module de redimensionnement d\'image:', error);
-      }
-    }
-  }, []);
-  
-  // Remplaçons par une meilleure approche
-  useEffect(() => {
-    const loadImageResizeModule = async () => {
-      try {
-        if (typeof window.Quill === 'undefined') {
-          console.log('Quill n\'est pas encore chargé, attente...');
-          return;
-        }
-
-        // Vérifier si le module est déjà chargé
-        if (!Quill.imports['modules/imageResize']) {
-          console.log('Chargement du module de redimensionnement d\'image...');
-          
-          // Importation dynamique du module
-          const ImageResize = await import('quill-image-resize-module');
-          Quill.register('modules/imageResize', ImageResize.default);
-          
-          console.log('Module de redimensionnement d\'image enregistré avec succès');
-        }
-      } catch (error) {
-        console.error('Erreur lors du chargement du module de redimensionnement d\'image:', error);
-        showWarning('Le module de redimensionnement d\'image n\'a pas pu être chargé. Certaines fonctionnalités d\'édition d\'image pourraient ne pas fonctionner.');
-      }
-    };
-    
-    loadImageResizeModule();
-  }, [showWarning]);
-  
-  // Cette fonction permet de gérer le redimensionnement des images via le clic droit
-  useEffect(() => {
-    if (quillRef.current) {
-      const editor = quillRef.current.getEditor();
-      
-      // Ajouter un gestionnaire pour les images insérées
-      editor.root.addEventListener('click', (event) => {
-        const target = event.target;
-        
-        // Vérifier si l'élément cliqué est une image
-        if (target.tagName === 'IMG') {
-          // Ajouter un gestionnaire pour le clic droit sur l'image
-          target.oncontextmenu = (e) => {
-            e.preventDefault();
-            
-            // Créer un menu contextuel
-            const menu = document.createElement('div');
-            menu.className = 'quill-image-menu';
-            menu.style.position = 'absolute';
-            menu.style.left = `${e.pageX}px`;
-            menu.style.top = `${e.pageY}px`;
-            menu.style.backgroundColor = 'white';
-            menu.style.border = '1px solid #ccc';
-            menu.style.borderRadius = '4px';
-            menu.style.padding = '8px';
-            menu.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
-            menu.style.zIndex = '1000';
-            
-            // Options du menu
-            const options = [
-              { label: 'Petite image (25%)', value: '25%' },
-              { label: 'Image moyenne (50%)', value: '50%' },
-              { label: 'Grande image (75%)', value: '75%' },
-              { label: 'Taille originale (100%)', value: '100%' },
-              { label: 'Aligner à gauche', value: 'left' },
-              { label: 'Centrer', value: 'center' },
-              { label: 'Aligner à droite', value: 'right' }
-            ];
-            
-            // Ajouter les options au menu
-            options.forEach(option => {
-              const item = document.createElement('div');
-              item.className = 'quill-image-menu-item';
-              item.textContent = option.label;
-              item.style.padding = '4px 8px';
-              item.style.cursor = 'pointer';
-              item.style.hover = 'backgroundColor: #f0f0f0';
-              
-              // Ajouter un gestionnaire pour le clic sur l'option
-              item.onclick = () => {
-                // Appliquer l'option sélectionnée
-                if (option.value.includes('%')) {
-                  // Changer la taille de l'image
-                  target.style.width = option.value;
-                  target.style.height = 'auto';
-                } else {
-                  // Changer l'alignement de l'image
-                  target.style.display = 'block';
-                  
-                  if (option.value === 'center') {
-                    target.style.marginLeft = 'auto';
-                    target.style.marginRight = 'auto';
-                  } else if (option.value === 'left') {
-                    target.style.marginLeft = '0';
-                    target.style.marginRight = 'auto';
-                  } else if (option.value === 'right') {
-                    target.style.marginLeft = 'auto';
-                    target.style.marginRight = '0';
-                  }
-                }
-                
-                // Fermer le menu
-                document.body.removeChild(menu);
-              };
-              
-              menu.appendChild(item);
-            });
-            
-            // Ajouter le menu au document
-            document.body.appendChild(menu);
-            
-            // Fermer le menu lorsqu'on clique ailleurs
-            document.addEventListener('click', function closeMenu(e) {
-              if (!menu.contains(e.target)) {
-                if (document.body.contains(menu)) {
-                  document.body.removeChild(menu);
-                }
-                document.removeEventListener('click', closeMenu);
-              }
-            });
-            
-            return false;
-          };
-        }
-      });
-      
-      console.log('Gestionnaire d\'images personnalisé initialisé');
-    }
-  }, [quillRef]);
-  
   return (
     <div className="phisher bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 p-4 rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">Phisher - Créateur d'E-mails</h1>
@@ -1952,6 +2206,7 @@ Pour plus d'informations, contactez votre équipe de sécurité.
                 <li>Vérifiez les fautes d'orthographe et de grammaire</li>
                 <li>Testez l'e-mail sur différents clients de messagerie</li>
                 <li>Utilisez des domaines similaires aux domaines légitimes</li>
+                <li>Prenez en compte que les images ne seront pas toujours affichées dans les mails à cause des sécurités mises en places par les founisseurs vous feriez mieux de les upload sur un service public comem cloudinary et mettre le lien ici.</li>
               </ul>
               <div className="mt-4 p-2 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-200 text-xs rounded">
                 <strong>Note:</strong> Cet outil est destiné uniquement aux tests de sécurité légitimes et aux exercices de sensibilisation. Utilisez-le de manière éthique et responsable.
@@ -2226,185 +2481,134 @@ Pour plus d'informations, contactez votre équipe de sécurité.
           overflow-y: auto;
         }
         
-        .email-preview {
-          min-height: 200px;
-          max-height: 400px;
-          overflow-y: auto;
-          padding: 1rem;
-          border: 1px solid #e2e8f0;
-          border-radius: 0.375rem;
-          color: #1a202c;
-          font-family: Arial, sans-serif;
-          line-height: 1.5;
+        /* Styles pour les variables */
+        .variable-badge {
+          display: inline-block;
+          background-color: #cbd5e0;
+          color: #2d3748;
+          border-radius: 3px;
+          padding: 1px 5px;
+          margin: 2px;
+          font-size: 0.8rem;
         }
         
-        /* Styles pour la prévisualisation */
-        .email-preview h1 {
-          font-size: 2em;
-          font-weight: bold;
-          margin-bottom: 0.5em;
-          margin-top: 0.5em;
-        }
-        
-        .email-preview h2 {
-          font-size: 1.5em;
-          font-weight: bold;
-          margin-bottom: 0.5em;
-          margin-top: 0.5em;
-        }
-        
-        .email-preview h3 {
-          font-size: 1.17em;
-          font-weight: bold;
-          margin-bottom: 0.5em;
-          margin-top: 0.5em;
-        }
-        
-        .email-preview h4 {
-          font-size: 1em;
-          font-weight: bold;
-          margin-bottom: 0.5em;
-          margin-top: 0.5em;
-        }
-        
-        .email-preview h5 {
-          font-size: 0.83em;
-          font-weight: bold;
-          margin-bottom: 0.5em;
-          margin-top: 0.5em;
-        }
-        
-        .email-preview h6 {
-          font-size: 0.67em;
-          font-weight: bold;
-          margin-bottom: 0.5em;
-          margin-top: 0.5em;
-        }
-        
-        .email-preview ul {
-          list-style-type: disc;
-          margin-left: 1.5em;
-          margin-bottom: 1em;
-          padding-left: 1em;
-        }
-        
-        .email-preview ol {
-          list-style-type: decimal;
-          margin-left: 1.5em;
-          margin-bottom: 1em;
-          padding-left: 1em;
-        }
-        
-        .email-preview li {
-          margin-bottom: 0.5em;
-          display: list-item;
-        }
-        
-        .email-preview p {
-          margin-bottom: 1em;
-        }
-        
-        .email-preview a {
-          color: #3182ce;
-          text-decoration: underline;
-        }
-        
-        .email-preview blockquote {
-          border-left: 4px solid #e2e8f0;
-          padding-left: 1em;
-          margin-left: 0;
-          margin-right: 0;
-          font-style: italic;
-        }
-        
-        /* Styles spécifiques pour les alignements Quill */
-        .email-preview [class*="ql-align-"] {
-          display: block;
-          width: 100%;
-        }
-        
-        .email-preview .ql-align-center {
-          text-align: center !important;
-        }
-        
-        .email-preview .ql-align-right {
-          text-align: right !important;
-        }
-        
-        .email-preview .ql-align-justify {
-          text-align: justify !important;
-        }
-        
-        /* Styles pour les listes Quill */
-        .email-preview .ql-indent-1 {
-          padding-left: 3em !important;
-        }
-        
-        .email-preview .ql-indent-2 {
-          padding-left: 6em !important;
-        }
-        
-        .email-preview .ql-indent-3 {
-          padding-left: 9em !important;
-        }
-        
-        /* Styles pour les couleurs de texte et d'arrière-plan */
-        .email-preview .ql-color-red {
-          color: #e53e3e !important;
-        }
-        
-        .email-preview .ql-color-blue {
-          color: #3182ce !important;
-        }
-        
-        .email-preview .ql-color-green {
-          color: #38a169 !important;
-        }
-        
-        .email-preview .ql-bg-red {
-          background-color: #fed7d7 !important;
-        }
-        
-        .email-preview .ql-bg-blue {
-          background-color: #bee3f8 !important;
-        }
-        
-        .email-preview .ql-bg-green {
-          background-color: #c6f6d5 !important;
-        }
-        
-        /* Styles pour le mode sombre */
-        .dark .email-preview {
+        .dark .variable-badge {
+          background-color: #4a5568;
           color: #e2e8f0;
         }
         
-        .dark .email-preview a {
-          color: #63b3ed;
+        /* Styles pour les poignées de redimensionnement d'image */
+        .ql-editor .image-resize-module-overlay {
+          border: 1px dashed #3182ce !important;
+          box-shadow: 0 0 8px rgba(0, 0, 0, 0.2) !important;
         }
         
-        .dark .email-preview blockquote {
-          border-left-color: #4a5568;
+        .ql-editor .image-resize-module-handle {
+          background-color: #3182ce !important;
+          border: 1px solid white !important;
+          width: 10px !important;
+          height: 10px !important;
         }
         
-        .dark .ql-snow .ql-stroke {
+        .ql-editor .image-resize-module-handle-tl,
+        .ql-editor .image-resize-module-handle-tr,
+        .ql-editor .image-resize-module-handle-bl,
+        .ql-editor .image-resize-module-handle-br {
+          width: 12px !important;
+          height: 12px !important;
+        }
+        
+        .ql-editor .image-resize-module-toolbar {
+          background-color: #2d3748 !important;
+          border-radius: 4px !important;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+        }
+        
+        .ql-editor .image-resize-module-toolbar button {
+          color: white !important;
+          font-size: 14px !important;
+          margin: 0 4px !important;
+        }
+        
+        .ql-editor .image-resize-module-display-size {
+          background-color: rgba(0, 0, 0, 0.7) !important;
+          color: white !important;
+          border-radius: 3px !important;
+          padding: 3px 6px !important;
+          font-size: 12px !important;
+        }
+        
+        /* Ajustements pour le mode sombre */
+        .dark .ql-editor .image-resize-module-overlay {
+          border-color: #4299e1 !important;
+        }
+        
+        .dark .ql-editor .image-resize-module-handle {
+          background-color: #4299e1 !important;
+        }
+        
+        .dark .ql-editor .image-resize-module-toolbar {
+          background-color: #1a202c !important;
+        }
+        
+        /* Amélioration pour les inputs en mode sombre */
+        .phisher input, .phisher textarea, .phisher select {
+          color: #1a202c;
+          background-color: #fff;
+          border: 1px solid #e2e8f0;
+          border-radius: 0.375rem;
+          padding: 0.5rem 0.75rem;
+        }
+        
+        .dark .phisher input, .dark .phisher textarea, .dark .phisher select {
+          color: #e2e8f0;
+          background-color: #2d3748;
+          border-color: #4a5568;
+        }
+        
+        /* Styles pour les placeholders en mode sombre */
+        .dark .phisher input::placeholder, .dark .phisher textarea::placeholder {
+          color: #a0aec0;
+        }
+        
+        /* Styles pour l'éditeur ReactQuill en mode sombre */
+        .dark .phisher .ql-container {
+          background-color: #2d3748;
+          color: #e2e8f0;
+          border-color: #4a5568;
+        }
+        
+        .dark .phisher .ql-toolbar {
+          background-color: #1a202c;
+          color: #e2e8f0;
+          border-color: #4a5568;
+        }
+        
+        .dark .phisher .ql-picker-label, 
+        .dark .phisher .ql-picker-options .ql-picker-item {
+          color: #e2e8f0;
+        }
+        
+        .dark .phisher .ql-stroke {
           stroke: #e2e8f0;
         }
         
-        .dark .ql-snow .ql-fill {
+        .dark .phisher .ql-fill {
           fill: #e2e8f0;
         }
         
-        .dark .ql-toolbar.ql-snow {
-          border-color: #4b5563;
-          background-color: #374151;
+        /* Styles pour les boutons en mode sombre */
+        .dark .phisher button {
+          border-color: #4a5568;
         }
         
-        .dark .ql-container.ql-snow {
-          border-color: #4b5563;
-        }
-        
-        .dark .ql-editor {
-          color: #e2e8f0;
+        /* Focus states for better accessibility */
+        .dark .phisher input:focus, 
+        .dark .phisher textarea:focus, 
+        .dark .phisher select:focus {
+          border-color: #4299e1;
+          box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+          outline: none;
         }
       `}</style>
     </div>
