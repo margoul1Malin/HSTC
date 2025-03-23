@@ -1,8 +1,28 @@
 import React, { useState } from 'react';
 import { FiCreditCard, FiPlay, FiInfo, FiAlertCircle, FiCopy } from 'react-icons/fi';
+const ccgen = require('creditcard-generator');
+const cc = require('creditcardutils');
+
+// Implémentation manuelle de l'algorithme de Luhn
+const luhnCheck = (cardNumber) => {
+  if (!cardNumber) return false;
+  let sum = 0;
+  let shouldDouble = false;
+  for (let i = cardNumber.length - 1; i >= 0; i--) {
+    let digit = parseInt(cardNumber.charAt(i));
+    if (shouldDouble) {
+      digit *= 2;
+      if (digit > 9) digit -= 9;
+    }
+    sum += digit;
+    shouldDouble = !shouldDouble;
+  }
+  return (sum % 10) === 0;
+};
 
 const CcGenerator = () => {
   const [cardType, setCardType] = useState('visa');
+  const [customBin, setCustomBin] = useState('');
   const [quantity, setQuantity] = useState(10);
   const [withCvv, setWithCvv] = useState(true);
   const [withExpiry, setWithExpiry] = useState(true);
@@ -10,10 +30,16 @@ const CcGenerator = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [useCustomBin, setUseCustomBin] = useState(false);
 
   const generateCards = () => {
     if (quantity <= 0 || quantity > 100) {
       setError('La quantité doit être comprise entre 1 et 100');
+      return;
+    }
+
+    if (useCustomBin && (!customBin || customBin.length < 4)) {
+      setError('Le BIN personnalisé doit contenir au moins 4 chiffres');
       return;
     }
 
@@ -22,55 +48,80 @@ const CcGenerator = () => {
     setSuccessMessage(null);
     setGeneratedCards([]);
 
-    // Simuler la génération des cartes
-    setTimeout(() => {
-      const cards = [];
-      for (let i = 0; i < quantity; i++) {
-        const card = {
-          number: generateCardNumber(cardType),
-          cvv: withCvv ? generateCvv() : '',
-          expiry: withExpiry ? generateExpiry() : ''
-        };
-        cards.push(card);
-      }
-      setGeneratedCards(cards);
+    try {
+      // Créer un délai artificiel pour simuler le traitement
+      setTimeout(() => {
+        try {
+          const cards = [];
+          for (let i = 0; i < quantity; i++) {
+            const cardNumber = generateCardNumber();
+            const card = {
+              number: cardNumber,
+              cvv: withCvv ? generateCvv(cardType === 'amex') : '',
+              expiry: withExpiry ? generateExpiry() : '',
+              isValid: luhnCheck(cardNumber)
+            };
+            cards.push(card);
+          }
+          setGeneratedCards(cards);
+        } catch (err) {
+          console.error("Erreur lors de la génération:", err);
+          setError(`Erreur lors de la génération: ${err.message}`);
+        } finally {
+          setIsGenerating(false);
+        }
+      }, 500);
+    } catch (err) {
+      console.error("Erreur:", err);
+      setError(`Erreur: ${err.message}`);
       setIsGenerating(false);
-    }, 1000);
-  };
-
-  const generateCardNumber = (type) => {
-    let prefix = '4';
-    let length = 16;
-    
-    switch (type) {
-      case 'visa':
-        prefix = '4';
-        length = 16;
-        break;
-      case 'mastercard':
-        prefix = '5';
-        length = 16;
-        break;
-      case 'amex':
-        prefix = '3';
-        length = 15;
-        break;
-      case 'discover':
-        prefix = '6';
-        length = 16;
-        break;
-      default:
-        prefix = '4';
-        length = 16;
     }
-    
-    // Ceci est une simulation - dans une implémentation réelle,
-    // nous devrions générer des numéros valides selon l'algorithme de Luhn
-    return `${prefix}${'x'.repeat(length - 1)}`.replace(/x/g, () => Math.floor(Math.random() * 10));
   };
 
-  const generateCvv = () => {
-    return Math.floor(100 + Math.random() * 900).toString();
+  const generateCardNumber = () => {
+    let generatedNumber;
+
+    try {
+      if (useCustomBin && customBin) {
+        // Utiliser le BIN personnalisé
+        generatedNumber = ccgen.GenCC(customBin)[0];
+      } else {
+        // Utiliser un type de carte prédéfini
+        switch (cardType) {
+          case 'visa':
+            generatedNumber = ccgen.GenCC("4")[0]; // Visa commence par 4
+            break;
+          case 'mastercard':
+            // MasterCard commence par 51-55
+            const mcPrefixes = ["51", "52", "53", "54", "55"];
+            const randomPrefix = mcPrefixes[Math.floor(Math.random() * mcPrefixes.length)];
+            generatedNumber = ccgen.GenCC(randomPrefix)[0];
+            break;
+          case 'amex':
+            // American Express commence par 34 ou 37
+            const amexPrefixes = ["34", "37"];
+            const randomAmexPrefix = amexPrefixes[Math.floor(Math.random() * amexPrefixes.length)];
+            generatedNumber = ccgen.GenCC(randomAmexPrefix)[0];
+            break;
+          case 'discover':
+            generatedNumber = ccgen.GenCC("6011")[0]; // Discover commence par 6011
+            break;
+          default:
+            generatedNumber = ccgen.GenCC("4")[0]; // Par défaut, générer un Visa
+        }
+      }
+
+      return generatedNumber;
+    } catch (err) {
+      console.error("Erreur lors de la génération du numéro:", err);
+      throw new Error(`Impossible de générer un numéro: ${err.message}`);
+    }
+  };
+
+  const generateCvv = (isAmex = false) => {
+    // American Express a un CVV à 4 chiffres, les autres cartes ont un CVV à 3 chiffres
+    const length = isAmex ? 4 : 3;
+    return Array.from({ length }, () => Math.floor(Math.random() * 10)).join('');
   };
 
   const generateExpiry = () => {
@@ -104,7 +155,7 @@ const CcGenerator = () => {
             Un outil pour générer des numéros de cartes de crédit à des fins d'éducation et de test uniquement.
             <br />
             <span className="text-sm font-semibold mt-2 block">
-              AVERTISSEMENT: Ces numéros sont générés aléatoirement et ne sont pas de vraies cartes de crédit. 
+              AVERTISSEMENT: Ces numéros sont générés selon l'algorithme de Luhn et valides pour les tests, mais ne sont pas de vraies cartes bancaires. 
               N'utilisez jamais cet outil à des fins frauduleuses.
             </span>
           </p>
@@ -138,24 +189,64 @@ const CcGenerator = () => {
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-6">
         <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Paramètres</h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          <div>
-            <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
-              Type de carte
-            </label>
-            <select
-              value={cardType}
-              onChange={(e) => setCardType(e.target.value)}
+        <div className="mb-4">
+          <div className="flex items-center mb-3">
+            <input
+              type="checkbox"
+              id="use-custom-bin"
+              checked={useCustomBin}
+              onChange={(e) => setUseCustomBin(e.target.checked)}
               disabled={isGenerating}
-              className="w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-            >
-              <option value="visa">Visa</option>
-              <option value="mastercard">Mastercard</option>
-              <option value="amex">American Express</option>
-              <option value="discover">Discover</option>
-            </select>
+              className="mr-2 h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+            />
+            <label htmlFor="use-custom-bin" className="text-gray-700 dark:text-gray-300">
+              Utiliser un BIN personnalisé
+            </label>
           </div>
           
+          {useCustomBin ? (
+            <div className="mb-4">
+              <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+                BIN personnalisé (4-8 chiffres)
+              </label>
+              <input
+                type="text"
+                value={customBin}
+                onChange={(e) => {
+                  // Autoriser uniquement les chiffres
+                  const value = e.target.value.replace(/\D/g, '');
+                  setCustomBin(value);
+                }}
+                maxLength={8}
+                placeholder="ex: 451234"
+                disabled={isGenerating}
+                className="w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Entrez les premiers chiffres de la carte (BIN). Le reste sera généré automatiquement.
+              </p>
+            </div>
+          ) : (
+            <div className="mb-4">
+              <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+                Type de carte
+              </label>
+              <select
+                value={cardType}
+                onChange={(e) => setCardType(e.target.value)}
+                disabled={isGenerating}
+                className="w-full p-2 border rounded-md bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              >
+                <option value="visa">Visa</option>
+                <option value="mastercard">Mastercard</option>
+                <option value="amex">American Express</option>
+                <option value="discover">Discover</option>
+              </select>
+            </div>
+          )}
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
             <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
               Quantité
@@ -248,15 +339,20 @@ const CcGenerator = () => {
                 >
                   <div className="flex items-center">
                     <FiCreditCard className="mr-2 text-gray-500" />
-                    <span className="font-mono">
-                      {card.number}
-                      {card.cvv && <span className="ml-2 px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">CVV: {card.cvv}</span>}
-                      {card.expiry && <span className="ml-2 px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">EXP: {card.expiry}</span>}
-                    </span>
+                    <div>
+                      <div className="font-medium">{card.number}</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400 flex space-x-4">
+                        {card.cvv && <span>CVV: {card.cvv}</span>}
+                        {card.expiry && <span>Date: {card.expiry}</span>}
+                        <span className={card.isValid ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}>
+                          {card.isValid ? "✓ Luhn valide" : "✗ Luhn invalide"}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                   <button
                     onClick={() => copyToClipboard(`${card.number}${card.cvv ? ' | ' + card.cvv : ''}${card.expiry ? ' | ' + card.expiry : ''}`)}
-                    className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                    className="p-2 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
                     title="Copier"
                   >
                     <FiCopy />

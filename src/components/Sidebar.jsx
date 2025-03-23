@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FiHome, FiCheckSquare, FiSettings, FiMenu, FiSearch, FiBookmark, FiChevronDown, FiChevronRight, FiDatabase, FiLock, FiTarget, FiServer, FiWifi, FiMail, FiSend, FiPhone, FiEye, FiMessageSquare, FiShield, FiGlobe, FiKey, FiCalendar, FiGithub, FiTool, FiFile, FiImage, FiActivity, FiCode, FiCreditCard, FiFolder, FiUser, FiPhoneCall, FiBarChart2, FiGrid, FiMapPin } from 'react-icons/fi';
+import { FiHome, FiCheckSquare, FiSettings, FiMenu, FiSearch, FiBookmark, FiChevronDown, FiChevronRight, FiDatabase, FiLock, FiTarget, FiServer, FiWifi, FiMail, FiSend, FiPhone, FiEye, FiMessageSquare, FiShield, FiGlobe, FiKey, FiCalendar, FiGithub, FiTool, FiFile, FiImage, FiActivity, FiCode, FiCreditCard, FiFolder, FiUser, FiPhoneCall, FiBarChart2, FiGrid, FiMapPin, FiRepeat } from 'react-icons/fi';
 import { FcKey, FcUnlock, FcTabletAndroid, FcSearch, FcViewDetails, FcCalendar, FcBiohazard, FcMoneyTransfer, FcGlobe, FcDebt, FcDataConfiguration, FcAddressBook } from "react-icons/fc";
 import { PiSyringeFill, PiCreditCardFill, PiBinaryFill, PiDoorOpenFill } from "react-icons/pi";
 import { SiNgrok, SiAmazonwebservices } from "react-icons/si";
@@ -55,7 +55,13 @@ const Sidebar = ({ activeView, setActiveView }) => {
   const isSystemPlanningViewActive = activeView === 'plannifyer' || activeView === 'scriptgarbage';
 
   // Vérifier si une vue de misc est active
-  const isMiscellaneousViewActive = activeView === 'exifyer' || activeView === 'virustotal' || activeView === 'qrcodegenerator' || activeView === 'ipgeolocation';
+  const isMiscellaneousViewActive = activeView === 'exifyer' || 
+                                   activeView === 'virustotal' || 
+                                   activeView === 'qrcodegenerator' || 
+                                   activeView === 'ipgeolocation' || 
+                                   activeView === 'base64toimage' || 
+                                   activeView === 'mitreattack' ||
+                                   activeView === 'converter';
 
   // Vérifier si une vue de sniffing est active
   const isSniffingViewActive = activeView === 'shark';
@@ -166,6 +172,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
     { id: 'ipgeolocation', label: 'IP Geolocation', icon: <FiMapPin size={18} /> },
     { id: 'base64toimage', label: 'Base64 → Image', icon: <FiImage size={18} /> },
     { id: 'mitreattack', label: 'MITRE ATT&CK', icon: <FiTarget size={18} /> },
+    { id: 'converter', label: 'Converter', icon: <FiRepeat size={18} /> },
   ];
 
   // Définir les éléments du sous-menu Sniffing
@@ -189,7 +196,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
   
   // Définir les éléments du sous-menu CC
   const ccSubMenuItems = [
-    { id: 'ccgenerator', label: 'CC Generator', icon: <PiCreditCardFill size={18} />, disabled: true },
+    { id: 'ccgenerator', label: 'CC Generator', icon: <PiCreditCardFill size={18} /> },
     { id: 'binchecker', label: 'BIN Checker', icon: <PiBinaryFill size={18} /> },
   ];
 

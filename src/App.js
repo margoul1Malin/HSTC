@@ -43,6 +43,7 @@ import SubdomainEnum from './components/OSINT/SubdomainEnum';
 import WebTechnologies from './components/OSINT/WebTechnologies';
 import ProxyList from './components/OSINT/ProxyList';
 import Msfvenom from './components/Malware/Msfvenom';
+import Converter from './components/Miscellaneous/Converter';
 import './styles/App.css';
 import { NotificationProvider } from './context/NotificationContext';
 
@@ -260,6 +261,9 @@ const App = () => {
       case 'msfvenom':
         console.log('Rendering Msfvenom view');
         return <Msfvenom />;
+      case 'converter':
+        console.log('Rendering Converter component');
+        return <Converter />;
       default:
         console.log('App - Vue non reconnue, affichage du GoBuster');
         return <GoBuster />;
