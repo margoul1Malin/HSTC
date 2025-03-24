@@ -4209,6 +4209,9 @@ body {
 .dark\:bg-opacity-70:is(.dark *) {
   --tw-bg-opacity: 0.7;
 }
+.dark\:bg-opacity-80:is(.dark *) {
+  --tw-bg-opacity: 0.8;
+}
 .dark\:text-amber-200:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(253 230 138 / var(--tw-text-opacity, 1));

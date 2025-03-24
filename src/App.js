@@ -46,6 +46,7 @@ import TwitterScraper from './components/OSINT/TwitterScraper';
 import Msfvenom from './components/Malware/Msfvenom';
 import Converter from './components/Miscellaneous/Converter';
 import Donut from './components/Malware/Donut';
+import HakBoardCrawler from './components/scanner/HakBoardCrawler';
 import './styles/App.css';
 import { NotificationProvider } from './context/NotificationContext';
 
@@ -160,6 +161,9 @@ const App = () => {
       case 'webalyzer':
         console.log('Rendering WebAlyzer component');
         return <WebAlyzer />;
+      case 'hakboardcrawler':
+        console.log('Rendering HakBoard Crawler component');
+        return <HakBoardCrawler />;
       case 'osintEmail':
         console.log('Rendering OsintEmail component');
         return <OsintEmail />;

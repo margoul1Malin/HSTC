@@ -4,6 +4,7 @@ import { FcKey, FcUnlock, FcTabletAndroid, FcSearch, FcViewDetails, FcCalendar, 
 import { PiSyringeFill, PiCreditCardFill, PiBinaryFill, PiDoorOpenFill } from "react-icons/pi";
 import { SiNgrok, SiAmazonwebservices } from "react-icons/si";
 import { FaQrcode } from "react-icons/fa";
+import { BiScan } from "react-icons/bi";
 const Sidebar = ({ activeView, setActiveView }) => {
   console.log('Sidebar - Rendu, vue active:', activeView);
   
@@ -120,7 +121,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
     { id: 'webalyzer', label: 'WebAlyzer', icon: <FcGlobe size={18} /> },
     { id: 'ssl_tls', label: 'SSL/TLS', icon: <FiLock size={18} /> },
     { id: 'zapscanner', label: 'OWASP ZAP', icon: <FiShield size={18} /> },
-    { id: 'simplecrawler', label: 'Simple Crawler', icon: <FiSearch size={18} />, disabled: true },
+    { id: 'hakboardcrawler', label: 'HakBoard Crawler', icon: <BiScan size={18} /> },
   ];
   
   // Définir les éléments du sous-menu E-Mails

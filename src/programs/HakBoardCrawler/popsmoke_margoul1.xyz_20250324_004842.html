@@ -1,0 +1,320 @@
+
+                <!DOCTYPE html>
+                <html lang="fr">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Rapport de Scan - HakBoardCrawler</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; color: #333; }
+                        h1 { color: #2c3e50; }
+                        h2 { color: #3498db; margin-top: 30px; }
+                        h3 { color: #2980b9; }
+                        .container { max-width: 1200px; margin: 0 auto; }
+                        .section { margin-bottom: 30px; padding: 20px; border-radius: 5px; background-color: #f9f9f9; }
+                        .info { color: #16a085; }
+                        .warning { color: #f39c12; }
+                        .danger { color: #c0392b; }
+                        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+                        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+                        th { background-color: #f2f2f2; }
+                        tr:hover { background-color: #f5f5f5; }
+                        .footer { margin-top: 50px; text-align: center; font-size: 0.8em; color: #7f8c8d; }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <h1>Rapport de Scan - HakBoardCrawler</h1>
+                
+                        <div class="section">
+                            <h2>Informations Générales</h2>
+                            <table>
+                                <tr><th>Cible</th><td>http://margoul1.xyz</td></tr>
+                                <tr><th>Date</th><td>2025-03-24T00:48:28.896273</td></tr>
+                                <tr><th>Mode</th><td>aggressive</td></tr>
+                            </table>
+                        </div>
+                
+                        <div class="section">
+                            <h2>Vulnérabilités Détectées</h2>
+                            <table>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Sévérité</th>
+                                    <th>Description</th>
+                                </tr>
+                    
+                            <tr>
+                                <td>En-tête X-Content-Type-Options</td>
+                                <td class="danger">high</td>
+                                <td>En-tête X-Content-Type-Options manquant. Empêche le navigateur d'interpréter les fichiers comme un type MIME différent.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>En-tête X-Frame-Options</td>
+                                <td class="danger">high</td>
+                                <td>En-tête X-Frame-Options manquant. Protège contre les attaques de clickjacking.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>En-tête X-XSS-Protection</td>
+                                <td class="danger">high</td>
+                                <td>En-tête X-XSS-Protection manquant. Filtre de base pour les attaques XSS dans les navigateurs plus anciens.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>En-tête Strict-Transport-Security</td>
+                                <td class="danger">high</td>
+                                <td>En-tête Strict-Transport-Security manquant. Force les connexions via HTTPS plutôt que HTTP.</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>En-tête server</td>
+                                <td class="info">low</td>
+                                <td>L'en-tête server révèle des informations sur la technologie utilisée: Vercel</td>
+                            </tr>
+                        
+                            </table>
+                        </div>
+                    
+                        <div class="section">
+                            <h2>Fichiers Sensibles Exposés</h2>
+                            <table>
+                                <tr>
+                                    <th>Chemin</th>
+                                    <th>Status</th>
+                                    <th>Type</th>
+                                </tr>
+                    
+                            </table>
+                        </div>
+                    
+                        <div class="section">
+                            <h2>Endpoints API Détectés</h2>
+                            <table>
+                                <tr>
+                                    <th>URL</th>
+                                    <th>Méthode</th>
+                                    <th>Paramètres</th>
+                                </tr>
+                    
+                            <tr>
+                                <td>http://margoul1.xyz/api/</td>
+                                <td>GET</td>
+                                <td></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/_next/data/</td>
+                                <td>GET</td>
+                                <td></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/_next/static/css/d6d7fed9d6474734.css\</td>
+                                <td>GET</td>
+                                <td></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/_next/static/media/a34f9d1faa5f3315-s.p.woff2\</td>
+                                <td>GET</td>
+                                <td></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/_next/static/</td>
+                                <td>GET</td>
+                                <td></td>
+                            </tr>
+                        
+                            </table>
+                        </div>
+                    
+                        <div class="section">
+                            <h2>Métadonnées Intéressantes</h2>
+                            <table>
+                                <tr>
+                                    <th>Fichier</th>
+                                    <th>Type</th>
+                                    <th>Champ</th>
+                                    <th>Valeur</th>
+                                </tr>
+                    
+                            </table>
+                        </div>
+                    
+                    <div class="section">
+                        <h2>Carte du Site</h2>
+                
+                        <h3>Statistiques des Ressources</h3>
+                        <table>
+                            <tr>
+                                <th>Type de Ressource</th>
+                                <th>Nombre</th>
+                            </tr>
+                            <tr>
+                                <td>Pages/URLs Total</td>
+                                <td>17</td>
+                            </tr>
+                            <tr>
+                                <td>Images</td>
+                                <td>6</td>
+                            </tr>
+                            <tr>
+                                <td>Scripts</td>
+                                <td>14</td>
+                            </tr>
+                            <tr>
+                                <td>Feuilles de style</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>Polices</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>Média</td>
+                                <td>0</td>
+                            </tr>
+                        </table>
+                    
+                        <h3>Pages découvertes</h3>
+                        <table>
+                            <tr>
+                                <th>URL</th>
+                                <th>Titre</th>
+                                <th>Statut</th>
+                                <th>Profondeur</th>
+                            </tr>
+                    
+                            <tr>
+                                <td>http://margoul1.xyz</td>
+                                <td>Margoul1 Store</td>
+                                <td>200</td>
+                                <td>0</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/</td>
+                                <td>Margoul1 Store</td>
+                                <td>200</td>
+                                <td>1</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/produits</td>
+                                <td>Margoul1 Store</td>
+                                <td>200</td>
+                                <td>1</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/contact</td>
+                                <td>Margoul1 Store</td>
+                                <td>200</td>
+                                <td>1</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/login</td>
+                                <td>Margoul1 Store</td>
+                                <td>200</td>
+                                <td>1</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/categories/gadgets</td>
+                                <td>Margoul1 Store</td>
+                                <td>200</td>
+                                <td>1</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/categories/softwares</td>
+                                <td>Margoul1 Store</td>
+                                <td>200</td>
+                                <td>1</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/categories/services</td>
+                                <td>Margoul1 Store</td>
+                                <td>200</td>
+                                <td>1</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/produits/67ab71204290856a7232e926</td>
+                                <td>Margoul1 Store</td>
+                                <td>200</td>
+                                <td>1</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/produits/67ab704683dda53875789587</td>
+                                <td>Margoul1 Store</td>
+                                <td>200</td>
+                                <td>1</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/produits/67ab6fa14290856a7232e925</td>
+                                <td>Margoul1 Store</td>
+                                <td>200</td>
+                                <td>1</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/produits/67ab6f4d4290856a7232e924</td>
+                                <td>Margoul1 Store</td>
+                                <td>200</td>
+                                <td>1</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/produits/67ab6e1383dda53875789586</td>
+                                <td>Margoul1 Store</td>
+                                <td>200</td>
+                                <td>1</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/produits/67adea2c5ba2965134191177</td>
+                                <td>Margoul1 Store</td>
+                                <td>200</td>
+                                <td>2</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/produits/67a602ff0985220c02dec5b2</td>
+                                <td>Margoul1 Store</td>
+                                <td>200</td>
+                                <td>2</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/produits/67d058a8746fd55cfa88ffc9</td>
+                                <td>Margoul1 Store</td>
+                                <td>200</td>
+                                <td>2</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>http://margoul1.xyz/produits/67ade8ce75f7af9fa71ab6a5</td>
+                                <td>Margoul1 Store</td>
+                                <td>200</td>
+                                <td>2</td>
+                            </tr>
+                        
+                        </table>
+                    
+                    </div>
+                
+                        <div class="footer">
+                            <p>Généré par HakBoardCrawler</p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+                
