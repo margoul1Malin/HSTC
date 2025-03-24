@@ -32,6 +32,38 @@ const ZAPScanner = () => {
   const [selectedPlugin, setSelectedPlugin] = useState(null);
   const [isInstallingPlugin, setIsInstallingPlugin] = useState(false);
   
+  // Fonction pour charger la configuration sauvegardée
+  const loadSavedConfiguration = async () => {
+    try {
+      // Charger les paramètres depuis le localStorage
+      const savedSettings = localStorage.getItem('zapScannerSettings');
+      if (savedSettings) {
+        const settings = JSON.parse(savedSettings);
+        
+        // Mettre à jour les états avec les valeurs sauvegardées
+        setZapPort(settings.zapPort || 8080);
+        setApiKey(settings.apiKey || '');
+        setScanOptions(settings.scanOptions || {
+          spiderMaxDepth: 5,
+          spiderMaxChildren: 10,
+          activeScanPolicy: 'Default Policy',
+          activeScanRecurse: true,
+          activeScanInScopeOnly: false
+        });
+        
+        // Si une URL cible était sauvegardée, la restaurer
+        if (settings.targetUrl) {
+          setTargetUrl(settings.targetUrl);
+        }
+        
+        showSuccess('Configuration chargée avec succès');
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement de la configuration:', error);
+      showError('Erreur lors du chargement de la configuration');
+    }
+  };
+  
   // Référence pour le conteneur de résultats
   const resultsRef = useRef(null);
   
