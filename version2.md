@@ -9,9 +9,7 @@ Ramzy (Intruder)    /
 
 ## SubMenu Miscellanous [ Incoming... ]
 
-Web Crawler 
 File Edit0r (Cool As Fuck) 
-
 
 ## Submenu Scanner [ Pending... ]
 Intégration Nessus, OpenVAS
@@ -34,3 +32,7 @@ RFID
 
 ## Submenu Flooding
 - Phones -> SIP FLooding / RTP Flooding (inviteflood)
+
+## Malware Menu
+
+Let's take into C2 Command & Control (Session Gestion)

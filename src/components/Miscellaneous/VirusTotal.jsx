@@ -33,31 +33,49 @@ const VirusTotal = () => {
     loadApiKey();
   }, []);
 
+  // Fonction pour calculer le hash d'un fichier
+  const calculateFileHash = async (filePath) => {
+    try {
+      const isWindows = window.electronAPI && window.electronAPI.platform === 'win32';
+      const command = isWindows
+        ? `certutil -hashfile "${filePath}" SHA256 | findstr /v "hash"`
+        : `sha256sum "${filePath}" | cut -d' ' -f1`;
+      
+      const result = await window.electronAPI.executeCommand(command);
+      return isWindows 
+        ? result.stdout.split('\r\n')[1].trim() 
+        : result.stdout.trim();
+    } catch (error) {
+      console.error('Erreur lors du calcul du hash:', error);
+      throw new Error('Erreur lors du calcul du hash du fichier');
+    }
+  };
+  
   // Fonction pour gérer la sélection de fichier
   const handleFileSelect = async () => {
     try {
       const result = await window.electronAPI.showOpenFileDialog({
         title: 'Sélectionner un fichier à analyser',
+        properties: ['openFile'],
         filters: [{ name: 'Tous les fichiers', extensions: ['*'] }]
       });
       
-      if (result.success) {
-        setSelectedFile(result.filePath);
-        setSearchValue(result.filePath);
+      if (!result.canceled && result.filePaths && result.filePaths[0]) {
+        const filePath = result.filePaths[0];
+        console.log('Fichier sélectionné:', filePath);
+        
+        // Calculer le hash du fichier
+        showInfo('Calcul du hash du fichier...');
+        const fileHash = await calculateFileHash(filePath);
+        console.log('Hash du fichier:', fileHash);
+        
+        setSelectedFile(filePath);
+        setSearchValue(fileHash); // On stocke le hash plutôt que le chemin
+        showSuccess('Fichier sélectionné et hash calculé avec succès');
       }
     } catch (error) {
       console.error('Erreur lors de la sélection du fichier:', error);
-      showError('Erreur lors de la sélection du fichier');
-    }
-  };
-  
-  // Fonction pour calculer le hash d'un fichier
-  const calculateFileHash = async (filePath) => {
-    try {
-      const result = await window.electronAPI.executeCommand(`sha256sum "${filePath}"`);
-      return result.stdout.split(' ')[0];
-    } catch (error) {
-      throw new Error('Erreur lors du calcul du hash du fichier');
+      showError('Erreur lors de la sélection du fichier: ' + error.message);
     }
   };
   
@@ -104,6 +122,23 @@ const VirusTotal = () => {
           if (!selectedFile) {
             throw new Error('Veuillez sélectionner un fichier');
           }
+          
+          // Vérifier d'abord si le hash existe déjà
+          try {
+            const fileHash = searchValue; // Le hash a été stocké lors de la sélection
+            const existingReport = await virusTotalService.getFileReport(fileHash);
+            
+            if (existingReport && existingReport.response_code === 1) {
+              console.log('Rapport existant trouvé pour le hash');
+              analysisResults = existingReport;
+              break;
+            }
+          } catch (error) {
+            console.log('Aucun rapport existant trouvé, upload du fichier nécessaire');
+          }
+          
+          // Si pas de rapport existant, uploader le fichier
+          showInfo('Upload du fichier en cours...');
           analysisResults = await virusTotalService.scanFile(selectedFile);
           break;
 
@@ -127,7 +162,7 @@ const VirusTotal = () => {
 
     } catch (error) {
       console.error('Erreur lors de l\'analyse:', error);
-      showError(error.message);
+      showError(error.message || 'Une erreur s\'est produite lors de l\'analyse');
     } finally {
       setIsLoading(false);
     }
