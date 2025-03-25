@@ -70,6 +70,23 @@ const ZAPScanner = () => {
   // Référence pour le conteneur de résultats
   const resultsRef = useRef(null);
   
+  // Effet pour charger la clé API sauvegardée au démarrage
+  useEffect(() => {
+    const loadApiKey = async () => {
+      try {
+        // Charger la clé API depuis le localStorage
+        const savedApiKey = localStorage.getItem('zapApiKey');
+        if (savedApiKey) {
+          setApiKey(savedApiKey);
+          console.log('Clé API ZAP chargée depuis le localStorage');
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement de la clé API:', error);
+      }
+    };
+    loadApiKey();
+  }, []);
+  
   // Vérifier si ZAP est installé
   const checkZapInstallation = async () => {
     try {
@@ -97,37 +114,51 @@ const ZAPScanner = () => {
   const checkZapStatus = async () => {
     try {
       if (window.electronAPI && window.electronAPI.executeCommand) {
-        // Vérifier simplement si le port est ouvert, sans utiliser l'API ZAP
-        const command = `curl -s -m 2 -o /dev/null -w "%{http_code}" http://localhost:${zapPort}/`;
-        const result = await window.electronAPI.executeCommand(command);
+        // Vérifier si le processus Java de ZAP est en cours d'exécution
+        const psCommand = `ps aux | grep -v grep | grep "java.*zap"`;
         
-        // Si on obtient un code HTTP (même une erreur 4xx ou 5xx), cela signifie que le port est ouvert
-        if (result.stdout && parseInt(result.stdout) > 0) {
-          setZapStatus('running');
-          showSuccess('OWASP ZAP est en cours d\'exécution');
+        const psResult = await window.electronAPI.executeCommand(psCommand);
+        const isProcessRunning = psResult.stdout && psResult.stdout.includes('java');
+
+        // Si le processus est en cours d'exécution, vérifier le port
+        if (isProcessRunning) {
+          // Utiliser netstat pour vérifier si le port est en écoute
+          const portCommand = `netstat -tuln | grep ":${zapPort}"`;
           
-          // Si aucune clé API n'est définie, essayer de la récupérer depuis ZAP
-          if (!apiKey) {
-            try {
-              // Essayer de récupérer la clé API depuis le fichier de configuration ZAP
-              const getApiKeyCommand = `grep -o 'api\\.key=.*' /home/margoul1/HakBoard/src/programs/ZAP_2.16.0/config.xml | cut -d'=' -f2`;
-              const apiKeyResult = await window.electronAPI.executeCommand(getApiKeyCommand);
+          try {
+            const portResult = await window.electronAPI.executeCommand(portCommand);
+            
+            if (portResult.stdout && portResult.stdout.includes(`:${zapPort}`)) {
+              setZapStatus('running');
+              showSuccess('OWASP ZAP est en cours d\'exécution');
               
-              if (apiKeyResult.stdout && apiKeyResult.stdout.trim()) {
-                const retrievedApiKey = apiKeyResult.stdout.trim();
-                setApiKey(retrievedApiKey);
-                showSuccess('Clé API ZAP récupérée avec succès');
+              // Si aucune clé API n'est définie, essayer de la récupérer
+              if (!apiKey) {
+                try {
+                  const configPath = '/home/margoul1/HakBoard/src/programs/ZAP_2.16.0/config.xml';
+                  const getApiKeyCommand = `grep -o 'api\\.key=.*' "${configPath}" 2>/dev/null | cut -d'=' -f2`;
+                  
+                  const apiKeyResult = await window.electronAPI.executeCommand(getApiKeyCommand);
+                  
+                  if (apiKeyResult.stdout && apiKeyResult.stdout.trim()) {
+                    const retrievedApiKey = apiKeyResult.stdout.trim();
+                    setApiKey(retrievedApiKey);
+                    localStorage.setItem('zapApiKey', retrievedApiKey);
+                    showSuccess('Clé API ZAP récupérée avec succès');
+                  }
+                } catch (error) {
+                  console.error('Erreur lors de la récupération de la clé API:', error);
+                }
               }
-            } catch (error) {
-              console.error('Erreur lors de la récupération de la clé API:', error);
+              return true;
             }
+          } catch (portError) {
+            console.error('Erreur lors de la vérification du port:', portError);
           }
-          
-          return true;
-        } else {
-          setZapStatus('stopped');
-          return false;
         }
+        
+        setZapStatus('stopped');
+        return false;
       }
     } catch (error) {
       console.error('Erreur lors de la vérification du statut ZAP:', error);
@@ -156,7 +187,7 @@ const ZAPScanner = () => {
     // Vérifier si une URL a été passée depuis la vue Targets
     const urlData = localStorage.getItem('zapScannerUrl');
     if (urlData) {
-      setTarget(urlData);
+      setTargetUrl(urlData);
       addLog(`Cible définie depuis Targets: ${urlData}`, 'info');
       // Supprimer les données pour éviter de les réutiliser à chaque montage
       localStorage.removeItem('zapScannerUrl');
@@ -164,8 +195,8 @@ const ZAPScanner = () => {
     
     // Nettoyer le processus ZAP au démontage du composant
     return () => {
-      if (isZapRunning && window.electronAPI) {
-        window.electronAPI.killProcess('zap')
+      if (zapStatus === 'running' && window.electronAPI) {
+        stopZap()
           .then(() => console.log('ZAP arrêté avec succès'))
           .catch(error => console.error('Erreur lors de l\'arrêt de ZAP:', error));
       }
@@ -239,15 +270,43 @@ const ZAPScanner = () => {
   // Arrêter ZAP
   const stopZap = async () => {
     try {
-      if (window.electronAPI && window.electronAPI.executeCommand) {
-        const command = `curl -s "http://localhost:${zapPort}/JSON/core/action/shutdown/?apikey=${apiKey}"`;
-        
-        await window.electronAPI.executeCommand(command);
-        setZapStatus('stopped');
-        showInfo('OWASP ZAP a été arrêté');
-      } else {
-        showError('API Electron non disponible pour exécuter la commande');
+      const isWindows = window.electronAPI && window.electronAPI.platform === 'win32';
+      
+      // D'abord essayer d'arrêter proprement via l'API
+      if (apiKey) {
+        try {
+          const command = `curl -s "http://localhost:${zapPort}/JSON/core/action/shutdown/?apikey=${apiKey}"`;
+          await window.electronAPI.executeCommand(command);
+          console.log('Arrêt propre de ZAP via API réussi');
+        } catch (error) {
+          console.error('Erreur lors de l\'arrêt via API:', error);
+        }
       }
+
+      // Attendre un peu que ZAP se termine proprement
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // Vérifier si le processus est toujours en cours
+      const checkCommand = isWindows
+        ? `tasklist /FI "IMAGENAME eq java.exe" /FI "WINDOWTITLE eq ZAP*" /NH`
+        : `ps aux | grep -v grep | grep "java.*zap"`;
+      
+      const checkResult = await window.electronAPI.executeCommand(checkCommand);
+      
+      // Si le processus est toujours en cours, le tuer
+      if (checkResult.stdout && (checkResult.stdout.includes('java.exe') || checkResult.stdout.includes('zap.sh'))) {
+        console.log('ZAP est toujours en cours, tentative de kill forcé');
+        
+        const killCommand = isWindows
+          ? `taskkill /F /FI "WINDOWTITLE eq ZAP*" /IM java.exe`
+          : `pkill -f "zap.sh"`;
+        
+        await window.electronAPI.executeCommand(killCommand);
+      }
+
+      setZapStatus('stopped');
+      showSuccess('OWASP ZAP a été arrêté');
+      
     } catch (error) {
       console.error('Erreur lors de l\'arrêt de ZAP:', error);
       showError(`Erreur lors de l'arrêt de ZAP: ${error.message}`);
