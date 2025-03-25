@@ -38,46 +38,90 @@ const QRCodeGenerator = () => {
       const isWindows = window.electronAPI && window.electronAPI.platform === 'win32';
       console.log('[QRCodeGenerator] Plateforme détectée:', isWindows ? 'Windows' : 'Linux');
 
+      // Préparer les options de configuration QR pour l'utiliser dans la commande
+      const qrOptions = JSON.stringify({
+        width: size,
+        margin: margin,
+        color: {
+          dark: darkColor,
+          light: lightColor
+        }
+      }).replace(/"/g, '\\"'); // Échapper les guillemets pour la commande shell
+
       // Construire la commande à exécuter avec l'URL correctement formatée
       let command;
       if (isWindows) {
-        // Commande Windows pour générer le QR code
-        command = `cd src && node -e "const qrcode = require('qrcode'); qrcode.toDataURL('${urlToUse}', {
-          width: ${size},
-          margin: ${margin},
-          color: {
-            dark: '${darkColor}',
-            light: '${lightColor}'
-          }
-        }, (err, url) => { if(err) { console.error(err); process.exit(1); } else { console.log(url); } });"`;
+        // Commande Windows pour générer le QR code (une seule ligne)
+        command = `cd src && node -e "const qrcode = require('qrcode'); qrcode.toDataURL('${urlToUse}', JSON.parse('${qrOptions}'), (err, url) => { if(err) { console.error(err); process.exit(1); } else { console.log(url); } });"`;
         console.log('[QRCodeGenerator] Commande Windows utilisée:', command);
       } else {
-        // Commande Linux pour générer le QR code
-        command = `cd src && node -e "const qrcode = require('qrcode'); qrcode.toDataURL('${urlToUse}', {
-          width: ${size},
-          margin: ${margin},
-          color: {
-            dark: '${darkColor}',
-            light: '${lightColor}'
-          }
-        }, (err, url) => { if(err) { console.error(err); process.exit(1); } else { console.log(url); } });"`;
+        // Commande Linux pour générer le QR code (une seule ligne)
+        command = `cd src && node -e "const qrcode = require('qrcode'); qrcode.toDataURL('${urlToUse}', JSON.parse('${qrOptions}'), (err, url) => { if(err) { console.error(err); process.exit(1); } else { console.log(url); } });"`;
         console.log('[QRCodeGenerator] Commande Linux utilisée:', command);
       }
 
+      // Alternative si la commande ci-dessus ne fonctionne pas - créer un fichier temporaire
       if (window.electronAPI && window.electronAPI.executeCommand) {
-        const result = await window.electronAPI.executeCommand(command);
+        let result;
+        try {
+          // Première tentative avec la commande directe
+          result = await window.electronAPI.executeCommand(command);
+        } catch (cmdError) {
+          console.error('[QRCodeGenerator] Erreur avec la commande directe:', cmdError);
+          
+          // Méthode alternative : créer un script temporaire et l'exécuter
+          console.log('[QRCodeGenerator] Essai avec méthode alternative via script temporaire');
+          
+          const tempScriptPath = isWindows ? '.\\temp\\qrgen.js' : '/tmp/qrgen.js';
+          const scriptContent = `
+const qrcode = require('qrcode');
+
+const options = ${JSON.stringify({
+            width: size,
+            margin: margin,
+            color: {
+              dark: darkColor,
+              light: lightColor
+            }
+          }, null, 2)};
+
+qrcode.toDataURL('${urlToUse}', options, (err, url) => {
+  if (err) {
+    console.error(err);
+    process.exit(1);
+  } else {
+    console.log(url);
+  }
+});`;
+
+          // Créer le répertoire temp si nécessaire
+          if (isWindows) {
+            await window.electronAPI.executeCommand('mkdir .\\temp 2>nul');
+          } else {
+            await window.electronAPI.executeCommand('mkdir -p /tmp');
+          }
+          
+          // Écrire le fichier script
+          await window.electronAPI.writeFile(tempScriptPath, scriptContent);
+          
+          // Exécuter le script
+          const nodeCmd = `cd src && node ${tempScriptPath}`;
+          result = await window.electronAPI.executeCommand(nodeCmd);
+        }
         
         if (result && result.stdout) {
           setQrCodeImage(result.stdout.trim());
           setSuccessMessage('QR Code généré avec succès! URL: ' + urlToUse);
           setUrl(urlToUse); // Mettre à jour l'URL avec le format corrigé
         } else if (result && result.stderr) {
+          console.error('[QRCodeGenerator] Erreur de génération:', result.stderr);
           setErrorMessage(`Erreur: ${result.stderr}`);
         }
       } else {
         setErrorMessage('API Electron non disponible');
       }
     } catch (error) {
+      console.error('[QRCodeGenerator] Erreur complète:', error);
       setErrorMessage(`Erreur lors de la génération du QR Code: ${error.message || 'Erreur inconnue'}`);
     } finally {
       setIsGenerating(false);

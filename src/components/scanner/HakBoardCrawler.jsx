@@ -285,8 +285,16 @@ const HakBoardCrawler = () => {
           // Exécuter à nouveau le crawler avec le format HTML
           const outputPath = filePath.replace(/\.[^/.]+$/, ""); // Supprimer l'extension
           
-          // Construire la commande pour générer le rapport HTML
-          let command = `env/bin/hakboardcrawler ${settings.target} -f html -o "${outputPath}"`;
+          // Détecter la plateforme
+          const isWindows = window.electronAPI && window.electronAPI.platform === 'win32';
+          console.log('[HakBoardCrawler] Plateforme détectée pour export:', isWindows ? 'Windows' : 'Linux');
+          
+          // Construire la commande pour générer le rapport HTML avec le bon chemin selon la plateforme
+          let command = isWindows
+            ? `.\\env\\Scripts\\python.exe -m hakboardcrawler ${settings.target} -f html -o "${outputPath}"`
+            : `env/bin/hakboardcrawler ${settings.target} -f html -o "${outputPath}"`;
+          
+          console.log('[HakBoardCrawler] Commande d\'export HTML:', command);
           
           // Ajouter les paramètres de base
           if (settings.depth) command += ` -d ${settings.depth}`;
@@ -320,7 +328,7 @@ const HakBoardCrawler = () => {
         }
       }
     } catch (err) {
-      console.error('Erreur lors de l\'exportation des résultats:', err);
+      console.error('[HakBoardCrawler] Erreur lors de l\'exportation des résultats:', err);
       setError(`Impossible d'exporter les résultats: ${err.message}`);
     }
   };

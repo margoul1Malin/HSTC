@@ -694,7 +694,11 @@ Rapport généré par HakBoard - Scanner SSL/TLS
             console.warn('Erreur d\'arguments dans la commande, essai avec moins d\'options');
             
             // Essayer avec une commande simplifiée (moins d'options)
-            const simpleCommand = `env/bin/sslyze ${cleanUrl} --json_out -`;
+            const isWindows = window.electronAPI && window.electronAPI.platform === 'win32';
+            const simpleCommand = isWindows
+              ? `.\\env\\Scripts\\sslyze.exe ${cleanUrl} --json_out -`
+              : `env/bin/sslyze ${cleanUrl} --json_out -`;
+              
             console.log('Essai avec une commande simplifiée:', simpleCommand);
             
             try {
@@ -702,7 +706,10 @@ Rapport généré par HakBoard - Scanner SSL/TLS
             } catch (simpleExecError) {
               // Essayer avec juste la commande de base sans options
               try {
-                const basicCommand = `env/bin/sslyze ${cleanUrl}`;
+                const basicCommand = isWindows
+                  ? `.\\env\\Scripts\\sslyze.exe ${cleanUrl}`
+                  : `env/bin/sslyze ${cleanUrl}`;
+                  
                 console.log('Essai avec une commande basique:', basicCommand);
                 result = await window.electronAPI.executeCommand(basicCommand);
               } catch (basicExecError) {
@@ -718,34 +725,49 @@ Rapport généré par HakBoard - Scanner SSL/TLS
         // Vérifier si l'erreur est due à un fichier non trouvé
         if (execError.message && (execError.message.includes('No such file or directory') || 
             execError.message.includes('not found') || 
-            execError.message.includes('cannot find'))) {
+            execError.message.includes('cannot find') ||
+            execError.message.includes('n\'est pas reconnu'))) {
           
           console.warn('Chemin sslyze non trouvé, essai avec des chemins alternatifs');
           
-          // Essayer avec des chemins alternatifs
-          const alternativePaths = [
-            'sslyze', // Commande directe si installée globalement
-            './env/bin/sslyze', // Chemin relatif avec ./
-            `${process.cwd()}/env/bin/sslyze`, // Chemin absolu
-            'python -m sslyze', // Via module Python
-            'python3 -m sslyze' // Via module Python avec Python3
-          ];
+          // Déterminer la plateforme
+          const isWindows = window.electronAPI && window.electronAPI.platform === 'win32';
+          console.log('[Scan_SSL_TLS] Recherche de chemins alternatifs pour plateforme:', isWindows ? 'Windows' : 'Linux');
+          
+          // Essayer avec des chemins alternatifs selon la plateforme
+          const alternativePaths = isWindows 
+            ? [
+                'sslyze',  // Commande globale
+                '.\\env\\Scripts\\sslyze.exe',  // Chemin relatif standard
+                '.\\venv\\Scripts\\sslyze.exe', // Autre environnement virtuel possible
+                'python -m sslyze',  // Via module Python
+                'python3 -m sslyze', // Via module Python avec Python3
+                '%LOCALAPPDATA%\\Programs\\Python\\Python310\\Scripts\\sslyze.exe', // Installation Python utilisateur
+                'C:\\Python310\\Scripts\\sslyze.exe' // Installation Python système
+              ]
+            : [
+                'sslyze', // Commande directe si installée globalement
+                './env/bin/sslyze', // Chemin relatif avec ./
+                `${process.cwd()}/env/bin/sslyze`, // Chemin absolu
+                'python -m sslyze', // Via module Python
+                'python3 -m sslyze' // Via module Python avec Python3
+              ];
           
           let alternativeResult = null;
           
           for (const altPath of alternativePaths) {
             try {
-              console.log(`Essai avec le chemin alternatif: ${altPath}`);
+              console.log(`[Scan_SSL_TLS] Essai avec le chemin alternatif: ${altPath}`);
               const altCommand = `${altPath} ${cleanUrl} --json_out -`;
               alternativeResult = await window.electronAPI.executeCommand(altCommand);
               
               if (alternativeResult && alternativeResult.stdout) {
-                console.log(`Succès avec le chemin alternatif: ${altPath}`);
+                console.log(`[Scan_SSL_TLS] Succès avec le chemin alternatif: ${altPath}`);
                 result = alternativeResult;
                 break;
               }
             } catch (altError) {
-              console.warn(`Échec avec le chemin alternatif ${altPath}:`, altError.message);
+              console.warn(`[Scan_SSL_TLS] Échec avec le chemin alternatif ${altPath}:`, altError.message);
             }
           }
           

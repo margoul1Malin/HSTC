@@ -41,8 +41,8 @@ const VirusTotal = () => {
       
       let command = '';
       if (isWindows) {
-        // Commande Windows pour calculer le hash SHA256
-        command = `certutil -hashfile "${filePath}" SHA256 | findstr /v "hash"`;
+        // Commande Windows pour calculer le hash SHA256 avec sortie simplifiée
+        command = `certutil -hashfile "${filePath}" SHA256`;
         console.log('[VirusTotal] Commande Windows utilisée:', command);
       } else {
         // Commande Linux pour calculer le hash SHA256
@@ -55,8 +55,19 @@ const VirusTotal = () => {
       
       let hash = '';
       if (isWindows) {
-        // Extraire le hash du résultat Windows (2ème ligne)
-        hash = result.stdout.split('\r\n')[1].trim();
+        // Format de sortie Windows:
+        // SHA256 hash of file C:\path\to\file.txt:
+        // a1b2c3d4e5f6...
+        // CertUtil: -hashfile command completed successfully.
+        const lines = result.stdout.split('\r\n').filter(line => line.trim() !== '');
+        
+        if (lines.length >= 2) {
+          // La deuxième ligne contient le hash
+          hash = lines[1].trim();
+          console.log('[VirusTotal] Hash extrait de la sortie Windows:', hash);
+        } else {
+          throw new Error('Format de sortie certutil inattendu');
+        }
       } else {
         // Extraire le hash du résultat Linux
         hash = result.stdout.trim();
@@ -66,7 +77,7 @@ const VirusTotal = () => {
       return hash;
     } catch (error) {
       console.error('[VirusTotal] Erreur lors du calcul du hash:', error);
-      throw new Error('Erreur lors du calcul du hash du fichier');
+      throw new Error('Erreur lors du calcul du hash du fichier: ' + (error.message || 'Erreur inconnue'));
     }
   };
   
