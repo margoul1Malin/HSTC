@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FiAlertCircle, FiCheckCircle, FiX, FiPlay, FiSlash, FiFile, FiSave } from 'react-icons/fi';
+import { FiAlertCircle, FiCheckCircle, FiX, FiPlay, FiSlash, FiFile, FiSave, FiAlertTriangle } from 'react-icons/fi';
 
 const XSSer = () => {
   const [isRunning, setIsRunning] = useState(false);
@@ -13,6 +13,18 @@ const XSSer = () => {
   const [reportPath, setReportPath] = useState('');
   const [vulnerabilitiesCount, setVulnerabilitiesCount] = useState(0);
   const [processId, setProcessId] = useState(null);
+  const [isWindows, setIsWindows] = useState(false);
+
+  // Vérifier la plateforme au chargement
+  useEffect(() => {
+    const checkPlatform = async () => {
+      if (window.electronAPI && window.electronAPI.getPlatform) {
+        const platform = await window.electronAPI.getPlatform();
+        setIsWindows(platform === 'win32');
+      }
+    };
+    checkPlatform();
+  }, []);
 
   // Fonction pour exécuter XSSer
   const runXSSer = async () => {
@@ -179,81 +191,93 @@ const XSSer = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">XSSer - Scanner de vulnérabilités XSS</h1>
       
-      <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 mb-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">URL Cible</label>
-            <input
-              type="text"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="https://example.com"
-              className="w-full p-2 border rounded-md text-gray-900 dark:text-white bg-white dark:bg-gray-700"
-              disabled={isRunning}
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium mb-1">Paramètre à tester</label>
-            <input
-              type="text"
-              value={param}
-              onChange={(e) => setParam(e.target.value)}
-              placeholder="XSS"
-              className="w-full p-2 border rounded-md text-gray-900 dark:text-white bg-white dark:bg-gray-700"
-              disabled={isRunning}
-            />
-          </div>
-        </div>
-        
-        <div className="mt-4 flex flex-wrap items-center gap-4">
+      {isWindows ? (
+        <div className="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 p-4 rounded-md mb-6">
           <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="auto"
-              checked={useAuto}
-              onChange={(e) => setUseAuto(e.target.checked)}
-              className="mr-2"
-              disabled={isRunning}
-            />
-            <label htmlFor="auto" className="text-sm">Mode Auto (--auto)</label>
-          </div>
-          
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="save"
-              checked={saveReport}
-              onChange={(e) => setSaveReport(e.target.checked)}
-              className="mr-2"
-              disabled={isRunning}
-            />
-            <label htmlFor="save" className="text-sm">Sauvegarder Rapport (--save)</label>
+            <FiAlertTriangle className="text-red-500 mr-2" size={24} />
+            <div>
+              <p className="font-bold text-red-700 dark:text-red-300">Fonctionnalité non disponible sur Windows</p>
+              <p className="text-red-700 dark:text-red-300">XSSer n'est pas compatible avec Windows dans cette interface. Veuillez utiliser un système Linux pour accéder à cette fonctionnalité.</p>
+            </div>
           </div>
         </div>
-        
-        <div className="mt-4 flex gap-2">
-          <button
-            onClick={runXSSer}
-            disabled={isRunning || !url}
-            className={`flex items-center px-4 py-2 rounded-md ${
-              isRunning ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
-            } text-white`}
-          >
-            <FiPlay className="mr-2" /> Lancer XSSer
-          </button>
+      ) : (
+        <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">URL Cible</label>
+              <input
+                type="text"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="https://example.com"
+                className="w-full p-2 border rounded-md text-gray-900 dark:text-white bg-white dark:bg-gray-700"
+                disabled={isRunning}
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">Paramètre à tester</label>
+              <input
+                type="text"
+                value={param}
+                onChange={(e) => setParam(e.target.value)}
+                placeholder="XSS"
+                className="w-full p-2 border rounded-md text-gray-900 dark:text-white bg-white dark:bg-gray-700"
+                disabled={isRunning}
+              />
+            </div>
+          </div>
           
-          <button
-            onClick={stopXSSer}
-            disabled={!isRunning}
-            className={`flex items-center px-4 py-2 rounded-md ${
-              !isRunning ? 'bg-gray-400 cursor-not-allowed' : 'bg-red-600 hover:bg-red-700'
-            } text-white`}
-          >
-            <FiSlash className="mr-2" /> Arrêter
-          </button>
+          <div className="mt-4 flex flex-wrap items-center gap-4">
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="auto"
+                checked={useAuto}
+                onChange={(e) => setUseAuto(e.target.checked)}
+                className="mr-2"
+                disabled={isRunning}
+              />
+              <label htmlFor="auto" className="text-sm">Mode Auto (--auto)</label>
+            </div>
+            
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="save"
+                checked={saveReport}
+                onChange={(e) => setSaveReport(e.target.checked)}
+                className="mr-2"
+                disabled={isRunning}
+              />
+              <label htmlFor="save" className="text-sm">Sauvegarder Rapport (--save)</label>
+            </div>
+          </div>
+          
+          <div className="mt-4 flex gap-2">
+            <button
+              onClick={runXSSer}
+              disabled={isRunning || !url}
+              className={`flex items-center px-4 py-2 rounded-md ${
+                isRunning ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+              } text-white`}
+            >
+              <FiPlay className="mr-2" /> Lancer XSSer
+            </button>
+            
+            <button
+              onClick={stopXSSer}
+              disabled={!isRunning}
+              className={`flex items-center px-4 py-2 rounded-md ${
+                !isRunning ? 'bg-gray-400 cursor-not-allowed' : 'bg-red-600 hover:bg-red-700'
+              } text-white`}
+            >
+              <FiSlash className="mr-2" /> Arrêter
+            </button>
+          </div>
         </div>
-      </div>
+      )}
       
       {/* Statut et erreurs */}
       {status && (

@@ -37,16 +37,35 @@ const VirusTotal = () => {
   const calculateFileHash = async (filePath) => {
     try {
       const isWindows = window.electronAPI && window.electronAPI.platform === 'win32';
-      const command = isWindows
-        ? `certutil -hashfile "${filePath}" SHA256 | findstr /v "hash"`
-        : `sha256sum "${filePath}" | cut -d' ' -f1`;
+      console.log('[VirusTotal] Plateforme détectée:', isWindows ? 'Windows' : 'Linux');
       
+      let command = '';
+      if (isWindows) {
+        // Commande Windows pour calculer le hash SHA256
+        command = `certutil -hashfile "${filePath}" SHA256 | findstr /v "hash"`;
+        console.log('[VirusTotal] Commande Windows utilisée:', command);
+      } else {
+        // Commande Linux pour calculer le hash SHA256
+        command = `sha256sum "${filePath}" | cut -d' ' -f1`;
+        console.log('[VirusTotal] Commande Linux utilisée:', command);
+      }
+      
+      console.log('[VirusTotal] Exécution de la commande de hash pour:', filePath);
       const result = await window.electronAPI.executeCommand(command);
-      return isWindows 
-        ? result.stdout.split('\r\n')[1].trim() 
-        : result.stdout.trim();
+      
+      let hash = '';
+      if (isWindows) {
+        // Extraire le hash du résultat Windows (2ème ligne)
+        hash = result.stdout.split('\r\n')[1].trim();
+      } else {
+        // Extraire le hash du résultat Linux
+        hash = result.stdout.trim();
+      }
+      
+      console.log('[VirusTotal] Hash calculé:', hash);
+      return hash;
     } catch (error) {
-      console.error('Erreur lors du calcul du hash:', error);
+      console.error('[VirusTotal] Erreur lors du calcul du hash:', error);
       throw new Error('Erreur lors du calcul du hash du fichier');
     }
   };

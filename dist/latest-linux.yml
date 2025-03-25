@@ -1,9 +1,9 @@
 version: 1.0.0
 files:
   - url: hakboard-1.0.0.AppImage
-    sha512: Kt3uXy/WL1srI/juuO/0WdjPP0XUzqo2HyXLHMwKjw0qRnNm0cP4cGavnxrY226TlEaZdsf96iuI0Xq3kgwqMw==
-    size: 463865951
-    blockMapSize: 477299
+    sha512: 4AUdB2zI7apuRum6y6x6hvJpiJiRGdqeVPq+UwOLPkdXgrdD/yDLi3CWntU4Sph1fF7UL5GRVKgJux6DpxyErg==
+    size: 501847302
+    blockMapSize: 517402
 path: hakboard-1.0.0.AppImage
-sha512: Kt3uXy/WL1srI/juuO/0WdjPP0XUzqo2HyXLHMwKjw0qRnNm0cP4cGavnxrY226TlEaZdsf96iuI0Xq3kgwqMw==
-releaseDate: '2025-03-23T21:30:02.702Z'
+sha512: 4AUdB2zI7apuRum6y6x6hvJpiJiRGdqeVPq+UwOLPkdXgrdD/yDLi3CWntU4Sph1fF7UL5GRVKgJux6DpxyErg==
+releaseDate: '2025-03-25T15:07:28.950Z'

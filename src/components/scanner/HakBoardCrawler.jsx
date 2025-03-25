@@ -98,6 +98,7 @@ const HakBoardCrawler = () => {
       
       // Détecter le système d'exploitation
       const isWindows = window.electronAPI && window.electronAPI.platform === 'win32';
+      console.log('[HakBoardCrawler] Plateforme détectée:', isWindows ? 'Windows' : 'Linux');
       
       // S'assurer qu'un chemin de rapport est spécifié
       const reportBasePath = settings.reportPath || (isWindows ? '.\\temp\\hakboard_report' : '/tmp/hakboard_report');
@@ -123,14 +124,21 @@ const HakBoardCrawler = () => {
       // Créer le marqueur selon l'OS
       if (isWindows) {
         await window.electronAPI.executeCommand(`echo. > "${markerPath}"`);
+        console.log('[HakBoardCrawler] Marqueur Windows créé:', markerPath);
       } else {
         await window.electronAPI.executeCommand(`touch "${markerPath}"`);
+        console.log('[HakBoardCrawler] Marqueur Linux créé:', markerPath);
       }
       
       // Construire la commande avec tous les arguments
-      let command = isWindows 
-        ? `.\\env\\Scripts\\python.exe -m hakboardcrawler ${settings.target}`
-        : `env/bin/hakboardcrawler ${settings.target}`;
+      let command;
+      if (isWindows) {
+        command = `.\\env\\Scripts\\python.exe -m hakboardcrawler ${settings.target}`;
+        console.log('[HakBoardCrawler] Commande Windows utilisée:', command);
+      } else {
+        command = `env/bin/hakboardcrawler ${settings.target}`;
+        console.log('[HakBoardCrawler] Commande Linux utilisée:', command);
+      }
       
       // Ajouter tous les paramètres configurés
       if (settings.depth) command += ` -d ${settings.depth}`;
@@ -147,7 +155,7 @@ const HakBoardCrawler = () => {
 
       if (settings.verboseMode) command += ` -v`;
       
-      console.log('Lancement du scan avec la commande:', command);
+      console.log('[HakBoardCrawler] Commande finale:', command);
       
       // Exécuter la commande
       await window.electronAPI.executeCommand(command);
@@ -156,24 +164,25 @@ const HakBoardCrawler = () => {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       // ====== STRATÉGIE 1: Essayer de lire le fichier prévu directement ======
-      console.log('Tentative de lecture du fichier prévu:', expectedFilename);
+      console.log('[HakBoardCrawler] Tentative de lecture du fichier prévu:', expectedFilename);
       
       let fileResult;
       try {
         const readCommand = isWindows
           ? `type "${expectedFilename}"`
           : `cat "${expectedFilename}"`;
+        console.log('[HakBoardCrawler] Commande de lecture:', readCommand);
         fileResult = await window.electronAPI.executeCommand(readCommand);
         if (!fileResult.stderr) {
-          console.log('Succès: Fichier trouvé directement');
+          console.log('[HakBoardCrawler] Succès: Fichier trouvé directement');
         }
       } catch (err) {
-        console.log('Fichier prévu non trouvé, passage à la stratégie 2');
+        console.log('[HakBoardCrawler] Fichier prévu non trouvé, passage à la stratégie 2');
       }
       
       // ====== STRATÉGIE 2: Rechercher les fichiers récents dans le répertoire ======
       if (fileResult?.stderr || !fileResult) {
-        console.log('Recherche des fichiers récents correspondants...');
+        console.log('[HakBoardCrawler] Recherche des fichiers récents correspondants...');
         
         // Obtenir le répertoire de base
         const basePath = reportBasePath.substring(0, reportBasePath.lastIndexOf(isWindows ? '\\' : '/') + 1) || (isWindows ? '.\\temp\\' : '/tmp/');
@@ -184,7 +193,7 @@ const HakBoardCrawler = () => {
           ? `dir /b /o-d "${basePath}${baseFile}_${targetClean}*.json" | findstr /n "^" | findstr "^1:"`
           : `find ${basePath} -type f -name "${baseFile}_${targetClean}*.json" -newer "${markerPath}" | sort -r | head -1`;
         
-        console.log('Commande de recherche:', findCommand);
+        console.log('[HakBoardCrawler] Commande de recherche:', findCommand);
         const findResult = await window.electronAPI.executeCommand(findCommand);
         
         if (findResult.stdout && findResult.stdout.trim()) {
@@ -192,7 +201,7 @@ const HakBoardCrawler = () => {
           const filePath = isWindows 
             ? `${basePath}${foundFile.replace(/^1:/, '')}`
             : foundFile;
-          console.log('Fichier trouvé par recherche:', filePath);
+          console.log('[HakBoardCrawler] Fichier trouvé par recherche:', filePath);
           
           const readCommand = isWindows
             ? `type "${filePath}"`
@@ -200,7 +209,7 @@ const HakBoardCrawler = () => {
           fileResult = await window.electronAPI.executeCommand(readCommand);
         } else {
           // ====== STRATÉGIE 3: Recherche générale des fichiers JSON récents ======
-          console.log('Aucun fichier spécifique trouvé, recherche des fichiers JSON récents...');
+          console.log('[HakBoardCrawler] Aucun fichier spécifique trouvé, recherche des fichiers JSON récents...');
           const findAnyJsonCommand = isWindows
             ? `dir /b /o-d "${basePath}*.json" | findstr /n "^" | findstr "^1:"`
             : `find ${basePath} -type f -name "*.json" -newer "${markerPath}" | sort -r | head -1`;
@@ -212,7 +221,7 @@ const HakBoardCrawler = () => {
             const filePath = isWindows 
               ? `${basePath}${foundAnyFile.replace(/^1:/, '')}`
               : foundAnyFile;
-            console.log('Fichier JSON récent trouvé:', filePath);
+            console.log('[HakBoardCrawler] Fichier JSON récent trouvé:', filePath);
             
             const readCommand = isWindows
               ? `type "${filePath}"`
@@ -232,17 +241,17 @@ const HakBoardCrawler = () => {
       // Parser le contenu JSON
       try {
         const jsonOutput = JSON.parse(fileResult.stdout);
-        console.log('Résultats du scan (aperçu):', Object.keys(jsonOutput));
+        console.log('[HakBoardCrawler] Résultats du scan (aperçu):', Object.keys(jsonOutput));
         setResults(jsonOutput);
         setScanStatus('success');
       } catch (parseError) {
-        console.error('Erreur lors du parsing JSON:', parseError);
-        console.log('Début du contenu brut:', fileResult.stdout.substring(0, 200) + '...');
+        console.error('[HakBoardCrawler] Erreur lors du parsing JSON:', parseError);
+        console.log('[HakBoardCrawler] Début du contenu brut:', fileResult.stdout.substring(0, 200) + '...');
         throw new Error('Impossible de parser les résultats JSON');
       }
       
     } catch (err) {
-      console.error('Erreur lors du scan:', err);
+      console.error('[HakBoardCrawler] Erreur lors du scan:', err);
       setError(err.message || 'Une erreur s\'est produite lors du scan');
       setScanStatus('error');
     } finally {

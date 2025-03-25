@@ -617,12 +617,18 @@ Rapport généré par HakBoard - Scanner SSL/TLS
   const buildScanCommand = (targetUrl) => {
     // Détecter le système d'exploitation
     const isWindows = window.electronAPI && window.electronAPI.platform === 'win32';
-    
-    // Construire le chemin de base en fonction du système d'exploitation
-    let command = isWindows ? '.\\env\\Scripts\\sslyze.exe' : 'env/bin/sslyze';
-    
-    // Ajouter l'URL cible
-    command += ` ${targetUrl}`;
+    console.log('[Scan_SSL_TLS] Plateforme détectée:', isWindows ? 'Windows' : 'Linux');
+
+    let command = '';
+    if (isWindows) {
+      // Commandes Windows
+      command = `.\\env\\Scripts\\sslyze.exe ${targetUrl}`;
+      console.log('[Scan_SSL_TLS] Commande Windows utilisée:', command);
+    } else {
+      // Commandes Linux
+      command = `env/bin/sslyze ${targetUrl}`;
+      console.log('[Scan_SSL_TLS] Commande Linux utilisée:', command);
+    }
     
     // Ajouter les options sélectionnées
     Object.entries(scanOptions).forEach(([option, enabled]) => {

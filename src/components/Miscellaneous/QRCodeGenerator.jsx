@@ -35,15 +35,34 @@ const QRCodeGenerator = () => {
       // Stocker l'URL formatée dans l'état
       setFormattedUrl(urlToUse);
 
+      const isWindows = window.electronAPI && window.electronAPI.platform === 'win32';
+      console.log('[QRCodeGenerator] Plateforme détectée:', isWindows ? 'Windows' : 'Linux');
+
       // Construire la commande à exécuter avec l'URL correctement formatée
-      const command = `cd src && node -e "const qrcode = require('qrcode'); qrcode.toDataURL('${urlToUse}', {
-        width: ${size},
-        margin: ${margin},
-        color: {
-          dark: '${darkColor}',
-          light: '${lightColor}'
-        }
-      }, (err, url) => { if(err) { console.error(err); process.exit(1); } else { console.log(url); } });"`;
+      let command;
+      if (isWindows) {
+        // Commande Windows pour générer le QR code
+        command = `cd src && node -e "const qrcode = require('qrcode'); qrcode.toDataURL('${urlToUse}', {
+          width: ${size},
+          margin: ${margin},
+          color: {
+            dark: '${darkColor}',
+            light: '${lightColor}'
+          }
+        }, (err, url) => { if(err) { console.error(err); process.exit(1); } else { console.log(url); } });"`;
+        console.log('[QRCodeGenerator] Commande Windows utilisée:', command);
+      } else {
+        // Commande Linux pour générer le QR code
+        command = `cd src && node -e "const qrcode = require('qrcode'); qrcode.toDataURL('${urlToUse}', {
+          width: ${size},
+          margin: ${margin},
+          color: {
+            dark: '${darkColor}',
+            light: '${lightColor}'
+          }
+        }, (err, url) => { if(err) { console.error(err); process.exit(1); } else { console.log(url); } });"`;
+        console.log('[QRCodeGenerator] Commande Linux utilisée:', command);
+      }
 
       if (window.electronAPI && window.electronAPI.executeCommand) {
         const result = await window.electronAPI.executeCommand(command);
