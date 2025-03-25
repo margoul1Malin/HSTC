@@ -1,15 +1,51 @@
-import React, { useState } from 'react';
-import { FiFile, FiInfo, FiUpload, FiDownload, FiAlertTriangle, FiRefreshCw } from 'react-icons/fi';
+import React, { useState, useEffect } from 'react';
+import { FiFile, FiInfo, FiUpload, FiDownload, FiAlertTriangle, FiRefreshCw, FiAlertCircle } from 'react-icons/fi';
 import { useNotification } from '../../context/NotificationContext';
 
 const Exifyer = () => {
   const { showSuccess, showError, showInfo, showWarning } = useNotification();
   
+  // États pour la vérification de la plateforme
+  const [platform, setPlatform] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [isExiftoolInstalled, setIsExiftoolInstalled] = useState(false);
+  
   // États pour gérer le composant
-  const [isLoading, setIsLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [metadata, setMetadata] = useState(null);
   const [error, setError] = useState(null);
+  
+  // Vérifier la plateforme et si exiftool est installé au chargement
+  useEffect(() => {
+    const checkPlatformAndExiftool = async () => {
+      try {
+        setIsLoading(true);
+        
+        // Vérifier la plateforme
+        if (window.electronAPI && window.electronAPI.getPlatform) {
+          const platformResult = await window.electronAPI.getPlatform();
+          setPlatform(platformResult);
+          
+          // Si c'est Linux, vérifier si exiftool est installé
+          if (platformResult === 'linux') {
+            try {
+              const result = await window.electronAPI.executeCommand('which exiftool');
+              setIsExiftoolInstalled(!!result.stdout);
+            } catch (error) {
+              console.error('Erreur lors de la vérification de exiftool:', error);
+              setIsExiftoolInstalled(false);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Erreur lors de la vérification de la plateforme et de exiftool:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkPlatformAndExiftool();
+  }, []);
   
   // Fonction pour gérer la sélection de fichier
   const handleFileSelect = async () => {
@@ -151,75 +187,103 @@ const Exifyer = () => {
         Exifyer - Extracteur de Métadonnées
       </h1>
       
-      <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
-            Sélectionner un fichier
-          </h2>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-            Choisissez un fichier pour extraire ses métadonnées. Formats supportés : images (JPEG, PNG), vidéos (MP4, AVI, MOV), PDF et autres types de fichiers.
-          </p>
-          
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={handleFileSelect}
-              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md flex items-center"
-            >
-              <FiUpload className="mr-2" /> Sélectionner un fichier
-            </button>
-            
-            {selectedFile && (
-              <span className="text-sm text-gray-600 dark:text-gray-400">
-                Fichier sélectionné : {selectedFile.split('/').pop()}
-              </span>
-            )}
+      {isLoading ? (
+        <div className="flex items-center justify-center py-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-500"></div>
+        </div>
+      ) : platform !== 'linux' ? (
+        <div className="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 p-4 rounded-md mb-6">
+          <div className="flex items-center">
+            <FiAlertCircle className="text-red-500 mr-2" size={24} />
+            <div>
+              <p className="font-bold text-red-700 dark:text-red-300">Incompatible avec Windows</p>
+              <p className="text-red-700 dark:text-red-300">Exifyer n'est pas compatible avec Windows. Veuillez utiliser un système Linux pour accéder à cette fonctionnalité.</p>
+            </div>
           </div>
         </div>
-        
-        {isLoading && (
-          <div className="flex items-center justify-center py-4">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-500"></div>
-          </div>
-        )}
-        
-        {error && (
-          <div className="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 p-4 rounded-md mb-6">
-            <div className="flex items-center">
-              <FiAlertTriangle className="text-red-500 mr-2" />
-              <p className="text-red-700 dark:text-red-300">{error}</p>
+      ) : !isExiftoolInstalled ? (
+        <div className="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-500 p-4 rounded-md mb-6">
+          <div className="flex items-center">
+            <FiInfo className="text-yellow-500 mr-2" size={24} />
+            <div>
+              <p className="font-bold text-yellow-700 dark:text-yellow-300">ExifTool n'est pas installé</p>
+              <p className="text-yellow-700 dark:text-yellow-300">Veuillez installer ExifTool pour utiliser cette fonctionnalité.</p>
+              <p className="mt-2 text-yellow-700 dark:text-yellow-300">Vous pouvez l'installer avec la commande suivante :</p>
+              <pre className="bg-yellow-100 dark:bg-yellow-900/40 p-2 mt-2 rounded text-yellow-800 dark:text-yellow-200">sudo apt-get install libimage-exiftool-perl</pre>
             </div>
           </div>
-        )}
-        
-        {metadata && (
-          <div className="mt-6">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                Métadonnées extraites
-              </h3>
-              <button
-                onClick={exportMetadata}
-                className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md flex items-center"
-              >
-                <FiDownload className="mr-2" /> Exporter
-              </button>
-            </div>
+        </div>
+      ) : (
+        <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
+          <div className="mb-6">
+            <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
+              Sélectionner un fichier
+            </h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+              Choisissez un fichier pour extraire ses métadonnées. Formats supportés : images (JPEG, PNG), vidéos (MP4, AVI, MOV), PDF et autres types de fichiers.
+            </p>
             
-            <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-md">
-              <pre className="text-sm text-gray-800 dark:text-gray-200 whitespace-pre-wrap">
-                {metadata}
-              </pre>
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={handleFileSelect}
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md flex items-center"
+              >
+                <FiUpload className="mr-2" /> Sélectionner un fichier
+              </button>
+              
+              {selectedFile && (
+                <span className="text-sm text-gray-600 dark:text-gray-400">
+                  Fichier sélectionné : {selectedFile.split('/').pop()}
+                </span>
+              )}
             </div>
           </div>
-        )}
-        
-        {!metadata && !isLoading && !error && (
-          <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-            <FiInfo className="mx-auto mb-2" size={24} />
-            <p>Sélectionnez un fichier pour commencer l'extraction des métadonnées</p>
-          </div>
-        )}
-      </div>
+          
+          {isLoading && (
+            <div className="flex items-center justify-center py-4">
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-500"></div>
+            </div>
+          )}
+          
+          {error && (
+            <div className="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 p-4 rounded-md mb-6">
+              <div className="flex items-center">
+                <FiAlertTriangle className="text-red-500 mr-2" />
+                <p className="text-red-700 dark:text-red-300">{error}</p>
+              </div>
+            </div>
+          )}
+          
+          {metadata && (
+            <div className="mt-6">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                  Métadonnées extraites
+                </h3>
+                <button
+                  onClick={exportMetadata}
+                  className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md flex items-center"
+                >
+                  <FiDownload className="mr-2" /> Exporter
+                </button>
+              </div>
+              
+              <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-md">
+                <pre className="text-sm text-gray-800 dark:text-gray-200 whitespace-pre-wrap">
+                  {metadata}
+                </pre>
+              </div>
+            </div>
+          )}
+          
+          {!metadata && !isLoading && !error && (
+            <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+              <FiInfo className="mx-auto mb-2" size={24} />
+              <p>Sélectionnez un fichier pour commencer l'extraction des métadonnées</p>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

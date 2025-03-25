@@ -15,6 +15,9 @@ const GoBuster = () => {
   const [isVerbose, setIsVerbose] = useState(true);
   const [showSuccess, setShowSuccess] = useState(false);
   const [processId, setProcessId] = useState(null);
+  const [platform, setPlatform] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [isGoBusterInstalled, setIsGoBusterInstalled] = useState(false);
   
   // États pour le générateur de wordlist
   const [showWordlistGenerator, setShowWordlistGenerator] = useState(false);
@@ -52,6 +55,44 @@ const GoBuster = () => {
     
     // Pas besoin de retourner une fonction de nettoyage
   }, []); // Dépendance vide car nous utilisons la référence directement
+
+  // Vérifier la plateforme et si GoBuster est installé au chargement
+  useEffect(() => {
+    const checkPlatformAndGoBuster = async () => {
+      try {
+        setIsLoading(true);
+        
+        // Vérifier la plateforme
+        if (window.electronAPI && window.electronAPI.getPlatform) {
+          const platformResult = await window.electronAPI.getPlatform();
+          setPlatform(platformResult);
+          
+          // Si c'est Linux, vérifier si GoBuster est installé
+          if (platformResult === 'linux') {
+            try {
+              const result = await window.electronAPI.executeCommand('which gobuster');
+              setIsGoBusterInstalled(!!result.stdout);
+              
+              if (result.stdout) {
+                addToOutput({ type: 'success', message: `GoBuster détecté à: ${result.stdout.trim()}` });
+              } else {
+                addToOutput({ type: 'error', message: 'GoBuster n\'est pas installé.' });
+              }
+            } catch (error) {
+              console.error('Erreur lors de la vérification de GoBuster:', error);
+              setIsGoBusterInstalled(false);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Erreur lors de la vérification de la plateforme et de GoBuster:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkPlatformAndGoBuster();
+  }, []);
 
   // Vérifier si GoBuster est installé au chargement de la page
   useEffect(() => {
@@ -501,6 +542,51 @@ const GoBuster = () => {
         return <FiClock className="text-gray-500" />;
     }
   };
+
+  // Rendu conditionnel en fonction de la plateforme
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+      </div>
+    );
+  }
+
+  // Si ce n'est pas Linux, afficher un message d'erreur
+  if (platform !== 'linux') {
+    return (
+      <div className="p-6 max-w-4xl mx-auto">
+        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
+          <div className="flex items-center">
+            <FiAlertCircle className="mr-2" size={24} />
+            <div>
+              <p className="font-bold">Incompatible avec Windows</p>
+              <p>GoBuster n'est pas compatible avec Windows. Veuillez utiliser un système Linux pour accéder à cette fonctionnalité.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Si GoBuster n'est pas installé, afficher un message d'installation
+  if (!isGoBusterInstalled) {
+    return (
+      <div className="p-6 max-w-4xl mx-auto">
+        <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6" role="alert">
+          <div className="flex items-center">
+            <FiInfo className="mr-2" size={24} />
+            <div>
+              <p className="font-bold">GoBuster n'est pas installé</p>
+              <p>Veuillez installer GoBuster pour utiliser cette fonctionnalité.</p>
+              <p className="mt-2">Vous pouvez l'installer avec la commande suivante :</p>
+              <pre className="bg-gray-100 p-2 mt-2 rounded">sudo apt-get install gobuster</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-4">
