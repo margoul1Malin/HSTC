@@ -615,8 +615,14 @@ Rapport généré par HakBoard - Scanner SSL/TLS
   
   // Fonction pour générer la commande avec les options sélectionnées
   const buildScanCommand = (targetUrl) => {
-    // Commande de base sans l'option --json_out
-    let command = `env/bin/sslyze ${targetUrl}`;
+    // Détecter le système d'exploitation
+    const isWindows = window.electronAPI && window.electronAPI.platform === 'win32';
+    
+    // Construire le chemin de base en fonction du système d'exploitation
+    let command = isWindows ? '.\\env\\Scripts\\sslyze.exe' : 'env/bin/sslyze';
+    
+    // Ajouter l'URL cible
+    command += ` ${targetUrl}`;
     
     // Ajouter les options sélectionnées
     Object.entries(scanOptions).forEach(([option, enabled]) => {

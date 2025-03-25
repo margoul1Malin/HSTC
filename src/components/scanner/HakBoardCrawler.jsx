@@ -96,8 +96,11 @@ const HakBoardCrawler = () => {
       // Sauvegarder les paramètres actuels
       await saveSettings();
       
+      // Détecter le système d'exploitation
+      const isWindows = window.electronAPI && window.electronAPI.platform === 'win32';
+      
       // S'assurer qu'un chemin de rapport est spécifié
-      const reportBasePath = settings.reportPath || '/tmp/hakboard_report';
+      const reportBasePath = settings.reportPath || (isWindows ? '.\\temp\\hakboard_report' : '/tmp/hakboard_report');
       
       // Créer un timestamp pour ce scan
       const now = new Date();
@@ -113,10 +116,21 @@ const HakBoardCrawler = () => {
       const expectedFilename = `${reportBasePath}_${targetClean}_${dateStr}_${timeStr}.json`;
 
       // Créer un marqueur temporel pour trouver facilement le fichier généré après
-      await window.electronAPI.executeCommand(`touch /tmp/scan_start_marker_${timeStr}`);
+      const markerPath = isWindows 
+        ? `.\\temp\\scan_start_marker_${timeStr}`
+        : `/tmp/scan_start_marker_${timeStr}`;
+
+      // Créer le marqueur selon l'OS
+      if (isWindows) {
+        await window.electronAPI.executeCommand(`echo. > "${markerPath}"`);
+      } else {
+        await window.electronAPI.executeCommand(`touch "${markerPath}"`);
+      }
       
       // Construire la commande avec tous les arguments
-      let command = `env/bin/hakboardcrawler ${settings.target}`;
+      let command = isWindows 
+        ? `.\\env\\Scripts\\python.exe -m hakboardcrawler ${settings.target}`
+        : `env/bin/hakboardcrawler ${settings.target}`;
       
       // Ajouter tous les paramètres configurés
       if (settings.depth) command += ` -d ${settings.depth}`;
@@ -127,7 +141,7 @@ const HakBoardCrawler = () => {
       command += ` -f json`; // Toujours utiliser JSON pour traiter les résultats
       
       if (settings.userAgent !== 'random') command += ` --user-agent ${settings.userAgent}`;
-      if (settings.ignoreRobots) command += ` --no-robots`; // Adaptation du paramètre
+      if (settings.ignoreRobots) command += ` --no-robots`;
       
       command += ` -o "${reportBasePath}"`;
 
@@ -135,7 +149,7 @@ const HakBoardCrawler = () => {
       
       console.log('Lancement du scan avec la commande:', command);
       
-      // Exécuter la commande - on ignore complètement la sortie standard car elle contient seulement des logs
+      // Exécuter la commande
       await window.electronAPI.executeCommand(command);
       
       // Attendre un peu pour s'assurer que le fichier est bien écrit
@@ -146,7 +160,10 @@ const HakBoardCrawler = () => {
       
       let fileResult;
       try {
-        fileResult = await window.electronAPI.executeCommand(`cat "${expectedFilename}"`);
+        const readCommand = isWindows
+          ? `type "${expectedFilename}"`
+          : `cat "${expectedFilename}"`;
+        fileResult = await window.electronAPI.executeCommand(readCommand);
         if (!fileResult.stderr) {
           console.log('Succès: Fichier trouvé directement');
         }
@@ -159,32 +176,48 @@ const HakBoardCrawler = () => {
         console.log('Recherche des fichiers récents correspondants...');
         
         // Obtenir le répertoire de base
-        const basePath = reportBasePath.substring(0, reportBasePath.lastIndexOf('/') + 1) || '/tmp/';
-        const baseFile = reportBasePath.substring(reportBasePath.lastIndexOf('/') + 1);
+        const basePath = reportBasePath.substring(0, reportBasePath.lastIndexOf(isWindows ? '\\' : '/') + 1) || (isWindows ? '.\\temp\\' : '/tmp/');
+        const baseFile = reportBasePath.substring(reportBasePath.lastIndexOf(isWindows ? '\\' : '/') + 1);
         
-        // Rechercher les fichiers JSON récents (créés après notre marqueur) avec le bon préfixe
-        const findCommand = `find ${basePath} -type f -name "${baseFile}_${targetClean}*.json" -newer "/tmp/scan_start_marker_${timeStr}" | sort -r | head -1`;
+        // Rechercher les fichiers JSON récents avec le bon préfixe
+        const findCommand = isWindows
+          ? `dir /b /o-d "${basePath}${baseFile}_${targetClean}*.json" | findstr /n "^" | findstr "^1:"`
+          : `find ${basePath} -type f -name "${baseFile}_${targetClean}*.json" -newer "${markerPath}" | sort -r | head -1`;
         
         console.log('Commande de recherche:', findCommand);
         const findResult = await window.electronAPI.executeCommand(findCommand);
         
         if (findResult.stdout && findResult.stdout.trim()) {
           const foundFile = findResult.stdout.trim();
-          console.log('Fichier trouvé par recherche:', foundFile);
+          const filePath = isWindows 
+            ? `${basePath}${foundFile.replace(/^1:/, '')}`
+            : foundFile;
+          console.log('Fichier trouvé par recherche:', filePath);
           
-          fileResult = await window.electronAPI.executeCommand(`cat "${foundFile}"`);
+          const readCommand = isWindows
+            ? `type "${filePath}"`
+            : `cat "${filePath}"`;
+          fileResult = await window.electronAPI.executeCommand(readCommand);
         } else {
           // ====== STRATÉGIE 3: Recherche générale des fichiers JSON récents ======
           console.log('Aucun fichier spécifique trouvé, recherche des fichiers JSON récents...');
-          const findAnyJsonCommand = `find ${basePath} -type f -name "*.json" -newer "/tmp/scan_start_marker_${timeStr}" | sort -r | head -1`;
+          const findAnyJsonCommand = isWindows
+            ? `dir /b /o-d "${basePath}*.json" | findstr /n "^" | findstr "^1:"`
+            : `find ${basePath} -type f -name "*.json" -newer "${markerPath}" | sort -r | head -1`;
           
           const findAnyResult = await window.electronAPI.executeCommand(findAnyJsonCommand);
           
           if (findAnyResult.stdout && findAnyResult.stdout.trim()) {
             const foundAnyFile = findAnyResult.stdout.trim();
-            console.log('Fichier JSON récent trouvé:', foundAnyFile);
+            const filePath = isWindows 
+              ? `${basePath}${foundAnyFile.replace(/^1:/, '')}`
+              : foundAnyFile;
+            console.log('Fichier JSON récent trouvé:', filePath);
             
-            fileResult = await window.electronAPI.executeCommand(`cat "${foundAnyFile}"`);
+            const readCommand = isWindows
+              ? `type "${filePath}"`
+              : `cat "${filePath}"`;
+            fileResult = await window.electronAPI.executeCommand(readCommand);
           } else {
             throw new Error('Aucun fichier de rapport JSON trouvé');
           }

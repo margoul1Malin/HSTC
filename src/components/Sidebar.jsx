@@ -1041,7 +1041,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
                       className={`flex items-center w-full p-2 pl-3 ${
                         activeView === item.id
                           ? 'bg-indigo-100 text-indigo-700 dark:bg-gray-700 dark:text-indigo-400'
-                          : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                          : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                       } ${
                         item.disabled ? 'opacity-50 cursor-not-allowed' : ''
                       } text-sm rounded-md transition-colors duration-200`}
@@ -1085,7 +1085,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
                       className={`flex items-center w-full p-2 pl-3 ${
                         activeView === item.id
                           ? 'bg-indigo-100 text-indigo-700 dark:bg-gray-700 dark:text-indigo-400'
-                          : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                          : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                       } ${
                         item.disabled ? 'opacity-50 cursor-not-allowed' : ''
                       } text-sm rounded-md transition-colors duration-200`}

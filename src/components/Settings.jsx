@@ -8,10 +8,19 @@ const Settings = ({ darkMode, setDarkMode }) => {
   
   // État pour les paramètres
   const [settings, setSettings] = useState({
-    darkMode: false
+    darkMode: darkMode // Initialiser avec la prop darkMode
   });
+  
   // État pour le chargement
   const [loading, setLoading] = useState(true);
+
+  // Mettre à jour les paramètres quand darkMode change
+  useEffect(() => {
+    setSettings(prev => ({
+      ...prev,
+      darkMode: darkMode
+    }));
+  }, [darkMode]);
 
   // Charger les paramètres au démarrage
   useEffect(() => {
@@ -59,16 +68,30 @@ const Settings = ({ darkMode, setDarkMode }) => {
   }, [setDarkMode, showError]);
 
   // Fonction pour gérer les changements de paramètres
-  const handleSettingChange = (key, value) => {
-    const updatedSettings = {
-      ...settings,
-      [key]: value,
-    };
-    setSettings(updatedSettings);
-    
-    // Si le mode sombre est modifié, mettre à jour l'état dans le composant parent
-    if (key === 'darkMode') {
-      setDarkMode(value);
+  const handleThemeChange = async (isDark) => {
+    try {
+      // Mettre à jour le thème immédiatement
+      setDarkMode(isDark);
+      
+      // Mettre à jour les paramètres locaux
+      const updatedSettings = {
+        ...settings,
+        darkMode: isDark
+      };
+      setSettings(updatedSettings);
+      
+      // Sauvegarder les paramètres
+      if (window.electronAPI) {
+        if (window.electronAPI.setStoreValue) {
+          await window.electronAPI.setStoreValue('app_settings', updatedSettings);
+        }
+        if (window.electronAPI.saveSettings) {
+          await window.electronAPI.saveSettings(updatedSettings);
+        }
+      }
+    } catch (error) {
+      console.error('Erreur lors du changement de thème:', error);
+      showError('Erreur lors du changement de thème');
     }
   };
 
@@ -117,7 +140,7 @@ const Settings = ({ darkMode, setDarkMode }) => {
             <label className="block text-gray-700 dark:text-gray-300 mb-2">Thème</label>
             <div className="flex items-center">
               <button
-                onClick={() => handleSettingChange('darkMode', false)}
+                onClick={() => handleThemeChange(false)}
                 className={`flex items-center justify-center p-3 rounded-l-md ${
                   !darkMode ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300' : 'bg-gray-100 dark:bg-gray-700'
                 }`}
@@ -126,7 +149,7 @@ const Settings = ({ darkMode, setDarkMode }) => {
                 Clair
               </button>
               <button
-                onClick={() => handleSettingChange('darkMode', true)}
+                onClick={() => handleThemeChange(true)}
                 className={`flex items-center justify-center p-3 rounded-r-md ${
                   darkMode ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300' : 'bg-gray-100 dark:bg-gray-700'
                 }`}

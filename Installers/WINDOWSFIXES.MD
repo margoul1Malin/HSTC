@@ -1,20 +1,6 @@
-Paramètres : Dark/LightMode inaccessible
-
-SSyze : env/bin/sslyze www.drhead.org --certinfo --compression --early_data --fallback --heartbleed --http_headers --openssl_ccs --robot --reneg --resum --sslv3 --tlsv1 --tlsv1_1 --tlsv1_2 --tlsv1_3\n Faut interoperabilité ici
-
-OWASP ZAP : Désactiver sur Windows
-
-HakBoardCrawler : Ex├®cution de la commande: touch /tmp/scan_start_marker_003123 Faut interoperabilité ici
-Et ducoup surement aussi pour env/Sripts/etC...
-
-Donut : Désactiver Sur windows
-
-Shark & WinPEAS -> Fait crash mais à l'air de fonctionner
-
 VirusTotal Selection Fichier marche pas
 
-
-Les sous-sections OSINT et CARD manque le dark:
+Lorsque je vais sur OWASP ZAP puis sur un autre menu il pète un câble + Je peux pas arrêter OWASPZAP
 
 QR Code : rreur lors de l'ex├®cution de la commande: Error: Command failed: cd src && node -e "const qrcode = require('qrcode'); qrcode.toDataURL('https://www.drhead.org', {
         width: 560,
